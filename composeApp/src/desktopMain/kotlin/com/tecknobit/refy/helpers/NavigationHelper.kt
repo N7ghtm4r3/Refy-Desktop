@@ -68,9 +68,9 @@ class NavigationHelper private constructor() {
     @Composable
     fun BottomNavigationBar() {
         NavigationBar {
-            var selectedItem by remember { mutableIntStateOf(0) }
-            navigationTabs.forEachIndexed { index, navTab ->
-                val selected = selectedItem == index
+            var selectedItem by remember { mutableStateOf(activeTab.value) }
+            navigationTabs.forEach { navTab ->
+                val selected = navTab == selectedItem
                 NavigationBarItem(
                     icon = {
                         Icon(
@@ -85,7 +85,7 @@ class NavigationHelper private constructor() {
                     selected = selected,
                     onClick = {
                         activeTab.value = navTab
-                        selectedItem = index
+                        selectedItem = navTab
                     },
                     label = {
                         Text(

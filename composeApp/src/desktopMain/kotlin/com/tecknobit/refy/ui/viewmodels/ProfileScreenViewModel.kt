@@ -5,7 +5,7 @@ import androidx.compose.runtime.MutableState
 import com.tecknobit.equinox.environment.records.EquinoxUser.ApplicationTheme
 import com.tecknobit.equinoxcompose.helpers.EquinoxViewModel
 
-class ProfileActivityViewModel(
+class ProfileScreenViewModel(
     snackbarHostState: SnackbarHostState
 ): EquinoxViewModel(
     snackbarHostState = snackbarHostState

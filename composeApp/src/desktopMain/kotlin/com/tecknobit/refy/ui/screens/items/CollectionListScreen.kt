@@ -6,9 +6,9 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
-import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
-import androidx.compose.foundation.lazy.staggeredgrid.items
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlaylistRemove
 import androidx.compose.material3.LocalContentColor
@@ -56,10 +56,10 @@ class CollectionListScreen : ItemScreen(), RefyLinkUtilities<RefyLink>, LinksCol
                 subText = stringResource(Res.string.no_collections_yet)
             )
         } else {
-            LazyVerticalStaggeredGrid(
-                columns = StaggeredGridCells.Adaptive(350.dp),
+            LazyVerticalGrid(
+                columns = GridCells.Adaptive(350.dp),
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
-                verticalItemSpacing = 10.dp
+                verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 items(
                     items = collections,

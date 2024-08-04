@@ -30,6 +30,7 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(compose.materialIconsExtended)
             api("moe.tlaster:precompose:1.6.0")
+            implementation("com.darkrockstudios:mpfilepicker:3.1.0")
             implementation("io.coil-kt.coil3:coil-compose:3.0.0-alpha07")
             implementation("io.coil-kt.coil3:coil-network-okhttp:3.0.0-alpha07")
             implementation("com.github.N7ghtm4r3:Equinox:1.0.2")

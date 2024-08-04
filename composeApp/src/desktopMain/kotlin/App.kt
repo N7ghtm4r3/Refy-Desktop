@@ -7,10 +7,10 @@ import coil3.addLastModifiedToFileCacheKey
 import coil3.compose.LocalPlatformContext
 import coil3.network.okhttp.OkHttpNetworkFetcherFactory
 import coil3.request.CachePolicy
-import com.tecknobit.refy.ui.screens.Screen.Routes.HOME
-import com.tecknobit.refy.ui.screens.Screen.Routes.SPLASHSCREEN
+import com.tecknobit.refy.ui.screens.Screen.Routes.*
 import com.tecknobit.refy.ui.screens.navigation.Splashscreen
 import com.tecknobit.refy.ui.screens.session.Home
+import com.tecknobit.refy.ui.screens.session.ProfileScreen
 import com.tecknobit.refy.ui.theme.RefyTheme
 import moe.tlaster.precompose.PreComposeApp
 import moe.tlaster.precompose.navigation.NavHost
@@ -97,34 +97,11 @@ fun App() {
                 ) {
                     Home().ShowContent()
                 }
-                /*scene(
-                    route = HOME_SCREEN
-                ) {
-                    NeutronTheme {
-                        Home().ShowScreen()
-                    }
-                }
                 scene(
-                    route = PROJECT_REVENUE_SCREEN
+                    route = PROFILE.name
                 ) {
-                    NeutronTheme {
-                        ProjectRevenueScreen().ShowScreen()
-                    }
+                    ProfileScreen().ShowContent()
                 }
-                scene(
-                    route = PROFILE_SCREEN
-                ) {
-                    NeutronTheme {
-                        ProfileScreen().ShowScreen()
-                    }
-                }
-                scene(
-                    route = CONNECT_SCREEN
-                ) {
-                    NeutronTheme {
-                        ConnectScreen().ShowScreen()
-                    }
-                }*/
             }
         }
     }
