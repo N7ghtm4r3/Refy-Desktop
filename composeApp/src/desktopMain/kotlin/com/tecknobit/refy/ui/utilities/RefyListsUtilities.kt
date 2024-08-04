@@ -168,6 +168,7 @@ fun AddItemToContainer(
         text = {
             LazyColumn (
                 modifier = Modifier
+                    .width(400.dp)
                     .heightIn(
                         max = 150.dp
                     )

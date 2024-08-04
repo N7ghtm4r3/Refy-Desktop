@@ -11,7 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.tecknobit.library.generated.resources.Res
 import com.tecknobit.refy.ui.screens.Screen
 import com.tecknobit.refy.ui.screens.Screen.Routes.HOME
 import com.tecknobit.refy.ui.theme.AppTypography
@@ -20,6 +19,8 @@ import displayFontFamily
 import kotlinx.coroutines.delay
 import navigator
 import org.jetbrains.compose.resources.stringResource
+import refy.composeapp.generated.resources.Res
+import refy.composeapp.generated.resources.app_name
 
 class Splashscreen : Screen() {
 

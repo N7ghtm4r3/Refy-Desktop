@@ -40,10 +40,9 @@ class LinkListScreen : LinksScreen<RefyLink>(
         RefyLinkCard(
             link = link,
             onClick = {
-                /*openLink(
-                    context = context,
+                openLink(
                     link = link
-                )*/
+                )
             }
         )
     }

@@ -7,6 +7,7 @@ import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -22,9 +23,24 @@ import com.tecknobit.refycore.records.links.RefyLink
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.getString
 import refy.composeapp.generated.resources.*
+import java.awt.Desktop
+import java.awt.Toolkit
+import java.awt.datatransfer.Clipboard
+import java.awt.datatransfer.StringSelection
+import java.net.URI
 
 interface RefyLinkUtilities<T : RefyLink> {
+
+    companion object {
+
+        /**
+         * **clipboard** -> the clipboard where save the content of note copied
+         */
+        private val clipboard: Clipboard = Toolkit.getDefaultToolkit().systemClipboard
+
+    }
 
     @Composable
     @NonRestartableComposable
@@ -127,29 +143,29 @@ interface RefyLinkUtilities<T : RefyLink> {
     @Composable
     @NonRestartableComposable
     fun ShareButton(
-        //context: Context,
-        link: T
+        link: T,
+        snackbarHostState: SnackbarHostState
     ) {
-        /*ShareButton(
-            context = context,
+        ShareButton(
             link = link,
+            snackbarHostState = snackbarHostState,
             tint = LocalContentColor.current
-        )*/
+        )
     }
 
     @Composable
     @NonRestartableComposable
     fun ShareButton(
-        //context: Context,
         link: T,
+        snackbarHostState: SnackbarHostState,
         tint: Color
     ) {
         IconButton(
             onClick = {
-                /*shareLink(
-                    context = context,
+                shareLink(
+                    snackbarHostState = snackbarHostState,
                     link = link
-                )*/
+                )
             }
         ) {
             Icon(
@@ -233,23 +249,17 @@ interface RefyLinkUtilities<T : RefyLink> {
     }
 
     fun openLink(
-        //context: Context,
         link: T
     ) {
-        /*openLink(
-            context = context,
+        openLink(
             link = link.referenceLink
-        )*/
+        )
     }
 
     fun openLink(
-        //context: Context,
         link: String
     ) {
-        /*val intent = Intent()
-        intent.data = link.toUri()
-        intent.action = Intent.ACTION_VIEW
-        context.startActivity(intent)*/
+        Desktop.getDesktop().browse(URI(link))
     }
 
     fun showLinkReference(
@@ -261,15 +271,15 @@ interface RefyLinkUtilities<T : RefyLink> {
         }
     }
 
-    /*fun shareLink(
-        context: Context,
+    fun shareLink(
+        snackbarHostState: SnackbarHostState,
         link: T
     ) {
-        val intent = Intent()
-        intent.type = "text/plain"
-        intent.action = Intent.ACTION_SEND
-        intent.putExtra(Intent.EXTRA_TEXT, "${link.title}\n${link.referenceLink}")
-        context.startActivity(Intent.createChooser(intent, null))
-    }*/
+        clipboard.setContents(StringSelection(link.referenceLink), null)
+        CoroutineScope(Dispatchers.IO).launch {
+            //TODO: TO TRANSLATE
+            snackbarHostState.showSnackbar(getString(Res.string.link_copied))
+        }
+    }
 
 }

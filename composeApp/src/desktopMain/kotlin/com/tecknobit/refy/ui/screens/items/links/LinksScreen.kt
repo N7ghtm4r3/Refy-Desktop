@@ -7,8 +7,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
+import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CreateNewFolder
 import androidx.compose.material.icons.filled.FolderCopy
@@ -57,8 +58,10 @@ abstract class LinksScreen <T : RefyLink> (
                 subText = stringResource(Res.string.no_links_yet)
             )
         } else {
-            LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(10.dp)
+            LazyVerticalStaggeredGrid(
+                columns = StaggeredGridCells.Adaptive(350.dp),
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+                verticalItemSpacing = 10.dp
             ) {
                 items(
                     items = links,
@@ -114,14 +117,13 @@ abstract class LinksScreen <T : RefyLink> (
             optionsBar = {
                 if(showCompleteOptionsBar) {
                     OptionsBar(
-                        //context = LocalContext.current,
                         link = link
                     )
                 } else {
                     OptionsBar {
                         ShareButton(
-                            //context = context,
-                            link = link
+                            link = link,
+                            snackbarHostState = snackbarHostState
                         )
                         Actions(
                             link = link,
@@ -182,8 +184,8 @@ abstract class LinksScreen <T : RefyLink> (
                             }
                         )
                         ShareButton(
-                            //context = context,
-                            link = link
+                            link = link,
+                            snackbarHostState = snackbarHostState
                         )
                     }
                 }
