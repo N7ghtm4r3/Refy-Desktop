@@ -1,0 +1,108 @@
+<resources>
+    <string name="app_name">Refy</string>
+    <string name="app_version">1.0.0</string>
+    <string name="links">Links</string>
+    <string name="collections">Collections</string>
+    <string name="teams">Teams</string>
+    <string name="custom">Custom</string>
+    <string name="no_links_yet">No links yet</string>
+    <string name="add_link_to_team">Add link to team</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="add">Add</string>
+    <string name="add_link_to_collection">Add link to collection</string>
+    <string name="delete_link">Delete link</string>
+    <string name="delete_link_message">By confirming, the link and related data will no longer be available, even in any teams or collections</string>
+    <string name="confirm">Confirm</string>
+    <string name="add_new_link">Add new link</string>
+    <string name="link_reference">Link reference</string>
+    <string name="link_reference_not_valid">Link reference not valid</string>
+    <string name="description">Description</string>
+    <string name="description_not_valid">Description not valid</string>
+    <string name="edit_link">Edit link</string>
+    <string name="edit">Edit</string>
+    <string name="no_collections_yet">No collections yet</string>
+    <string name="delete_collection">Delete collection</string>
+    <string name="delete_collection_message">By confirming, the collection and related links will no longer be available, if the collection is shared with teams the personal links for each member will be kept except for who deleted the collection</string>
+    <string name="add_collection_to_team">Add collection to team</string>
+    <string name="collection_name">Collection name</string>
+    <string name="collection_color">Collection color</string>
+    <string name="invalid_collection">Invalid collection</string>
+    <string name="add_links_to_collection">Add links to collection</string>
+    <string name="you_re_not_on_any_team">You\'re not on any team</string>
+    <string name="delete_team">Delete team</string>
+    <string name="delete_team_message">By confirming, the team and related data will no longer be available, the personal links for each member will be kept</string>
+    <string name="add_links_to_team">Add links to team</string>
+    <string name="invalid_team">Invalid team</string>
+    <string name="team_name">Team name</string>
+    <string name="members">Members</string>
+    <string name="leave_team">Leave team</string>
+    <string name="leave_team_message">By confirming, the team and related data will no longer be available for you</string>
+    <string name="invalid_custom_link">Invalid custom link</string>
+    <string name="custom_link_title">Link title</string>
+    <string name="options">Options</string>
+    <string name="unique_access">Unique access</string>
+    <string name="expires">Expires</string>
+    <string name="expires_in">in</string>
+    <string name="resources">Resources</string>
+    <string name="fields">Fields</string>
+    <string name="key">Key</string>
+    <string name="value">Value</string>
+    <string name="field">Field</string>
+    <string name="value_not_valid">Value not valid</string>
+    <string name="not_valid">Not valid</string>
+    <string name="details">Details</string>
+    <string name="unique_access_text">This link has the unique access, at the first view will be automatically deleted</string>
+    <string name="the_link_will_expire_on">The link will expire on %1$s</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="language">Language</string>
+    <string name="theme">Theme</string>
+    <string name="change">Change</string>
+    <string name="logout">Logout</string>
+    <string name="delete">Delete</string>
+    <string name="logout_message">If you confirm you will be disconnected from this device</string>
+    <string name="delete_message">If you confirm your account will be permanently deleted and your data will not be more recoverable</string>
+    <string name="change_email">Change email</string>
+    <string name="new_email">New email</string>
+    <string name="new_password">New password</string>
+    <string name="change_password">Change password</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="execute">Execute</string>
+    <string name="hello">Hello</string>
+    <string name="name">Name</string>
+    <string name="surname">Surname</string>
+    <string name="sign_in">Sign in!</string>
+    <string name="sign_in_btn">Sign in</string>
+    <string name="are_you_new_to_neutron">Are you new to Refy?</string>
+    <string name="have_an_account">Have an account?</string>
+    <string name="sign_up">Sign up!</string>
+    <string name="sign_up_btn">Sign up</string>
+    <string name="welcome_back">Welcome back</string>
+    <string name="host_address_not_valid">Host address not valid</string>
+    <string name="server_secret_not_valid">Server secret not valid</string>
+    <string name="email_not_valid">Email not valid</string>
+    <string name="password_not_valid">Password not valid</string>
+    <string name="name_not_valid">Name not valid</string>
+    <string name="surname_not_valid">Surname not valid</string>
+    <string name="host_address">Host address</string>
+    <string name="server_secret">Server secret</string>
+    <string name="tag_name">Tag name</string>
+    <string name="tag_name_not_valid">Tag name not valid</string>
+    <plurals name="expirations_minute">
+        <item formatted="false" quantity="one">%1$d minute</item>
+        <item formatted="false" quantity="other">%1$d minutes</item>
+    </plurals>
+    <plurals name="expirations_hour">
+        <item formatted="false" quantity="one">%1$d hour</item>
+        <item formatted="false" quantity="other">%1$d hours</item>
+    </plurals>
+    <plurals name="expirations_day">
+        <item formatted="false" quantity="one">%1$d day</item>
+        <item formatted="false" quantity="other">%1$d days</item>
+    </plurals>
+    <plurals name="expirations_week">
+        <item formatted="false" quantity="one">%1$d week</item>
+        <item formatted="false" quantity="other">%1$d weeks</item>
+    </plurals>
+    <string name="account_deletion">Account deletion</string>
+</resources>

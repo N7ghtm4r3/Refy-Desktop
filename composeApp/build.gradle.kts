@@ -29,6 +29,17 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
             implementation(compose.materialIconsExtended)
+            api("moe.tlaster:precompose:1.6.0")
+            implementation("io.coil-kt.coil3:coil-compose:3.0.0-alpha07")
+            implementation("io.coil-kt.coil3:coil-network-okhttp:3.0.0-alpha07")
+            implementation("com.github.N7ghtm4r3:Equinox:1.0.2")
+            implementation("com.github.N7ghtm4r3:APIManager:2.2.3")
+            implementation("com.tecknobit.refycore:refycore:1.0.0")
+            implementation("org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose:2.8.0")
+            implementation("com.mohamedrejeb.richeditor:richeditor-compose:1.0.0-rc05-k2")
+            implementation("com.github.N7ghtm4r3:Equinox-Compose:1.0.0") {
+                exclude("com.github.N7ghtm4r3.Equinox-Compose", "library-android")
+            }
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
