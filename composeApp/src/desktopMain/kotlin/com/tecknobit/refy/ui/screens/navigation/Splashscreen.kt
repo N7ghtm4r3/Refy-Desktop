@@ -12,7 +12,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tecknobit.refy.ui.screens.Screen
-import com.tecknobit.refy.ui.screens.Screen.Routes.HOME
 import com.tecknobit.refy.ui.theme.AppTypography
 import com.tecknobit.refycore.records.RefyUser
 import displayFontFamily
@@ -77,7 +76,7 @@ class Splashscreen : Screen() {
             Unit
         ) {
             delay(500)
-            navigator.navigate(HOME.name)
+            navigator.navigate(Routes.CONNECT_SCREEN.name)
         }
     }
 

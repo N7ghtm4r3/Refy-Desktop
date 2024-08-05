@@ -19,6 +19,8 @@ abstract class Screen {
 
         SPLASHSCREEN,
 
+        CONNECT_SCREEN,
+
         HOME,
 
         CREATE_COLLECTION_SCREEN,
@@ -28,6 +30,10 @@ abstract class Screen {
         CREATE_TEAM_SCREEN,
 
         TEAM_SCREEN,
+
+        CREATE_CUSTOM_LINK_SCREEN,
+
+        CUSTOM_LINK_SCREEN,
 
         PROFILE
 

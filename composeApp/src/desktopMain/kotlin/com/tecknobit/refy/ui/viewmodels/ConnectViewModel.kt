@@ -5,7 +5,9 @@ import androidx.compose.runtime.MutableState
 import com.tecknobit.apimanager.formatters.JsonHelper
 import com.tecknobit.equinox.inputs.InputValidator.*
 import com.tecknobit.equinoxcompose.helpers.EquinoxViewModel
+import com.tecknobit.refy.ui.screens.Screen.Routes.HOME
 import com.tecknobit.refycore.helpers.RefyInputValidator.isTagNameValid
+import navigator
 
 class ConnectViewModel (
     snackbarHostState: SnackbarHostState
@@ -99,6 +101,7 @@ class ConnectViewModel (
         else
             signIn()*/
         //context.startActivity(Intent(context, MainActivity::class.java))
+        navigator.navigate(HOME.name)
     }
 
     /**

@@ -9,12 +9,15 @@ import coil3.network.okhttp.OkHttpNetworkFetcherFactory
 import coil3.request.CachePolicy
 import com.tecknobit.equinox.environment.records.EquinoxItem.IDENTIFIER_KEY
 import com.tecknobit.refy.ui.screens.Screen.Routes.*
+import com.tecknobit.refy.ui.screens.auth.ConnectScreen
 import com.tecknobit.refy.ui.screens.navigation.Splashscreen
 import com.tecknobit.refy.ui.screens.session.Home
 import com.tecknobit.refy.ui.screens.session.ProfileScreen
 import com.tecknobit.refy.ui.screens.session.create.CreateCollectionScreen
+import com.tecknobit.refy.ui.screens.session.create.CreateCustomLinkScreen
 import com.tecknobit.refy.ui.screens.session.create.CreateTeamScreen
 import com.tecknobit.refy.ui.screens.session.singleitem.CollectionScreen
+import com.tecknobit.refy.ui.screens.session.singleitem.CustomLinkScreen
 import com.tecknobit.refy.ui.screens.session.singleitem.TeamScreen
 import com.tecknobit.refy.ui.theme.RefyTheme
 import moe.tlaster.precompose.PreComposeApp
@@ -99,6 +102,11 @@ fun App() {
                     Splashscreen().ShowContent()
                 }
                 scene(
+                    route = CONNECT_SCREEN.name
+                ) {
+                    ConnectScreen().ShowContent()
+                }
+                scene(
                     route = HOME.name
                 ) {
                     Home().ShowContent()
@@ -129,6 +137,20 @@ fun App() {
                 ) { backStackEntry ->
                     TeamScreen(
                         teamId = backStackEntry.path<String>(IDENTIFIER_KEY)!!
+                    ).ShowContent()
+                }
+                scene(
+                    route = "${CREATE_CUSTOM_LINK_SCREEN.name}/{$IDENTIFIER_KEY}?"
+                ) { backStackEntry ->
+                    CreateCustomLinkScreen(
+                        customLinkId = backStackEntry.path<String>(IDENTIFIER_KEY)
+                    ).ShowContent()
+                }
+                scene(
+                    route = "${CUSTOM_LINK_SCREEN.name}/{$IDENTIFIER_KEY}"
+                ) { backStackEntry ->
+                    CustomLinkScreen(
+                        customLinkId = backStackEntry.path<String>(IDENTIFIER_KEY)!!
                     ).ShowContent()
                 }
                 scene(
