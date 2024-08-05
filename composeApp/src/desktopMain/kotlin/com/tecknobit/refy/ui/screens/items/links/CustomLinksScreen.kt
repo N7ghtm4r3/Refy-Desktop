@@ -22,11 +22,6 @@ class CustomLinksScreen : LinksScreen<CustomRefyLink>(
         LinksList()
     }
 
-    @Composable
-    override fun SetFabAction() {
-        //context = LocalContext.current
-    }
-
     override fun executeFabAction() {
         navigator.navigate(CREATE_CUSTOM_LINK_SCREEN.name)
     }

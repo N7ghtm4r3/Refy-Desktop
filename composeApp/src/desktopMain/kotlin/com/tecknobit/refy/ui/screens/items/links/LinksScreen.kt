@@ -51,7 +51,6 @@ abstract class LinksScreen <T : RefyLink> (
         screenViewModel = viewModel
         viewModel.getLinks()
         links = viewModel.links.collectAsState().value
-        SetFabAction()
         if(links.isEmpty()) {
             EmptyListUI(
                 icon = Icons.Default.LinkOff,

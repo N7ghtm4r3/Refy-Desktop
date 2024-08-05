@@ -35,13 +35,9 @@ import com.tecknobit.refycore.records.Team
 import com.tecknobit.refycore.records.Team.MAX_TEAMS_DISPLAYED
 import displayFontFamily
 import imageLoader
-import navigator
 
 @Structure
 abstract class ItemScreen : Screen() {
-
-    @Composable
-    abstract fun SetFabAction()
 
     abstract fun executeFabAction()
 

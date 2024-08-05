@@ -52,7 +52,6 @@ class CollectionListScreen : ItemScreen(), RefyLinkUtilities<RefyLink>, LinksCol
         screenViewModel = viewModel
         viewModel.getCollections()
         collections = viewModel.collections.collectAsState().value
-        SetFabAction()
         if(collections.isEmpty()) {
             EmptyListUI(
                 icon = Icons.Default.PlaylistRemove,
@@ -74,11 +73,6 @@ class CollectionListScreen : ItemScreen(), RefyLinkUtilities<RefyLink>, LinksCol
                 }
             }
         }
-    }
-
-    @Composable
-    override fun SetFabAction() {
-        //context = LocalContext.current
     }
 
     override fun executeFabAction() {

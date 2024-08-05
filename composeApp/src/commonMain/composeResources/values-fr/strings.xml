@@ -73,8 +73,8 @@
     <string name="surname">Nom de famille</string>
     <string name="sign_in">S'inscrire !</string>
     <string name="sign_in_btn">S'inscrire</string>
-    <string name="are_you_new_to_neutron">Vous êtes nouveau sur Refy \?</string>
-    <string name="have_an_account">Vous avez un compte \?</string>
+    <string name="are_you_new_to_neutron">Vous êtes nouveau sur Refy ?</string>
+    <string name="have_an_account">Vous avez un compte ?</string>
     <string name="sign_up">Inscrivez-vous !</string>
     <string name="sign_up_btn">S'inscrire</string>
     <string name="welcome_back">Bienvenue à nouveau</string>

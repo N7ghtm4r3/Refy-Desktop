@@ -29,6 +29,7 @@ class LinkListScreen : LinksScreen<RefyLink>(
 
     @Composable
     override fun ShowContent() {
+        SetFabAction()
         LinksList()
     }
 
@@ -49,7 +50,7 @@ class LinkListScreen : LinksScreen<RefyLink>(
 
     @Composable
     @NonRestartableComposable
-    override fun SetFabAction() {
+    private fun SetFabAction() {
         addLink = remember { mutableStateOf(false) }
         AddLink()
     }

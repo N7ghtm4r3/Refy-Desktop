@@ -56,7 +56,6 @@ class TeamsListScreen: ItemScreen(), TeamsUtilities, RefyLinkUtilities<RefyLink>
         screenViewModel = viewModel
         viewModel.getTeams()
         teams = viewModel.teams.collectAsState().value
-        SetFabAction()
         if(teams.isEmpty()) {
             EmptyListUI(
                 icon = Icons.Default.GroupOff,
@@ -78,11 +77,6 @@ class TeamsListScreen: ItemScreen(), TeamsUtilities, RefyLinkUtilities<RefyLink>
                 }
             }
         }
-    }
-
-    @Composable
-    override fun SetFabAction() {
-        //context = LocalContext.current
     }
 
     override fun executeFabAction() {
