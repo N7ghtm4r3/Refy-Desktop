@@ -27,6 +27,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tecknobit.equinoxcompose.components.EmptyListUI
+import com.tecknobit.refy.ui.screens.Screen.Routes.CREATE_TEAM_SCREEN
+import com.tecknobit.refy.ui.screens.Screen.Routes.TEAM_SCREEN
 import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.user
 import com.tecknobit.refy.ui.theme.AppTypography
 import com.tecknobit.refy.ui.utilities.*
@@ -34,6 +36,7 @@ import com.tecknobit.refy.ui.viewmodels.teams.TeamsListViewModel
 import com.tecknobit.refycore.records.Team
 import com.tecknobit.refycore.records.links.RefyLink
 import displayFontFamily
+import navigator
 import org.jetbrains.compose.resources.stringResource
 import refy.composeapp.generated.resources.Res
 import refy.composeapp.generated.resources.you_re_not_on_any_team
@@ -83,7 +86,7 @@ class TeamsListScreen: ItemScreen(), TeamsUtilities, RefyLinkUtilities<RefyLink>
     }
 
     override fun executeFabAction() {
-        //context.startActivity(Intent(context, CreateTeamActivity::class.java))
+        navigator.navigate(CREATE_TEAM_SCREEN.name)
     }
 
     @Composable
@@ -98,17 +101,17 @@ class TeamsListScreen: ItemScreen(), TeamsUtilities, RefyLinkUtilities<RefyLink>
                 .wrapContentHeight()
                 .combinedClickable(
                     onClick = {
-                        /*navToDedicatedItemActivity(
+                        navToDedicatedItemScreen(
                             itemId = team.id,
-                            destination = TeamActivity::class.java
-                        )*/
+                            destination = TEAM_SCREEN
+                        )
                     },
                     onLongClick = if (isAdmin) {
                         {
-                            /*navToDedicatedItemActivity(
+                            navToDedicatedItemScreen(
                                 itemId = team.id,
-                                destination = CreateTeamActivity::class.java
-                            )*/
+                                destination = CREATE_TEAM_SCREEN
+                            )
                         }
                     } else
                         null

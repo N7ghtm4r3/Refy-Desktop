@@ -13,7 +13,9 @@ import com.tecknobit.refy.ui.screens.navigation.Splashscreen
 import com.tecknobit.refy.ui.screens.session.Home
 import com.tecknobit.refy.ui.screens.session.ProfileScreen
 import com.tecknobit.refy.ui.screens.session.create.CreateCollectionScreen
+import com.tecknobit.refy.ui.screens.session.create.CreateTeamScreen
 import com.tecknobit.refy.ui.screens.session.singleitem.CollectionScreen
+import com.tecknobit.refy.ui.screens.session.singleitem.TeamScreen
 import com.tecknobit.refy.ui.theme.RefyTheme
 import moe.tlaster.precompose.PreComposeApp
 import moe.tlaster.precompose.navigation.NavHost
@@ -113,6 +115,20 @@ fun App() {
                 ) { backStackEntry ->
                     CollectionScreen(
                         collectionId = backStackEntry.path<String>(IDENTIFIER_KEY)!!
+                    ).ShowContent()
+                }
+                scene(
+                    route = "${CREATE_TEAM_SCREEN.name}/{$IDENTIFIER_KEY}?"
+                ) { backStackEntry ->
+                    CreateTeamScreen(
+                        teamId = backStackEntry.path<String>(IDENTIFIER_KEY)
+                    ).ShowContent()
+                }
+                scene(
+                    route = "${TEAM_SCREEN.name}/{$IDENTIFIER_KEY}"
+                ) { backStackEntry ->
+                    TeamScreen(
+                        teamId = backStackEntry.path<String>(IDENTIFIER_KEY)!!
                     ).ShowContent()
                 }
                 scene(

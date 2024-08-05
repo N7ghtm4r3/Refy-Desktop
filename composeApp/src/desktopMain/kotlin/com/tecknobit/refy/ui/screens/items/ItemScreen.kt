@@ -189,11 +189,4 @@ abstract class ItemScreen : Screen() {
         }
     }
 
-    protected fun navToDedicatedItemScreen(
-        itemId: String,
-        destination: Routes
-    ) {
-        navigator.navigate("$destination/$itemId")
-    }
-
 }
