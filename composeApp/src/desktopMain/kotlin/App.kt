@@ -7,14 +7,18 @@ import coil3.addLastModifiedToFileCacheKey
 import coil3.compose.LocalPlatformContext
 import coil3.network.okhttp.OkHttpNetworkFetcherFactory
 import coil3.request.CachePolicy
+import com.tecknobit.equinox.environment.records.EquinoxItem.IDENTIFIER_KEY
 import com.tecknobit.refy.ui.screens.Screen.Routes.*
 import com.tecknobit.refy.ui.screens.navigation.Splashscreen
 import com.tecknobit.refy.ui.screens.session.Home
 import com.tecknobit.refy.ui.screens.session.ProfileScreen
+import com.tecknobit.refy.ui.screens.session.create.CreateCollectionScreen
+import com.tecknobit.refy.ui.screens.session.singleitem.CollectionScreen
 import com.tecknobit.refy.ui.theme.RefyTheme
 import moe.tlaster.precompose.PreComposeApp
 import moe.tlaster.precompose.navigation.NavHost
 import moe.tlaster.precompose.navigation.Navigator
+import moe.tlaster.precompose.navigation.path
 import moe.tlaster.precompose.navigation.rememberNavigator
 import okhttp3.OkHttpClient
 import org.jetbrains.compose.resources.Font
@@ -96,6 +100,20 @@ fun App() {
                     route = HOME.name
                 ) {
                     Home().ShowContent()
+                }
+                scene(
+                    route = "${CREATE_COLLECTION_SCREEN.name}/{$IDENTIFIER_KEY}?"
+                ) { backStackEntry ->
+                    CreateCollectionScreen(
+                        collectionId = backStackEntry.path<String>(IDENTIFIER_KEY)
+                    ).ShowContent()
+                }
+                scene(
+                    route = "${COLLECTION_SCREEN.name}/{$IDENTIFIER_KEY}"
+                ) { backStackEntry ->
+                    CollectionScreen(
+                        collectionId = backStackEntry.path<String>(IDENTIFIER_KEY)!!
+                    ).ShowContent()
                 }
                 scene(
                     route = PROFILE.name

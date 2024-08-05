@@ -21,6 +21,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.tecknobit.equinoxcompose.components.EmptyListUI
+import com.tecknobit.refy.ui.screens.Screen.Routes.COLLECTION_SCREEN
+import com.tecknobit.refy.ui.screens.Screen.Routes.CREATE_COLLECTION_SCREEN
 import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.user
 import com.tecknobit.refy.ui.toColor
 import com.tecknobit.refy.ui.utilities.LinksCollectionUtilities
@@ -30,6 +32,7 @@ import com.tecknobit.refy.ui.utilities.getItemRelations
 import com.tecknobit.refy.ui.viewmodels.collections.CollectionListViewModel
 import com.tecknobit.refycore.records.LinksCollection
 import com.tecknobit.refycore.records.links.RefyLink
+import navigator
 import org.jetbrains.compose.resources.stringResource
 import refy.composeapp.generated.resources.Res
 import refy.composeapp.generated.resources.no_collections_yet
@@ -79,7 +82,7 @@ class CollectionListScreen : ItemScreen(), RefyLinkUtilities<RefyLink>, LinksCol
     }
 
     override fun executeFabAction() {
-        //context.startActivity(Intent(context, CreateCollectionActivity::class.java))
+        navigator.navigate(CREATE_COLLECTION_SCREEN.name)
     }
 
     @Composable
@@ -89,16 +92,16 @@ class CollectionListScreen : ItemScreen(), RefyLinkUtilities<RefyLink>, LinksCol
         ItemCard(
             borderColor = collection.color.toColor(),
             onClick = {
-                /*navToDedicatedItemActivity(
+                navToDedicatedItemScreen(
                     itemId = collection.id,
-                    //destination = CollectionActivity::class.java
-                )*/
+                    destination = COLLECTION_SCREEN
+                )
             },
             onLongClick = {
-                /*navToDedicatedItemActivity(
+                navToDedicatedItemScreen(
                     itemId = collection.id,
-                    destination = CreateCollectionActivity::class.java
-                )*/
+                    destination = CREATE_COLLECTION_SCREEN
+                )
             },
             title = collection.title,
             description = collection.description,

@@ -20,6 +20,10 @@ abstract class Screen {
 
         HOME,
 
+        CREATE_COLLECTION_SCREEN,
+
+        COLLECTION_SCREEN,
+
         PROFILE
 
     }

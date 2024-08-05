@@ -35,6 +35,7 @@ import com.tecknobit.refycore.records.Team
 import com.tecknobit.refycore.records.Team.MAX_TEAMS_DISPLAYED
 import displayFontFamily
 import imageLoader
+import navigator
 
 @Structure
 abstract class ItemScreen : Screen() {
@@ -188,13 +189,11 @@ abstract class ItemScreen : Screen() {
         }
     }
 
-    protected fun navToDedicatedItemActivity(
+    protected fun navToDedicatedItemScreen(
         itemId: String,
-        destination: Class<*>
+        destination: Routes
     ) {
-        /*val intent = Intent(context, destination)
-        intent.putExtra(IDENTIFIER_KEY, itemId)
-        context.startActivity(intent)*/
+        navigator.navigate("$destination/$itemId")
     }
 
 }

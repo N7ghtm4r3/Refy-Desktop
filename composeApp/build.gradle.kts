@@ -41,6 +41,7 @@ kotlin {
             implementation("com.github.N7ghtm4r3:Equinox-Compose:1.0.0") {
                 exclude("com.github.N7ghtm4r3.Equinox-Compose", "library-android")
             }
+            implementation("com.github.skydoves:colorpicker-compose:1.1.2")
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
