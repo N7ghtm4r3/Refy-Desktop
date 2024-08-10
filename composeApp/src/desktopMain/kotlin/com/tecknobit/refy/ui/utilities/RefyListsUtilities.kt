@@ -281,8 +281,10 @@ fun ExpandTeamMembers(
                         items = team.members,
                         key = { member -> member.id + team.id }
                     ) { member ->
-                        UserPlaque(
-                            user = member
+                        DefaultPlaque(
+                            profilePic = member.profilePic,
+                            completeName = member.completeName,
+                            tagName = member.completeName,
                         )
                         HorizontalDivider()
                     }
@@ -301,8 +303,10 @@ fun TeamMemberPlaque(
 ) {
     val isAuthorizedUser = team.isAdmin(user.id) && member.id != user.id
     val enableOption = isAuthorizedUser && !team.isTheAuthor(member.id)
-    UserPlaque(
-        user = member,
+    DefaultPlaque(
+        profilePic = member.profilePic,
+        completeName = member.completeName,
+        tagName = member.completeName,
         supportingContent = {
             RolesMenu(
                 enableOption = enableOption,
@@ -340,23 +344,45 @@ fun UserPlaque(
     supportingContent: @Composable (() -> Unit)? = null,
     trailingContent: @Composable (() -> Unit)? = null
 ) {
+    DefaultPlaque(
+        colors = colors,
+        profilePicSize = profilePicSize,
+        profilePic = user.profilePic,
+        completeName = user.completeName,
+        tagName = user.completeName,
+        supportingContent = supportingContent,
+        trailingContent = trailingContent
+    )
+}
+
+@Composable
+@NonRestartableComposable
+private fun DefaultPlaque(
+    colors: ListItemColors = ListItemDefaults.colors(),
+    profilePicSize: Dp = 50.dp,
+    profilePic: String,
+    completeName: String,
+    tagName: String,
+    supportingContent: @Composable (() -> Unit)? = null,
+    trailingContent: @Composable (() -> Unit)? = null
+) {
     ListItem(
         colors = colors,
         leadingContent = {
             Logo(
                 picSize = profilePicSize,
-                picUrl = user.profilePic
+                picUrl = profilePic
             )
         },
         headlineContent = {
             Text(
-                text = user.completeName
+                text = completeName
             )
         },
         supportingContent = supportingContent,
         overlineContent = {
             Text(
-                text = user.tagName
+                text = tagName
             )
         },
         trailingContent = trailingContent
@@ -368,9 +394,9 @@ fun UserPlaque(
 private fun RolesMenu(
     enableOption: Boolean,
     viewModel: TeamActivityViewModel,
-    member: RefyUser
+    member: RefyTeamMember
 ) {
-    val role = ((member) as RefyTeamMember).role
+    val role = (member).role
     val changeRole = remember { mutableStateOf(false) }
     Column {
         Text(

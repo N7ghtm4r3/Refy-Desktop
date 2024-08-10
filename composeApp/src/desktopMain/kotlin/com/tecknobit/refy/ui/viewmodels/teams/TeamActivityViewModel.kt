@@ -2,7 +2,6 @@ package com.tecknobit.refy.ui.viewmodels.teams
 
 import androidx.compose.material3.SnackbarHostState
 import com.tecknobit.refycore.records.LinksCollection
-import com.tecknobit.refycore.records.RefyUser
 import com.tecknobit.refycore.records.Team
 import com.tecknobit.refycore.records.Team.RefyTeamMember
 import com.tecknobit.refycore.records.Team.RefyTeamMember.TeamRole
@@ -45,7 +44,7 @@ class TeamActivityViewModel(
     }
 
     fun changeMemberRole(
-        member: RefyUser,
+        member: RefyTeamMember,
         role: TeamRole,
         onSuccess: () -> Unit
     ) {

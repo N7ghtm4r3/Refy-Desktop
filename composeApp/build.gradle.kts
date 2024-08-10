@@ -62,7 +62,7 @@ compose.desktop {
             packageName = "com.tecknobit.refy"
             packageVersion = "1.0.0"
             version = "1.0.0"
-            description = "Order and ticket revenue manager for the projects you are developing"
+            description = "References collector and custom links generator"
             copyright = "© 2024 Tecknobit"
             vendor = "Tecknobit"
             licenseFile.set(project.file("LICENSE"))

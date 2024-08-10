@@ -1,7 +1,7 @@
 package com.tecknobit.refy.ui.viewmodels.links
 
-import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.user
 import com.tecknobit.refy.ui.screens.items.links.CustomLinksScreen
+import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.user
 import com.tecknobit.refycore.helpers.RefyInputValidator.isDescriptionValid
 import com.tecknobit.refycore.helpers.RefyInputValidator.isLinkResourceValid
 import com.tecknobit.refycore.records.RefyUser
@@ -21,8 +21,6 @@ class CustomLinksViewModel: LinksViewModel<CustomRefyLink>() {
                         "title",
                         "*Lorem* ipsum dolor sit amet, consectetur adipiscing elit. Duis non turpis quis leo pharetra ullamcorper.*Lorem* ipsum dolor sit amet, consectetur adipiscing elit. Duis non turpis quis leo pharetra ullamcorper.vavavav avavavava",
                         "https://github.com/N7ghtm4r3",
-                        listOf(),
-                        listOf(),
                         System.currentTimeMillis(),
                         false,
                         CustomRefyLink.ExpiredTime.NO_EXPIRATION,
@@ -35,8 +33,6 @@ class CustomLinksViewModel: LinksViewModel<CustomRefyLink>() {
                         "title",
                         "*Lorem* ipsum dolor sit amet, consectetur adipiscing elit. Duis non turpis quis leo pharetra ullamcorper.*Lorem* ipsum dolor sit amet, consectetur adipiscing elit. Duis non turpis quis leo pharetra ullamcorper.vavavav avavavava",
                         "https://github.com/N7ghtm4r3",
-                        listOf(),
-                        listOf(),
                         System.currentTimeMillis(),
                         true,
                         CustomRefyLink.ExpiredTime.ONE_WEEK,
