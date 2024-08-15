@@ -51,6 +51,7 @@ class CollectionListScreen : ItemScreen(), RefyLinkUtilities<RefyLink>, LinksCol
         viewModel.setCurrentUserOwnedLinks()
         viewModel.setCurrentUserOwnedTeams()
         screenViewModel = viewModel
+        viewModel.getCollections()
         collections = viewModel.collections.collectAsState().value
         if(collections.isEmpty()) {
             EmptyListUI(

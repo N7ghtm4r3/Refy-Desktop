@@ -59,7 +59,7 @@ interface LinksCollectionUtilities {
             availableItems = availableTeams,
             title = Res.string.add_collection_to_team,
             confirmAction = { ids ->
-                viewModel.addCollectionToTeam(
+                viewModel.addTeamsToCollection(
                     collection = collection,
                     teams = ids,
                     onSuccess = { show.value = false },

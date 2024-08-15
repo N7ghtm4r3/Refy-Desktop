@@ -26,8 +26,10 @@ import coil3.compose.LocalPlatformContext
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.darkrockstudios.libraries.mpfilepicker.FilePicker
+import com.tecknobit.equinox.environment.records.EquinoxUser.DEFAULT_PROFILE_PIC
+import com.tecknobit.refy.ui.getCompleteMediaItemUrl
 import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.localUser
-import com.tecknobit.refy.ui.utilities.UserPlaque
+import com.tecknobit.refy.ui.utilities.DefaultPlaque
 import com.tecknobit.refy.ui.viewmodels.create.CreateTeamViewModel
 import com.tecknobit.refycore.records.Team
 import imageLoader
@@ -66,7 +68,7 @@ class CreateTeamScreen(
                 if(itemExists)
                     item!!.logoPic
                 else
-                    "" // TODO: SET THE DEFAULT PATH INSTEAD
+                    DEFAULT_PROFILE_PIC
             )
         }
         ScaffoldContent(
@@ -112,7 +114,14 @@ class CreateTeamScreen(
                 .clickable { pickProfilePic.value = true },
             imageLoader = imageLoader,
             model = ImageRequest.Builder(LocalPlatformContext.current)
-                .data(viewModel.logoPic.value)
+                .data(
+                    if (itemExists && viewModel.logoPic.value.contains(item!!.id)) {
+                        getCompleteMediaItemUrl(
+                            relativeMediaUrl = viewModel.logoPic.value
+                        )
+                    } else
+                        viewModel.logoPic.value
+                )
                 .crossfade(enable = true)
                 .crossfade(500)
                 //.error() //TODO: TO SET THE ERROR IMAGE CORRECTLY
@@ -186,7 +195,7 @@ class CreateTeamScreen(
     private fun MembersSection() {
         val keyboardController = LocalSoftwareKeyboardController.current
         viewModel.fetchCurrentUsers()
-        val currentUsers = viewModel.currentUsers.collectAsState().value
+        val currentUsers = viewModel.potentialMembers.collectAsState().value
         CustomSection(
             header = Res.string.members
         ) {
@@ -195,8 +204,10 @@ class CreateTeamScreen(
                 key = { member -> member.id }
             ) { member ->
                 val checked = remember { mutableStateOf(viewModel.itemDedicatedList.contains(member.id)) }
-                UserPlaque(
-                    user = member,
+                DefaultPlaque(
+                    profilePic = member.profilePic,
+                    completeName = member.completeName,
+                    tagName = member.tagName,
                     trailingContent = {
                         ItemCheckbox(
                             checked = checked,

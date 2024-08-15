@@ -237,20 +237,19 @@ class TeamsListScreen: ItemScreen(), TeamsUtilities, RefyLinkUtilities<RefyLink>
                     horizontalAlignment = Alignment.End
                 ) {
                     Row {
-                        LeaveTeamButton(
-                            //activity = null,
-                            viewModel = viewModel,
-                            leaveTeam = leaveTeam,
-                            team = team,
-                            tint = MaterialTheme.colorScheme.primary
-                        )
                         if (team.isTheAuthor(localUser.userId)) {
                             DeleteTeamButton(
-                                //activity = null,
                                 viewModel = viewModel,
                                 deleteTeam = deleteTeam,
                                 team = team,
                                 tint = MaterialTheme.colorScheme.error
+                            )
+                        } else {
+                            LeaveTeamButton(
+                                viewModel = viewModel,
+                                leaveTeam = leaveTeam,
+                                team = team,
+                                tint = MaterialTheme.colorScheme.primary
                             )
                         }
                     }

@@ -131,7 +131,7 @@ interface RefyLinkUtilities<T : RefyLink> {
             availableItems = availableLinks,
             title = Res.string.add_link_to_team,
             confirmAction = { ids ->
-                viewModel.addLinksToTeam(
+                viewModel.manageTeamLinks(
                     team = team,
                     links = ids,
                     onSuccess = { show.value = false },
@@ -277,7 +277,6 @@ interface RefyLinkUtilities<T : RefyLink> {
     ) {
         clipboard.setContents(StringSelection(link.referenceLink), null)
         CoroutineScope(Dispatchers.IO).launch {
-            //TODO: TO TRANSLATE
             snackbarHostState.showSnackbar(getString(Res.string.link_copied))
         }
     }

@@ -48,7 +48,7 @@ import com.tecknobit.equinoxcompose.helpers.EquinoxViewModel
 import com.tecknobit.refy.ui.getCompleteMediaItemUrl
 import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.localUser
 import com.tecknobit.refy.ui.theme.AppTypography
-import com.tecknobit.refy.ui.viewmodels.teams.TeamActivityViewModel
+import com.tecknobit.refy.ui.viewmodels.teams.TeamScreenViewModel
 import com.tecknobit.refycore.records.RefyItem
 import com.tecknobit.refycore.records.RefyUser
 import com.tecknobit.refycore.records.Team
@@ -315,7 +315,7 @@ fun ExpandTeamMembers(
 fun TeamMemberPlaque(
     team: Team,
     member: RefyTeamMember,
-    viewModel: TeamActivityViewModel
+    viewModel: TeamScreenViewModel
 ) {
     val isAuthorizedUser = team.isAdmin(localUser.userId) && member.id != localUser.userId
     val enableOption = isAuthorizedUser && !team.isTheAuthor(member.id)
@@ -411,7 +411,7 @@ fun DefaultPlaque(
 @NonRestartableComposable
 private fun RolesMenu(
     enableOption: Boolean,
-    viewModel: TeamActivityViewModel,
+    viewModel: TeamScreenViewModel,
     member: RefyTeamMember
 ) {
     val role = (member).role

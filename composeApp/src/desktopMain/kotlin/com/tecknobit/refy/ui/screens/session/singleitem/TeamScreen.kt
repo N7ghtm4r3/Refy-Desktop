@@ -30,7 +30,7 @@ import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.localUser
 import com.tecknobit.refy.ui.theme.AppTypography
 import com.tecknobit.refy.ui.toColor
 import com.tecknobit.refy.ui.utilities.*
-import com.tecknobit.refy.ui.viewmodels.teams.TeamActivityViewModel
+import com.tecknobit.refy.ui.viewmodels.teams.TeamScreenViewModel
 import com.tecknobit.refycore.records.LinksCollection
 import com.tecknobit.refycore.records.Team
 import com.tecknobit.refycore.records.links.RefyLink
@@ -50,7 +50,7 @@ class TeamScreen(
     itemId = teamId
 ), RefyLinkUtilities<RefyLink>, TeamsUtilities {
 
-    private lateinit var viewModel: TeamActivityViewModel
+    private lateinit var viewModel: TeamScreenViewModel
 
     private lateinit var linksExpanded: MutableState<Boolean>
 
@@ -58,15 +58,18 @@ class TeamScreen(
 
     private var isUserAdmin: Boolean = false
 
+    init {
+        prepareView()
+    }
+
     @Composable
     override fun ShowContent() {
-        prepareView()
+        item = viewModel.team.collectAsState().value
+        activityColorTheme = MaterialTheme.colorScheme.primaryContainer
+        isUserAdmin = item!!.isAdmin(localUser.userId)
+        linksExpanded = remember { mutableStateOf(item!!.links.isNotEmpty()) }
+        membersExpanded = remember { mutableStateOf(false) }
         ContentView {
-            item = viewModel.team.collectAsState().value
-            activityColorTheme = MaterialTheme.colorScheme.primaryContainer
-            isUserAdmin = item!!.isAdmin(localUser.userId)
-            linksExpanded = remember { mutableStateOf(item!!.links.isNotEmpty()) }
-            membersExpanded = remember { mutableStateOf(false) }
             Scaffold(
                 snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
                 topBar = {
@@ -420,7 +423,7 @@ class TeamScreen(
     override fun prepareView() {
         super.prepareView()
         if (itemExists) {
-            viewModel = TeamActivityViewModel(
+            viewModel = TeamScreenViewModel(
                 snackbarHostState = snackbarHostState,
                 initialTeam = item!!
             )

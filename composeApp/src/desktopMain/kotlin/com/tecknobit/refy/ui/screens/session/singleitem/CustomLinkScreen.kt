@@ -37,12 +37,15 @@ class CustomLinkScreen(
 
     private lateinit var viewModel: CustomLinkActivityViewModel
 
+    init {
+        prepareView()
+    }
+
     @Composable
     override fun ShowContent() {
-        prepareView()
+        item = viewModel.customLink.collectAsState().value
+        activityColorTheme = MaterialTheme.colorScheme.primaryContainer
         ContentView {
-            item = viewModel.customLink.collectAsState().value
-            activityColorTheme = MaterialTheme.colorScheme.primaryContainer
             Scaffold(
                 snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
                 topBar = {

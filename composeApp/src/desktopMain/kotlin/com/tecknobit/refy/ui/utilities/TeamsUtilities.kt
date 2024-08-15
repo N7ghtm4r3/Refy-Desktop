@@ -13,6 +13,7 @@ import com.tecknobit.equinoxcompose.components.EquinoxAlertDialog
 import com.tecknobit.refy.ui.viewmodels.teams.TeamViewModelHelper
 import com.tecknobit.refycore.records.LinksCollection
 import com.tecknobit.refycore.records.Team
+import navigator
 import refy.composeapp.generated.resources.*
 
 interface TeamsUtilities {
@@ -57,7 +58,7 @@ interface TeamsUtilities {
             availableItems = availableCollections,
             title = Res.string.add_collection_to_team,
             confirmAction = { ids ->
-                viewModel.addCollectionsToTeam(
+                viewModel.manageTeamCollections(
                     team = team,
                     collections = ids,
                     onSuccess = { show.value = false },
@@ -102,6 +103,7 @@ interface TeamsUtilities {
         }
         EquinoxAlertDialog(
             show = show,
+            onDismissAction = resetLayout,
             icon = Icons.Default.Delete,
             title = Res.string.delete_team,
             text = Res.string.delete_team_message,
@@ -109,7 +111,7 @@ interface TeamsUtilities {
                 viewModel.deleteTeam(
                     team = team,
                     onSuccess = {
-                        resetLayout.invoke()
+                        navigator.goBack()
                     }
                 )
             }
@@ -153,6 +155,7 @@ interface TeamsUtilities {
         }
         EquinoxAlertDialog(
             show = show,
+            onDismissAction = resetLayout,
             icon = Icons.AutoMirrored.Filled.ExitToApp,
             title = Res.string.leave_team,
             text = Res.string.leave_team_message,
@@ -160,7 +163,8 @@ interface TeamsUtilities {
                 viewModel.leaveTeam(
                     team = team,
                     onSuccess = {
-                        resetLayout.invoke()
+                        show.value = false
+                        navigator.goBack()
                     }
                 )
             }

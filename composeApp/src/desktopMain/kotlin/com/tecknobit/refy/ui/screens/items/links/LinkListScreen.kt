@@ -120,11 +120,11 @@ class LinkListScreen : LinksScreen<RefyLink>(
             )
         }
         viewModel.linkDescriptionError = remember { mutableStateOf(false) }
-        viewModel.SuspendUntilElementOnScreen(
-            elementVisible = show
-        )
+        if (show.value)
+            viewModel.suspendRefresher()
         val resetLayout = {
             show.value = false
+            viewModel.restartRefresher()
             viewModel.linkReference.value = ""
             viewModel.linkReferenceError.value = false
             viewModel.linkDescription.value = ""
@@ -134,7 +134,7 @@ class LinkListScreen : LinksScreen<RefyLink>(
             show = show,
             icon = icon,
             onDismissAction = resetLayout,
-            title = stringResource(title),
+            title = title,
             text = {
                 Column(
                     verticalArrangement = Arrangement.spacedBy(10.dp)
@@ -156,8 +156,7 @@ class LinkListScreen : LinksScreen<RefyLink>(
                     )
                 }
             },
-            dismissText = stringResource(Res.string.dismiss),
-            confirmText = stringResource(confirmText),
+            confirmText = confirmText,
             confirmAction = {
                 viewModel.manageLink(
                     link = link,
