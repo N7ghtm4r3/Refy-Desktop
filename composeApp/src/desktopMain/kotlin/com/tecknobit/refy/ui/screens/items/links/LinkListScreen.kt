@@ -25,11 +25,20 @@ class LinkListScreen : LinksScreen<RefyLink>(
 
     @Composable
     override fun ShowContent() {
-        val context = this::class.java
-        currentScreenContext = context
-        viewModel.setActiveContext(context)
-        viewModel.setCurrentUserOwnedCollections()
-        viewModel.setCurrentUserOwnedTeams()
+        LifecycleManager(
+            onCreate = {
+                viewModel.setActiveContext(context)
+                viewModel.setCurrentUserOwnedCollections()
+                viewModel.setCurrentUserOwnedTeams()
+                fetchLinksList()
+            },
+            onResume = {
+                restartScreenRefreshing()
+            },
+            onDispose = {
+                suspendScreenRefreshing()
+            }
+        )
         SetFabAction()
         LinksList()
     }

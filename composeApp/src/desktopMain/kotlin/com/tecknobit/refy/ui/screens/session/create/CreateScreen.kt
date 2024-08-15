@@ -69,6 +69,11 @@ abstract class CreateScreen<T : RefyItem, V : CreateItemViewModel<T>>(
 
     @Composable
     protected open fun ScreenContent() {
+        LifecycleManager(
+            onDispose = {
+                viewModel.suspendRefresher()
+            }
+        )
         viewModel.initExistingItem(
             item = item
         )

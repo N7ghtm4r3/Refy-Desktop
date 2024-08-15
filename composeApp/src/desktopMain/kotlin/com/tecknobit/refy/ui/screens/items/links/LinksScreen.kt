@@ -46,10 +46,13 @@ abstract class LinksScreen <T : RefyLink> (
 
     private lateinit var links: List<T>
 
-    @Composable
-    protected fun LinksList() {
+    protected fun fetchLinksList() {
         screenViewModel = viewModel
         viewModel.getLinks()
+    }
+
+    @Composable
+    protected fun LinksList() {
         links = viewModel.links.collectAsState().value
         if(links.isEmpty()) {
             EmptyListUI(

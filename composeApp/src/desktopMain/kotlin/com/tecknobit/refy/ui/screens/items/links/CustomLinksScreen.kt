@@ -14,9 +14,18 @@ class CustomLinksScreen : LinksScreen<CustomRefyLink>(
 
     @Composable
     override fun ShowContent() {
-        val context = this::class.java
-        currentScreenContext = context
-        viewModel.setActiveContext(context)
+        LifecycleManager(
+            onCreate = {
+                viewModel.setActiveContext(context)
+                fetchLinksList()
+            },
+            onResume = {
+                fetchLinksList()
+            },
+            onDispose = {
+                viewModel.suspendRefresher()
+            }
+        )
         LinksList()
     }
 

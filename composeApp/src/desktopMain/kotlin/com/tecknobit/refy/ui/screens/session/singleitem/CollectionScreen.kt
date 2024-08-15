@@ -43,15 +43,23 @@ class CollectionScreen(
     private lateinit var viewModel: CollectionActivityViewModel
 
     init {
-        prepareView()
+        //prepareView()
     }
 
     @Composable
     override fun ShowContent() {
-        item = viewModel.collection.collectAsState().value
-        activityColorTheme = item!!.color.toColor()
-        hasTeams = item!!.hasTeams()
+        LifecycleManager(
+            onCreate = {
+                prepareView()
+            },
+            onDispose = {
+                viewModel.suspendRefresher()
+            }
+        )
         ContentView {
+            item = viewModel.collection.collectAsState().value
+            activityColorTheme = item!!.color.toColor()
+            hasTeams = item!!.hasTeams()
             Scaffold(
                 snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
                 topBar = {

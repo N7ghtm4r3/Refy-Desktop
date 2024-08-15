@@ -42,12 +42,10 @@ import imageLoader
 @Structure
 abstract class ItemScreen : Screen() {
 
-    protected lateinit var currentScreenContext: Class<*>
-
     abstract fun executeFabAction()
 
     fun restartScreenRefreshing() {
-        screenViewModel.setActiveContext(currentScreenContext)
+        screenViewModel.setActiveContext(context)
         screenViewModel.restartRefresher()
     }
 

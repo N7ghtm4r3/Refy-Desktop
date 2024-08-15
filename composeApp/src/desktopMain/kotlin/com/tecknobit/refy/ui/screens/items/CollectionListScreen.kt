@@ -45,13 +45,21 @@ class CollectionListScreen : ItemScreen(), RefyLinkUtilities<RefyLink>, LinksCol
 
     @Composable
     override fun ShowContent() {
-        val context = this::class.java
-        currentScreenContext = context
         viewModel.setActiveContext(context)
-        viewModel.setCurrentUserOwnedLinks()
-        viewModel.setCurrentUserOwnedTeams()
-        screenViewModel = viewModel
-        viewModel.getCollections()
+        LifecycleManager(
+            onCreate = {
+                viewModel.setCurrentUserOwnedLinks()
+                screenViewModel = viewModel
+                viewModel.getCollections()
+            },
+            onResume = {
+                screenViewModel = viewModel
+                restartScreenRefreshing()
+            },
+            onDispose = {
+                suspendScreenRefreshing()
+            }
+        )
         collections = viewModel.collections.collectAsState().value
         if(collections.isEmpty()) {
             EmptyListUI(
