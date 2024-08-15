@@ -1,6 +1,7 @@
 package com.tecknobit.refy.ui
 
 import androidx.compose.ui.graphics.Color
+import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.localUser
 import com.tecknobit.refycore.records.RefyItem
 import java.util.*
 
@@ -40,4 +41,10 @@ fun <T : RefyItem> List<T>.getRefyItem(
         }
     }
     return null
+}
+
+fun getCompleteMediaItemUrl(
+    relativeMediaUrl: String
+): String {
+    return "${localUser.hostAddress}/$relativeMediaUrl"
 }

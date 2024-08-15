@@ -45,7 +45,8 @@ import com.mohamedrejeb.richeditor.model.rememberRichTextState
 import com.mohamedrejeb.richeditor.ui.material.RichText
 import com.tecknobit.equinoxcompose.components.EquinoxAlertDialog
 import com.tecknobit.equinoxcompose.helpers.EquinoxViewModel
-import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.user
+import com.tecknobit.refy.ui.getCompleteMediaItemUrl
+import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.localUser
 import com.tecknobit.refy.ui.theme.AppTypography
 import com.tecknobit.refy.ui.viewmodels.teams.TeamActivityViewModel
 import com.tecknobit.refycore.records.RefyItem
@@ -57,8 +58,6 @@ import com.tecknobit.refycore.records.Team.RefyTeamMember.TeamRole.ADMIN
 import displayFontFamily
 import imageLoader
 import org.jetbrains.compose.resources.StringResource
-import refy.composeapp.generated.resources.Res
-import refy.composeapp.generated.resources.add
 
 @Composable
 @NonRestartableComposable
@@ -120,14 +119,24 @@ fun ItemDescription(
     }
 }
 
+fun <T : RefyItem> isItemOwner(
+    item: T
+): Boolean {
+    return item.owner.id == localUser.userId
+}
+
 fun <T: RefyItem> getItemRelations(
     userList: List<T>,
-    linkList: List<T>
+    currentAttachments: List<T>
 ): List<T> {
-    val containers = mutableListOf<T>()
-    containers.addAll(userList)
-    containers.removeAll(linkList)
-    return containers
+    val attachments = mutableListOf<T>()
+    attachments.addAll(userList)
+    attachments.removeAll { attachment ->
+        currentAttachments.any { currentAttachment ->
+            attachment.id == currentAttachment.id
+        }
+    }
+    return attachments
 }
 
 fun Modifier.drawOneSideBorder(
@@ -157,18 +166,21 @@ fun AddItemToContainer(
     title: StringResource,
     confirmAction: (List<String>) -> Unit
 ) {
-    viewModel.SuspendUntilElementOnScreen(
-        elementVisible = show
-    )
+    if (show.value)
+        viewModel.suspendRefresher()
+    val resetLayout = {
+        show.value = false
+        viewModel.restartRefresher()
+    }
     val ids = mutableListOf<String>()
     EquinoxAlertDialog(
         show = show,
+        onDismissAction = resetLayout,
         icon = icon,
         title = title,
         text = {
             LazyColumn (
                 modifier = Modifier
-                    .width(400.dp)
                     .heightIn(
                         max = 150.dp
                     )
@@ -199,8 +211,10 @@ fun AddItemToContainer(
                 }
             }
         },
-        confirmAction = { confirmAction.invoke(ids) },
-        confirmText = Res.string.add
+        confirmAction = {
+            confirmAction.invoke(ids)
+            resetLayout.invoke()
+        }
     )
 }
 
@@ -254,12 +268,14 @@ fun ExpandTeamMembers(
     show: MutableState<Boolean>,
     teams: List<Team>
 ) {
-    viewModel.SuspendUntilElementOnScreen(
-        elementVisible = show
-    )
+    val resetLayout = {
+        show.value = false
+        viewModel.restartRefresher()
+    }
     if(show.value) {
+        viewModel.suspendRefresher()
         ModalBottomSheet(
-            onDismissRequest = { show.value = false }
+            onDismissRequest = resetLayout
         ) {
             LazyColumn(
                 modifier = Modifier
@@ -301,12 +317,12 @@ fun TeamMemberPlaque(
     member: RefyTeamMember,
     viewModel: TeamActivityViewModel
 ) {
-    val isAuthorizedUser = team.isAdmin(user.id) && member.id != user.id
+    val isAuthorizedUser = team.isAdmin(localUser.userId) && member.id != localUser.userId
     val enableOption = isAuthorizedUser && !team.isTheAuthor(member.id)
     DefaultPlaque(
         profilePic = member.profilePic,
         completeName = member.completeName,
-        tagName = member.completeName,
+        tagName = member.tagName,
         supportingContent = {
             RolesMenu(
                 enableOption = enableOption,
@@ -357,7 +373,7 @@ fun UserPlaque(
 
 @Composable
 @NonRestartableComposable
-private fun DefaultPlaque(
+fun DefaultPlaque(
     colors: ListItemColors = ListItemDefaults.colors(),
     profilePicSize: Dp = 50.dp,
     profilePic: String,
@@ -371,7 +387,9 @@ private fun DefaultPlaque(
         leadingContent = {
             Logo(
                 picSize = profilePicSize,
-                picUrl = profilePic
+                picUrl = getCompleteMediaItemUrl(
+                    relativeMediaUrl = profilePic
+                )
             )
         },
         headlineContent = {
@@ -412,18 +430,25 @@ private fun RolesMenu(
             else
                 Color.Unspecified
         )
-        viewModel.SuspendUntilElementOnScreen(
-            elementVisible = changeRole
-        )
+        if (changeRole.value)
+            viewModel.suspendRefresher()
+        val resetLayout = {
+            changeRole.value = false
+            viewModel.restartRefresher()
+        }
         DropdownMenu(
             expanded = changeRole.value,
-            onDismissRequest = { changeRole.value = false }
+            onDismissRequest = resetLayout
         ) {
             TeamRole.entries.forEach { role ->
                 DropdownMenuItem(
                     text = {
                         Text(
-                            text = role.name
+                            text = role.name,
+                            color = if (role == ADMIN)
+                                MaterialTheme.colorScheme.error
+                            else
+                                Color.Unspecified
                         )
                     },
                     onClick = {

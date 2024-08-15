@@ -45,54 +45,26 @@ abstract class SingleItemScreen <T : RefyItem> (
 
     protected var activityColorTheme: Color = Color.Red
 
-    @Composable
-    protected abstract fun InitViewModel()
+    protected open fun prepareView() {
+        initItemFromScreen()
+    }
 
     @Composable
     @NonRestartableComposable
-    protected fun DisplayItem(
-        topBarColor: Color? = MaterialTheme.colorScheme.primaryContainer,
-        title: @Composable () -> Unit = {
-            Text(
-                text = item!!.title
-            )
-        },
-        actions: @Composable RowScope.() -> Unit,
-        floatingActionButton: @Composable () -> Unit,
-        content: @Composable (PaddingValues) -> Unit
+    protected fun ContentView(
+        validItemUi: @Composable () -> Unit
     ) {
-        initItemFromScreen()
         RefyTheme {
-            if(invalidItem)
+            if (!itemExists)
                 InvalidItemUi()
-            else {
-                InitViewModel()
-                Scaffold(
-                    snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
-                    topBar = {
-                        LargeTopAppBar(
-                            navigationIcon = { NavButton() },
-                            title = title,
-                            colors = TopAppBarDefaults.largeTopAppBarColors(
-                                containerColor = if(topBarColor != null)
-                                    topBarColor
-                                else
-                                    activityColorTheme
-                            ),
-                            actions = actions
-                        )
-                    },
-                    floatingActionButton = floatingActionButton
-                ) { paddingValues ->
-                    content.invoke(paddingValues)
-                }
-            }
+            else
+                validItemUi.invoke()
         }
     }
 
     @Composable
     @NonRestartableComposable
-    private fun NavButton() {
+    protected fun NavButton() {
         iconsColor = LocalContentColor.current
         IconButton(
             onClick = { navigator.goBack() }

@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package com.tecknobit.refy.ui.screens.session.singleitem
 
 import androidx.compose.foundation.horizontalScroll
@@ -14,8 +16,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tecknobit.equinoxcompose.components.EquinoxAlertDialog
-import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.user
-import com.tecknobit.refy.ui.theme.RefyTheme
+import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.localUser
 import com.tecknobit.refy.ui.utilities.DeleteItemButton
 import com.tecknobit.refy.ui.utilities.ItemDescription
 import com.tecknobit.refy.ui.viewmodels.links.CustomLinkActivityViewModel
@@ -29,7 +30,7 @@ import refy.composeapp.generated.resources.*
 class CustomLinkScreen(
     customLinkId: String
 ) : SingleItemScreen<CustomRefyLink>(
-    items = user.customLinks,
+    items = localUser.getCustomLinks(true),
     invalidMessage = Res.string.invalid_custom_link,
     itemId = customLinkId
 ) {
@@ -38,31 +39,46 @@ class CustomLinkScreen(
 
     @Composable
     override fun ShowContent() {
-        RefyTheme {
-            activityColorTheme = MaterialTheme.colorScheme.primary
-            DisplayItem(
-                topBarColor = MaterialTheme.colorScheme.primaryContainer,
-                actions = {
-                    ShareButton(
-                        link = item!!,
-                        tint = iconsColor,
-                        snackbarHostState = snackbarHostState
-                    )
-                    val deleteLink = remember { mutableStateOf(false) }
-                    DeleteItemButton(
-                        show = deleteLink,
-                        deleteAction = {
+        prepareView()
+        ContentView {
+            item = viewModel.customLink.collectAsState().value
+            activityColorTheme = MaterialTheme.colorScheme.primaryContainer
+            Scaffold(
+                snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
+                topBar = {
+                    LargeTopAppBar(
+                        navigationIcon = { NavButton() },
+                        title = {
+                            Text(
+                                text = item!!.title
+                            )
+                        },
+                        colors = TopAppBarDefaults.largeTopAppBarColors(
+                            containerColor = activityColorTheme
+                        ),
+                        actions = {
+                            ShareButton(
+                                link = item!!,
+                                tint = iconsColor,
+                                snackbarHostState = snackbarHostState
+                            )
+                            val deleteLink = remember { mutableStateOf(false) }
                             DeleteItemButton(
                                 show = deleteLink,
                                 deleteAction = {
-                                    DeleteLink(
-                                        show = deleteLink
+                                    DeleteItemButton(
+                                        show = deleteLink,
+                                        deleteAction = {
+                                            DeleteLink(
+                                                show = deleteLink
+                                            )
+                                        },
+                                        tint = iconsColor
                                     )
                                 },
                                 tint = iconsColor
                             )
-                        },
-                        tint = iconsColor
+                        }
                     )
                 },
                 floatingActionButton = {
@@ -76,51 +92,39 @@ class CustomLinkScreen(
                             contentDescription = null
                         )
                     }
-                },
-                content = { paddingValues ->
-                    Column (
+                }
+            ) { paddingValues ->
+                Column(
+                    modifier = Modifier
+                        .padding(
+                            top = paddingValues.calculateTopPadding(),
+                            bottom = 16.dp
+                        )
+                        .verticalScroll(rememberScrollState())
+                ) {
+                    ItemDescription(
                         modifier = Modifier
                             .padding(
-                                top = paddingValues.calculateTopPadding(),
-                                bottom = 16.dp
-                            )
-                            .verticalScroll(rememberScrollState())
-                    ) {
-                        ItemDescription(
-                            modifier = Modifier
-                                .padding(
-                                    all = 16.dp
-                                ),
-                            description = item!!.description
-                        )
+                                all = 16.dp
+                            ),
+                        description = item!!.description
+                    )
+                    HorizontalDivider()
+                    DetailsSection()
+                    PayloadSection(
+                        header = Res.string.resources,
+                        map = item!!.resources
+                    )
+                    if (item!!.fields.isNotEmpty()) {
                         HorizontalDivider()
-                        DetailsSection()
                         PayloadSection(
-                            header = Res.string.resources,
-                            map = item!!.resources
+                            header = Res.string.fields,
+                            map = item!!.fields
                         )
-                        if(item!!.fields.isNotEmpty()) {
-                            HorizontalDivider()
-                            PayloadSection(
-                                header = Res.string.fields,
-                                map = item!!.fields
-                            )
-                        }
                     }
                 }
-            )
+            }
         }
-    }
-
-    @Composable
-    override fun InitViewModel() {
-        viewModel = CustomLinkActivityViewModel(
-            snackbarHostState = snackbarHostState,
-            initialCustomLink = item!!
-        )
-        viewModel.setActiveContext(this::class.java)
-        viewModel.refreshLink()
-        item = viewModel.customLink.collectAsState().value
     }
 
     @Composable
@@ -242,6 +246,18 @@ class CustomLinkScreen(
                 )
             }
         )
+    }
+
+    override fun prepareView() {
+        super.prepareView()
+        if (itemExists) {
+            viewModel = CustomLinkActivityViewModel(
+                snackbarHostState = snackbarHostState,
+                initialCustomLink = item!!
+            )
+            viewModel.setActiveContext(this::class.java)
+            viewModel.refreshLink()
+        }
     }
 
 }

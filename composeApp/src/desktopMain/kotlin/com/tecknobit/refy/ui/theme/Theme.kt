@@ -6,6 +6,9 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color
+import com.tecknobit.equinox.environment.records.EquinoxUser.ApplicationTheme.Dark
+import com.tecknobit.equinox.environment.records.EquinoxUser.ApplicationTheme.Light
+import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.localUser
 
 private val lightScheme = lightColorScheme(
     primary = primaryLight,
@@ -249,7 +252,11 @@ val unspecified_scheme = ColorFamily(
 
 @Composable
 fun RefyTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    darkTheme: Boolean = when (localUser.theme) {
+        Light -> false
+        Dark -> true
+        else -> isSystemInDarkTheme()
+    },
     content: @Composable () -> Unit
 ) {
     MaterialTheme(

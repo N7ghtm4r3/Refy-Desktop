@@ -26,11 +26,14 @@ import coil3.compose.LocalPlatformContext
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.tecknobit.apimanager.annotations.Structure
+import com.tecknobit.refy.ui.getCompleteMediaItemUrl
 import com.tecknobit.refy.ui.screens.Screen
 import com.tecknobit.refy.ui.theme.AppTypography
 import com.tecknobit.refy.ui.utilities.ExpandTeamMembers
 import com.tecknobit.refy.ui.utilities.ItemDescription
 import com.tecknobit.refy.ui.utilities.drawOneSideBorder
+import com.tecknobit.refy.ui.utilities.isItemOwner
+import com.tecknobit.refycore.records.RefyItem
 import com.tecknobit.refycore.records.Team
 import com.tecknobit.refycore.records.Team.MAX_TEAMS_DISPLAYED
 import displayFontFamily
@@ -39,12 +42,24 @@ import imageLoader
 @Structure
 abstract class ItemScreen : Screen() {
 
+    protected lateinit var currentScreenContext: Class<*>
+
     abstract fun executeFabAction()
+
+    fun restartScreenRefreshing() {
+        screenViewModel.setActiveContext(currentScreenContext)
+        screenViewModel.restartRefresher()
+    }
+
+    fun suspendScreenRefreshing() {
+        screenViewModel.suspendRefresher()
+    }
 
     @OptIn(ExperimentalFoundationApi::class)
     @Composable
     @NonRestartableComposable
     protected fun ItemCard(
+        item: RefyItem,
         borderColor: Color? = null,
         onClick: () -> Unit,
         onDoubleClick: (() -> Unit)? = null,
@@ -60,7 +75,10 @@ abstract class ItemScreen : Screen() {
             .combinedClickable(
                 onClick = onClick,
                 onDoubleClick = onDoubleClick,
-                onLongClick = onLongClick
+                onLongClick = if (isItemOwner(item))
+                    onLongClick
+                else
+                    null
             )
         Card(
             modifier = if(borderColor != null)
@@ -173,7 +191,11 @@ abstract class ItemScreen : Screen() {
                         .size(pictureSize),
                     imageLoader = imageLoader,
                     model = ImageRequest.Builder(LocalPlatformContext.current)
-                        .data(picture)
+                        .data(
+                            getCompleteMediaItemUrl(
+                                relativeMediaUrl = picture
+                            )
+                        )
                         .crossfade(enable = true)
                         .crossfade(500)
                         //.error() //TODO: TO SET THE ERROR IMAGE CORRECTLY

@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class, ExperimentalFoundationApi::class)
 
 package com.tecknobit.refy.ui.screens.session.create
 
@@ -24,7 +24,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import com.tecknobit.equinoxcompose.components.EquinoxOutlinedTextField
-import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.user
+import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.localUser
 import com.tecknobit.refy.ui.viewmodels.create.CreateCustomLinkViewModel
 import com.tecknobit.refycore.records.links.CustomRefyLink
 import com.tecknobit.refycore.records.links.CustomRefyLink.*
@@ -37,7 +37,7 @@ import refy.composeapp.generated.resources.*
 class CreateCustomLinkScreen(
     customLinkId: String?
 ): CreateScreen<CustomRefyLink, CreateCustomLinkViewModel>(
-    items = user.customLinks,
+    items = localUser.getCustomLinks(true),
     invalidMessage = Res.string.invalid_custom_link,
     itemId = customLinkId
 ) {

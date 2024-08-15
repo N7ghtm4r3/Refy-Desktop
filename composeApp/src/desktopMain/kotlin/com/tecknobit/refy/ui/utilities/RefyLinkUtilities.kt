@@ -200,7 +200,6 @@ interface RefyLinkUtilities<T : RefyLink> {
     @Composable
     @NonRestartableComposable
     fun DeleteLinkButton(
-        //activity: Activity?,
         viewModel: LinksViewModelHelper<T>,
         deleteLink: MutableState<Boolean>,
         link: T,
@@ -210,7 +209,6 @@ interface RefyLinkUtilities<T : RefyLink> {
             show = deleteLink,
             deleteAction = {
                 DeleteLink(
-                    //activity = activity,
                     show = deleteLink,
                     link = link,
                     viewModel = viewModel
@@ -223,16 +221,19 @@ interface RefyLinkUtilities<T : RefyLink> {
     @Composable
     @NonRestartableComposable
     private fun DeleteLink(
-        //activity: Activity?,
         viewModel: LinksViewModelHelper<T>,
         show: MutableState<Boolean>,
         link: T
     ) {
-        viewModel.SuspendUntilElementOnScreen(
-            elementVisible = show
-        )
+        if (show.value)
+            viewModel.suspendRefresher()
+        val resetLayout = {
+            show.value = false
+            viewModel.restartRefresher()
+        }
         EquinoxAlertDialog(
             show = show,
+            onDismissAction = resetLayout,
             icon = Icons.Default.Delete,
             title = Res.string.delete_link,
             text = Res.string.delete_link_message,
@@ -240,8 +241,7 @@ interface RefyLinkUtilities<T : RefyLink> {
                 viewModel.deleteLink(
                     link = link,
                     onSuccess = {
-                        show.value = false
-                        //activity?.finish()
+                        resetLayout.invoke()
                     }
                 )
             },

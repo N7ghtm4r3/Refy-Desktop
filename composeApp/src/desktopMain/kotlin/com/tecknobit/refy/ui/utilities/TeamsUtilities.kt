@@ -69,7 +69,6 @@ interface TeamsUtilities {
     @Composable
     @NonRestartableComposable
     fun DeleteTeamButton(
-        //activity: Activity?,
         viewModel: TeamViewModelHelper,
         deleteTeam: MutableState<Boolean>,
         team: Team,
@@ -79,7 +78,6 @@ interface TeamsUtilities {
             show = deleteTeam,
             deleteAction = {
                 DeleteTeam(
-                    //activity = activity,
                     show = deleteTeam,
                     team = team,
                     viewModel = viewModel
@@ -92,14 +90,16 @@ interface TeamsUtilities {
     @Composable
     @NonRestartableComposable
     private fun DeleteTeam(
-        //activity: Activity?,
         viewModel: TeamViewModelHelper,
         show: MutableState<Boolean>,
         team: Team
     ) {
-        viewModel.SuspendUntilElementOnScreen(
-            elementVisible = show
-        )
+        if (show.value)
+            viewModel.suspendRefresher()
+        val resetLayout = {
+            show.value = false
+            viewModel.restartRefresher()
+        }
         EquinoxAlertDialog(
             show = show,
             icon = Icons.Default.Delete,
@@ -109,8 +109,7 @@ interface TeamsUtilities {
                 viewModel.deleteTeam(
                     team = team,
                     onSuccess = {
-                        show.value = false
-                       // activity?.finish()
+                        resetLayout.invoke()
                     }
                 )
             }
@@ -120,7 +119,6 @@ interface TeamsUtilities {
     @Composable
     @NonRestartableComposable
     fun LeaveTeamButton(
-        //activity: Activity?,
         viewModel: TeamViewModelHelper,
         leaveTeam: MutableState<Boolean>,
         team: Team,
@@ -131,7 +129,6 @@ interface TeamsUtilities {
             show = leaveTeam,
             optionAction = {
                 LeaveTeam(
-                    //activity = activity,
                     show = leaveTeam,
                     team = team,
                     viewModel = viewModel
@@ -144,14 +141,16 @@ interface TeamsUtilities {
     @Composable
     @NonRestartableComposable
     private fun LeaveTeam(
-        //activity: Activity?,
         viewModel: TeamViewModelHelper,
         show: MutableState<Boolean>,
         team: Team
     ) {
-        viewModel.SuspendUntilElementOnScreen(
-            elementVisible = show
-        )
+        if (show.value)
+            viewModel.suspendRefresher()
+        val resetLayout = {
+            show.value = false
+            viewModel.restartRefresher()
+        }
         EquinoxAlertDialog(
             show = show,
             icon = Icons.AutoMirrored.Filled.ExitToApp,
@@ -161,8 +160,7 @@ interface TeamsUtilities {
                 viewModel.leaveTeam(
                     team = team,
                     onSuccess = {
-                        show.value = false
-                        //activity?.finish()
+                        resetLayout.invoke()
                     }
                 )
             }

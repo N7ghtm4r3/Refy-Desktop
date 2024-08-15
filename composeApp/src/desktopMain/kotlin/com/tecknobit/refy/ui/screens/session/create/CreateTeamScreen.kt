@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
+@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3Api::class)
 
 package com.tecknobit.refy.ui.screens.session.create
 
@@ -26,7 +26,7 @@ import coil3.compose.LocalPlatformContext
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.darkrockstudios.libraries.mpfilepicker.FilePicker
-import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.user
+import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.localUser
 import com.tecknobit.refy.ui.utilities.UserPlaque
 import com.tecknobit.refy.ui.viewmodels.create.CreateTeamViewModel
 import com.tecknobit.refycore.records.Team
@@ -39,7 +39,7 @@ import refy.composeapp.generated.resources.team_name
 class CreateTeamScreen(
     teamId: String?
 ): CreateScreen<Team, CreateTeamViewModel>(
-    items = user.teams,
+    items = localUser.getTeams(true),
     invalidMessage = Res.string.invalid_team,
     itemId = teamId
 ) {
@@ -168,7 +168,7 @@ class CreateTeamScreen(
     @Composable
     @NonRestartableComposable
     private fun PickLogo() {
-        val profilePic = remember { mutableStateOf(user.profilePic) }
+        val profilePic = remember { mutableStateOf(localUser.profilePic) }
         pickProfilePic = remember { mutableStateOf(false) }
         FilePicker(
             show = pickProfilePic.value,

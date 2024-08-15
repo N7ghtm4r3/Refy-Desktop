@@ -3,7 +3,13 @@ package com.tecknobit.refy.ui.viewmodels
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.MutableState
 import com.tecknobit.equinox.environment.records.EquinoxUser.ApplicationTheme
+import com.tecknobit.equinox.environment.records.EquinoxUser.PROFILE_PIC_KEY
+import com.tecknobit.equinox.inputs.InputValidator.isEmailValid
+import com.tecknobit.equinox.inputs.InputValidator.isPasswordValid
 import com.tecknobit.equinoxcompose.helpers.EquinoxViewModel
+import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.localUser
+import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.requester
+import java.io.File
 
 class ProfileScreenViewModel(
     snackbarHostState: SnackbarHostState
@@ -41,7 +47,7 @@ class ProfileScreenViewModel(
         imagePath: String,
         profilePic: MutableState<String>
     ) {
-        /*requester.sendRequest(
+        requester.sendRequest(
             request = {
                 requester.changeProfilePic(
                     profilePic = File(imagePath)
@@ -51,8 +57,8 @@ class ProfileScreenViewModel(
                 profilePic.value = imagePath
                 localUser.profilePic = it.getString(PROFILE_PIC_KEY)
             },
-            onFailure = { showSnack(it) }
-        )*/
+            onFailure = { showSnackbarMessage(it) }
+        )
     }
 
     /**
@@ -63,7 +69,7 @@ class ProfileScreenViewModel(
     fun changeEmail(
         onSuccess: () -> Unit
     ) {
-        /*if (isEmailValid(newEmail.value)) {
+        if (isEmailValid(newEmail.value)) {
             requester.sendRequest(
                 request = {
                     requester.changeEmail(
@@ -74,11 +80,10 @@ class ProfileScreenViewModel(
                     localUser.email = newEmail.value
                     onSuccess.invoke()
                 },
-                onFailure = { showSnack(it) }
+                onFailure = { showSnackbarMessage(it) }
             )
         } else
-            newEmailError.value = true*/
-        onSuccess.invoke()
+            newEmailError.value = true
     }
 
     /**
@@ -89,7 +94,7 @@ class ProfileScreenViewModel(
     fun changePassword(
         onSuccess: () -> Unit
     ) {
-        /*if (isPasswordValid(newPassword.value)) {
+        if (isPasswordValid(newPassword.value)) {
             requester.sendRequest(
                 request = {
                     requester.changePassword(
@@ -97,11 +102,10 @@ class ProfileScreenViewModel(
                     )
                 },
                 onSuccess = { onSuccess.invoke() },
-                onFailure = { showSnack(it) }
+                onFailure = { showSnackbarMessage(it) }
             )
         } else
-            newPasswordError.value = true*/
-        onSuccess.invoke()
+            newPasswordError.value = true
     }
 
     /**
@@ -114,7 +118,7 @@ class ProfileScreenViewModel(
         newLanguage: String,
         onSuccess: () -> Unit
     ) {
-        /*requester.sendRequest(
+        requester.sendRequest(
             request = {
                 requester.changeLanguage(
                     newLanguage = newLanguage
@@ -124,9 +128,8 @@ class ProfileScreenViewModel(
                 localUser.language = newLanguage
                 onSuccess.invoke()
             },
-            onFailure = { showSnack(it) }
-        )*/
-        onSuccess.invoke()
+            onFailure = { showSnackbarMessage(it) }
+        )
     }
 
     /**
@@ -139,7 +142,7 @@ class ProfileScreenViewModel(
         newTheme: ApplicationTheme,
         onChange: () -> Unit
     ) {
-        //localUser.theme = newTheme
+        localUser.theme = newTheme
         onChange.invoke()
     }
 
@@ -151,15 +154,15 @@ class ProfileScreenViewModel(
     fun deleteAccount(
         onDelete: () -> Unit
     ) {
-        /*requester.sendRequest(
+        requester.sendRequest(
             request = { requester.deleteAccount() },
             onSuccess = {
                 clearSession(
                     onClear = onDelete
                 )
             },
-            onFailure = { showSnack(it) }
-        )*/
+            onFailure = { showSnackbarMessage(it) }
+        )
     }
 
     /**
@@ -170,7 +173,7 @@ class ProfileScreenViewModel(
     fun clearSession(
         onClear: () -> Unit
     ) {
-        //localUser.clear()
+        localUser.clear()
         onClear.invoke()
     }
 

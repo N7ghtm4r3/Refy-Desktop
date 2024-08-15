@@ -1,7 +1,6 @@
 package com.tecknobit.refy.ui.screens.items.links
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.NonRestartableComposable
 import com.tecknobit.refy.ui.screens.Screen.Routes.CREATE_CUSTOM_LINK_SCREEN
 import com.tecknobit.refy.ui.screens.Screen.Routes.CUSTOM_LINK_SCREEN
@@ -13,12 +12,11 @@ class CustomLinksScreen : LinksScreen<CustomRefyLink>(
     viewModel = CustomLinksViewModel()
 ) {
 
-    init {
-        viewModel.setActiveContext(this::class.java)
-    }
-
     @Composable
     override fun ShowContent() {
+        val context = this::class.java
+        currentScreenContext = context
+        viewModel.setActiveContext(context)
         LinksList()
     }
 
@@ -39,18 +37,13 @@ class CustomLinksScreen : LinksScreen<CustomRefyLink>(
                     destination = CUSTOM_LINK_SCREEN
                 )
             },
+            onLongClick = {
+                navToDedicatedItemScreen(
+                    itemId = link.id,
+                    destination = CUSTOM_LINK_SCREEN
+                )
+            },
             showCompleteOptionsBar = false
-        )
-    }
-
-    @Composable
-    override fun EditLink(
-        editLink: MutableState<Boolean>,
-        link: CustomRefyLink
-    ) {
-        navToDedicatedItemScreen(
-            itemId = link.id,
-            destination = CREATE_CUSTOM_LINK_SCREEN
         )
     }
 

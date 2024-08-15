@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.dp
 import com.tecknobit.apimanager.annotations.Structure
 import com.tecknobit.equinoxcompose.components.EmptyListUI
 import com.tecknobit.refy.ui.screens.items.ItemScreen
-import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.user
+import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.localUser
 import com.tecknobit.refy.ui.utilities.*
 import com.tecknobit.refy.ui.viewmodels.links.LinksViewModel
 import com.tecknobit.refycore.records.RefyItem
@@ -82,26 +82,14 @@ abstract class LinksScreen <T : RefyLink> (
 
     @Composable
     @NonRestartableComposable
-    protected abstract fun EditLink(
-        editLink: MutableState<Boolean>,
-        link: T
-    )
-
-    @Composable
-    @NonRestartableComposable
     fun RefyLinkCard(
         link: T,
         onClick: () -> Unit,
+        onLongClick: () -> Unit,
         showCompleteOptionsBar: Boolean = true
     ) {
-        val editLink = remember { mutableStateOf(false) }
-        if(editLink.value) {
-            EditLink(
-                editLink = editLink,
-                link = link
-            )
-        }
         ItemCard(
+            item = link,
             onClick = onClick,
             onDoubleClick = {
                 showLinkReference(
@@ -109,7 +97,7 @@ abstract class LinksScreen <T : RefyLink> (
                     link = link
                 )
             },
-            onLongClick = { editLink.value = true },
+            onLongClick = onLongClick,
             title = link.title,
             description = link.description,
             teams = link.teams,
@@ -143,7 +131,7 @@ abstract class LinksScreen <T : RefyLink> (
         val addToCollection = remember { mutableStateOf(false) }
         OptionsBar(
             options = {
-                val userCanUpdate = link.canBeUpdatedByUser(user.id)
+                val userCanUpdate = link.canBeUpdatedByUser(localUser.userId)
                 AnimatedVisibility(
                     visible = userCanUpdate,
                     enter = fadeIn(),
@@ -151,8 +139,8 @@ abstract class LinksScreen <T : RefyLink> (
                 ) {
                     Row {
                         val collections = getItemRelations(
-                            userList = user.collections,
-                            linkList = link.collections
+                            userList = localUser.getCollections(true),
+                            currentAttachments = link.collections
                         )
                         OptionButton(
                             icon = Icons.Default.CreateNewFolder,
@@ -167,8 +155,8 @@ abstract class LinksScreen <T : RefyLink> (
                             }
                         )
                         val teams = getItemRelations(
-                            userList = user.teams,
-                            linkList = link.teams
+                            userList = localUser.getTeams(true),
+                            currentAttachments = link.teams
                         )
                         OptionButton(
                             icon = Icons.Default.GroupAdd,
@@ -215,7 +203,6 @@ abstract class LinksScreen <T : RefyLink> (
                 )
                 if (userCanUpdate) {
                     DeleteLinkButton(
-                        //activity = null,
                         viewModel = viewModel,
                         deleteLink = deleteLink,
                         link = link,
@@ -240,7 +227,7 @@ abstract class LinksScreen <T : RefyLink> (
             availableItems = availableTeams,
             title = Res.string.add_link_to_team,
             confirmAction = { ids ->
-                viewModel.addLinkToTeam(
+                viewModel.addLinkToTeams(
                     link = link,
                     teams = ids,
                     onSuccess = { show.value = false },
@@ -263,7 +250,7 @@ abstract class LinksScreen <T : RefyLink> (
             availableItems = availableCollection,
             title = Res.string.add_link_to_collection,
             confirmAction = { ids ->
-                viewModel.addLinkToCollection(
+                viewModel.addLinkToCollections(
                     link = link,
                     collections = ids,
                     onSuccess = { show.value = false },

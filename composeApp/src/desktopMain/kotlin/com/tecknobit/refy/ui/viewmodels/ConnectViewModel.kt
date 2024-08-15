@@ -3,10 +3,16 @@ package com.tecknobit.refy.ui.viewmodels
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.MutableState
 import com.tecknobit.apimanager.formatters.JsonHelper
+import com.tecknobit.equinox.environment.records.EquinoxItem.IDENTIFIER_KEY
+import com.tecknobit.equinox.environment.records.EquinoxUser
+import com.tecknobit.equinox.environment.records.EquinoxUser.*
 import com.tecknobit.equinox.inputs.InputValidator.*
 import com.tecknobit.equinoxcompose.helpers.EquinoxViewModel
 import com.tecknobit.refy.ui.screens.Screen.Routes.HOME
+import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.localUser
+import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.requester
 import com.tecknobit.refycore.helpers.RefyInputValidator.isTagNameValid
+import com.tecknobit.refycore.records.RefyUser.TAG_NAME_KEY
 import navigator
 
 class ConnectViewModel (
@@ -96,12 +102,10 @@ class ConnectViewModel (
      * No-any params required
      */
     fun auth() {
-        /*if (isSignUp.value)
+        if (isSignUp.value)
             signUp()
         else
-            signIn()*/
-        //context.startActivity(Intent(context, MainActivity::class.java))
-        navigator.navigate(HOME.name)
+            signIn()
     }
 
     /**
@@ -111,14 +115,14 @@ class ConnectViewModel (
      * No-any params required
      */
     private fun signUp() {
-        /*if (signUpFormIsValid()) {
-            val currentLanguageTag = EquinoxUser.getValidUserLanguage()
+        if (signUpFormIsValid()) {
+            val currentLanguageTag = getValidUserLanguage()
             var language = LANGUAGES_SUPPORTED[currentLanguageTag]
             language = if (language == null)
                 DEFAULT_LANGUAGE
             else
                 currentLanguageTag
-            /*requester.changeHost(host.value + BASE_ENDPOINT)
+            requester.changeHost(host.value)
             requester.sendRequest(
                 request = {
                     requester.signUp(
@@ -127,20 +131,22 @@ class ConnectViewModel (
                         surname = surname.value,
                         email = email.value,
                         password = password.value,
-                        language = language
+                        language = language!!,
+                        tagName = tagName.value
                     )
                 },
                 onSuccess = { response ->
                     launchApp(
+                        tagName = tagName.value,
                         name = name.value,
                         surname = surname.value,
-                        language = language,
+                        language = language!!,
                         response = response
                     )
                 },
-                onFailure = { showSnack(it) }
-            )*/
-        }*/
+                onFailure = { showSnackbarMessage(it) }
+            )
+        }
     }
 
     /**
@@ -196,8 +202,8 @@ class ConnectViewModel (
      * No-any params required
      */
     private fun signIn() {
-        /*if (signInFormIsValid()) {
-            requester.changeHost(host.value + BASE_ENDPOINT)
+        if (signInFormIsValid()) {
+            requester.changeHost(host.value)
             requester.sendRequest(
                 request = {
                     requester.signIn(
@@ -207,15 +213,16 @@ class ConnectViewModel (
                 },
                 onSuccess = { response ->
                     launchApp(
+                        tagName = response.getString(TAG_NAME_KEY),
                         name = response.getString(NAME_KEY),
                         surname = response.getString(SURNAME_KEY),
                         language = response.getString(LANGUAGE_KEY),
                         response = response
                     )
                 },
-                onFailure = { showSnack(it) }
+                onFailure = { showSnackbarMessage(it) }
             )
-        }*/
+        }
     }
 
     /**
@@ -254,11 +261,12 @@ class ConnectViewModel (
      */
     private fun launchApp(
         response: JsonHelper,
+        tagName: String,
         name: String,
         surname: String,
         language: String
     ) {
-        /*requester.setUserCredentials(
+        requester.setUserCredentials(
             userId = response.getString(IDENTIFIER_KEY),
             userToken = response.getString(TOKEN_KEY)
         )
@@ -269,9 +277,10 @@ class ConnectViewModel (
             email.value,
             password.value,
             language,
-            response
+            response,
+            tagName
         )
-        navigator.navigate(HOME_SCREEN)*/
+        navigator.navigate(HOME.name)
     }
 
 }

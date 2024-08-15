@@ -71,7 +71,6 @@ interface LinksCollectionUtilities {
     @Composable
     @NonRestartableComposable
     fun DeleteCollectionButton(
-        //activity: Activity?,
         viewModel: LinksCollectionViewModelHelper,
         deleteCollection: MutableState<Boolean>,
         collection: LinksCollection,
@@ -81,7 +80,6 @@ interface LinksCollectionUtilities {
             show = deleteCollection,
             deleteAction = {
                 DeleteCollection(
-                    //activity = activity,
                     show = deleteCollection,
                     collection = collection,
                     viewModel = viewModel
@@ -94,16 +92,19 @@ interface LinksCollectionUtilities {
     @Composable
     @NonRestartableComposable
     private fun DeleteCollection(
-        //activity: Activity?,
         viewModel: LinksCollectionViewModelHelper,
         show: MutableState<Boolean>,
         collection: LinksCollection
     ) {
-        viewModel.SuspendUntilElementOnScreen(
-            elementVisible = show
-        )
+        if (show.value)
+            viewModel.suspendRefresher()
+        val resetLayout = {
+            show.value = false
+            viewModel.restartRefresher()
+        }
         EquinoxAlertDialog(
             show = show,
+            onDismissAction = resetLayout,
             icon = Icons.Default.Delete,
             title = Res.string.delete_collection,
             text = Res.string.delete_collection_message,
@@ -111,11 +112,10 @@ interface LinksCollectionUtilities {
                 viewModel.deleteCollection(
                     collection = collection,
                     onSuccess = {
-                        show.value = false
-                        //activity?.finish()
+                        resetLayout.invoke()
                     }
                 )
-            },
+            }
         )
     }
 

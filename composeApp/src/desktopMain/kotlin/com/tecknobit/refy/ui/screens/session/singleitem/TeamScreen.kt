@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package com.tecknobit.refy.ui.screens.session.singleitem
 
 import androidx.compose.animation.AnimatedVisibility
@@ -22,10 +24,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.tecknobit.refy.ui.getCompleteMediaItemUrl
 import com.tecknobit.refy.ui.screens.Screen.Routes.CREATE_COLLECTION_SCREEN
-import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.user
+import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.localUser
 import com.tecknobit.refy.ui.theme.AppTypography
-import com.tecknobit.refy.ui.theme.RefyTheme
 import com.tecknobit.refy.ui.toColor
 import com.tecknobit.refy.ui.utilities.*
 import com.tecknobit.refy.ui.viewmodels.teams.TeamActivityViewModel
@@ -43,7 +45,7 @@ import refy.composeapp.generated.resources.links
 class TeamScreen(
     teamId: String
 ) : SingleItemScreen<Team>(
-    items = user.teams,
+    items = localUser.getTeams(false),
     invalidMessage = Res.string.invalid_team,
     itemId = teamId
 ), RefyLinkUtilities<RefyLink>, TeamsUtilities {
@@ -58,85 +60,100 @@ class TeamScreen(
 
     @Composable
     override fun ShowContent() {
-        RefyTheme {
-            activityColorTheme = MaterialTheme.colorScheme.primary
+        prepareView()
+        ContentView {
+            item = viewModel.team.collectAsState().value
+            activityColorTheme = MaterialTheme.colorScheme.primaryContainer
+            isUserAdmin = item!!.isAdmin(localUser.userId)
+            linksExpanded = remember { mutableStateOf(item!!.links.isNotEmpty()) }
             membersExpanded = remember { mutableStateOf(false) }
-            DisplayItem(
-                topBarColor = MaterialTheme.colorScheme.primaryContainer,
-                title = {
-                    Box {
-                        Logo(
-                            modifier = Modifier
-                                .align(Alignment.BottomStart),
-                            picSize = 65.dp,
-                            picUrl = item!!.logoPic
-                        )
-                        Column (
-                            modifier = Modifier
-                                .fillMaxHeight(),
-                            verticalArrangement = Arrangement.Bottom
-                        ) {
-                            Text(
-                                modifier = Modifier
-                                    .align(Alignment.End)
-                                    .padding(
-                                        start = 35.dp
-                                    ),
-                                text = item!!.title,
-                                fontSize = 24.sp
-                            )
+            Scaffold(
+                snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
+                topBar = {
+                    LargeTopAppBar(
+                        navigationIcon = { NavButton() },
+                        title = {
+                            Box {
+                                Logo(
+                                    modifier = Modifier
+                                        .align(Alignment.BottomStart),
+                                    picSize = 65.dp,
+                                    picUrl = getCompleteMediaItemUrl(
+                                        relativeMediaUrl = item!!.logoPic
+                                    )
+                                )
+                                Column(
+                                    modifier = Modifier
+                                        .fillMaxHeight(),
+                                    verticalArrangement = Arrangement.Bottom
+                                ) {
+                                    Text(
+                                        modifier = Modifier
+                                            .align(Alignment.End)
+                                            .padding(
+                                                start = 35.dp
+                                            ),
+                                        text = item!!.title,
+                                        fontSize = 24.sp
+                                    )
+                                }
+                            }
+                        },
+                        colors = TopAppBarDefaults.largeTopAppBarColors(
+                            containerColor = activityColorTheme
+                        ),
+                        actions = {
+                            AnimatedVisibility(
+                                visible = isUserAdmin,
+                                enter = fadeIn(),
+                                exit = fadeOut()
+                            ) {
+                                Row {
+                                    val links = getItemRelations(
+                                        userList = localUser.getLinks(true),
+                                        currentAttachments = item!!.links
+                                    )
+                                    val addLinks = remember { mutableStateOf(false) }
+                                    AddLinksButton(
+                                        viewModel = viewModel,
+                                        show = addLinks,
+                                        links = links,
+                                        team = item!!,
+                                        tint = iconsColor
+                                    )
+                                    val addCollections = remember { mutableStateOf(false) }
+                                    val collections = getItemRelations(
+                                        userList = localUser.getCollections(true),
+                                        currentAttachments = item!!.collections
+                                    )
+                                    AddCollectionsButton(
+                                        viewModel = viewModel,
+                                        show = addCollections,
+                                        collections = collections,
+                                        team = item!!,
+                                        tint = iconsColor
+                                    )
+                                }
+                            }
+                            if (item!!.isTheAuthor(localUser.userId)) {
+                                val deleteTeam = remember { mutableStateOf(false) }
+                                DeleteTeamButton(
+                                    viewModel = viewModel,
+                                    deleteTeam = deleteTeam,
+                                    team = item!!,
+                                    tint = iconsColor
+                                )
+                            } else {
+                                val leaveTeam = remember { mutableStateOf(false) }
+                                LeaveTeamButton(
+                                    viewModel = viewModel,
+                                    leaveTeam = leaveTeam,
+                                    team = item!!,
+                                    tint = iconsColor
+                                )
+                            }
                         }
-                    }
-                },
-                actions = {
-                    AnimatedVisibility(
-                        visible = isUserAdmin,
-                        enter = fadeIn(),
-                        exit = fadeOut()
-                    ) {
-                        Row {
-                            val links = getItemRelations(
-                                userList = user.links,
-                                linkList = item!!.links
-                            )
-                            val addLinks = remember { mutableStateOf(false) }
-                            AddLinksButton(
-                                viewModel = viewModel,
-                                show = addLinks,
-                                links = links,
-                                team = item!!,
-                                tint = iconsColor
-                            )
-                            val addCollections = remember { mutableStateOf(false) }
-                            val collections = getItemRelations(
-                                userList = user.collections,
-                                linkList = item!!.collections
-                            )
-                            AddCollectionsButton(
-                                viewModel = viewModel,
-                                show = addCollections,
-                                collections = collections,
-                                team = item!!,
-                                tint = iconsColor
-                            )
-                        }
-                    }
-                    val leaveTeam = remember { mutableStateOf(false) }
-                    LeaveTeamButton(
-                        viewModel = viewModel,
-                        leaveTeam = leaveTeam,
-                        team = item!!,
-                        tint = iconsColor
                     )
-                    if(item!!.isTheAuthor(user.id)) {
-                        val deleteTeam = remember { mutableStateOf(false) }
-                        DeleteTeamButton(
-                            viewModel = viewModel,
-                            deleteTeam = deleteTeam,
-                            team = item!!,
-                            tint = iconsColor
-                        )
-                    }
                 },
                 floatingActionButton = {
                     AnimatedVisibility(
@@ -154,28 +171,13 @@ class TeamScreen(
                             )
                         }
                     }
-                },
-                content = { paddingValues ->
-                    TeamContent(
-                        paddingValues = paddingValues
-                    )
                 }
-            )
-            linksExpanded = remember { mutableStateOf(item!!.links.isNotEmpty()) }
+            ) { paddingValues ->
+                TeamContent(
+                    paddingValues = paddingValues
+                )
+            }
         }
-    }
-
-    @Composable
-    @NonRestartableComposable
-    override fun InitViewModel() {
-        viewModel = TeamActivityViewModel(
-            snackbarHostState = snackbarHostState,
-            initialTeam = item!!
-        )
-        viewModel.setActiveContext(this::class.java)
-        viewModel.refreshTeam()
-        item = viewModel.team.collectAsState().value
-        isUserAdmin = item!!.isAdmin(user.id)
     }
 
     @Composable
@@ -324,7 +326,7 @@ class TeamScreen(
                 size = 8.dp
             ),
             onClick = {
-                user.collections = item!!.collections
+                localUser.setCollections(item!!.collections)
                 navToDedicatedItemScreen(
                     itemId = collection.id,
                     destination = CREATE_COLLECTION_SCREEN
@@ -412,6 +414,18 @@ class TeamScreen(
                     }
                 }
             }
+        }
+    }
+
+    override fun prepareView() {
+        super.prepareView()
+        if (itemExists) {
+            viewModel = TeamActivityViewModel(
+                snackbarHostState = snackbarHostState,
+                initialTeam = item!!
+            )
+            viewModel.setActiveContext(this::class.java)
+            viewModel.refreshTeam()
         }
     }
 

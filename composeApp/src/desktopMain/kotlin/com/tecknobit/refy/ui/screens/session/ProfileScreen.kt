@@ -24,9 +24,10 @@ import com.tecknobit.equinox.environment.records.EquinoxUser.ApplicationTheme.*
 import com.tecknobit.equinox.inputs.InputValidator.*
 import com.tecknobit.equinoxcompose.components.EquinoxAlertDialog
 import com.tecknobit.equinoxcompose.components.EquinoxOutlinedTextField
+import com.tecknobit.refy.helpers.NavigationHelper.Companion.resetFirstTab
 import com.tecknobit.refy.ui.screens.Screen
 import com.tecknobit.refy.ui.screens.Screen.Routes.SPLASHSCREEN
-import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.user
+import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.localUser
 import com.tecknobit.refy.ui.theme.RefyTheme
 import com.tecknobit.refy.ui.utilities.Logo
 import com.tecknobit.refy.ui.viewmodels.ProfileScreenViewModel
@@ -46,26 +47,11 @@ class ProfileScreen: Screen() {
      * **fileType** -> list of allowed image types
      */
     private val fileType = listOf("jpg", "png", "jpeg")
-
-    /**
-     * *theme* -> the current user's theme
-     */
-    private lateinit var theme: MutableState<ApplicationTheme>
-
-    init {
-        viewModel.setActiveContext(this::class.java)
-    }
     
     @Composable
     override fun ShowContent() {
-        theme = remember { mutableStateOf(user.theme) }
-        RefyTheme(
-            darkTheme = when(theme.value) {
-                Light -> false
-                Dark -> true
-                else -> isSystemInDarkTheme()
-            }
-        ) {
+        viewModel.setActiveContext(this::class.java)
+        RefyTheme {
             Scaffold(
                 snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
             ) { paddingValues ->
@@ -96,7 +82,7 @@ class ProfileScreen: Screen() {
                 .background(MaterialTheme.colorScheme.inversePrimary)
                 .height(225.dp),
         ) {
-            val profilePic = remember { mutableStateOf(user.profilePic) }
+            val profilePic = remember { mutableStateOf(localUser.profilePic) }
             var pickProfilePic by remember { mutableStateOf(false) }
             FilePicker(
                 show = pickProfilePic,
@@ -135,11 +121,11 @@ class ProfileScreen: Screen() {
                     .align(Alignment.BottomStart)
             ) {
                 Text(
-                    text = user.tagName,
+                    text = localUser.tagName,
                     fontSize = 14.sp
                 )
                 Text(
-                    text = user.completeName,
+                    text = localUser.completeName,
                     fontSize = 20.sp
                 )
             }
@@ -150,7 +136,7 @@ class ProfileScreen: Screen() {
     @NonRestartableComposable
     private fun EmailSection() {
         val showChangeEmailAlert = remember { mutableStateOf(false) }
-        var userEmail by remember { mutableStateOf(user.email) }
+        var userEmail by remember { mutableStateOf(localUser.email) }
         viewModel.newEmail = remember { mutableStateOf("") }
         viewModel.newEmailError = remember { mutableStateOf(false) }
         val resetEmailLayout = {
@@ -256,7 +242,7 @@ class ProfileScreen: Screen() {
         val changeLanguage = remember { mutableStateOf(false) }
         UserInfo(
             header = Res.string.language,
-            info = LANGUAGES_SUPPORTED[user.language]!!,
+            info = LANGUAGES_SUPPORTED[localUser.language]!!,
             onClick = { changeLanguage.value = true }
         )
         ChangeLanguage(
@@ -270,7 +256,7 @@ class ProfileScreen: Screen() {
         val changeTheme = remember { mutableStateOf(false) }
         UserInfo(
             header = Res.string.theme,
-            info = user.theme.name,
+            info = localUser.theme.name,
             buttonText = Res.string.change,
             onClick = { changeTheme.value = true }
         )
@@ -430,7 +416,7 @@ class ProfileScreen: Screen() {
                     Icon(
                         imageVector = Icons.Default.Flag,
                         contentDescription = null,
-                        tint = if (user.language == language)
+                        tint = if (localUser.language == language)
                             MaterialTheme.colorScheme.primary
                         else
                             LocalContentColor.current
@@ -467,7 +453,7 @@ class ProfileScreen: Screen() {
                                 newTheme = theme,
                                 onChange = {
                                     changeTheme.value = false
-                                    this@ProfileScreen.theme.value = theme
+                                    navToSplash()
                                 }
                             )
                         }
@@ -484,7 +470,7 @@ class ProfileScreen: Screen() {
                             else -> Icons.Default.AutoMode
                         },
                         contentDescription = null,
-                        tint = if (user.theme == theme)
+                        tint = if (localUser.theme == theme)
                             MaterialTheme.colorScheme.primary
                         else
                             LocalContentColor.current
@@ -534,6 +520,7 @@ class ProfileScreen: Screen() {
      * No-any params required
      */
     private fun navToSplash() {
+        resetFirstTab()
         navigator.navigate(SPLASHSCREEN.name)
     }
     

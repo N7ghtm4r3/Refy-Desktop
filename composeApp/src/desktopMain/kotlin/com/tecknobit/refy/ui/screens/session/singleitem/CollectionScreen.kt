@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package com.tecknobit.refy.ui.screens.session.singleitem
 
 import androidx.compose.animation.AnimatedVisibility
@@ -11,12 +13,14 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Groups
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.runtime.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.user
+import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.localUser
 import com.tecknobit.refy.ui.toColor
 import com.tecknobit.refy.ui.utilities.ExpandTeamMembers
 import com.tecknobit.refy.ui.utilities.LinksCollectionUtilities
@@ -31,7 +35,7 @@ import refy.composeapp.generated.resources.invalid_collection
 class CollectionScreen(
     collectionId: String
 ): SingleItemScreen<LinksCollection>(
-    items = user.collections,
+    items = localUser.getCollections(false),
     invalidMessage = Res.string.invalid_collection,
     itemId = collectionId
 ), RefyLinkUtilities<RefyLink>, LinksCollectionUtilities {
@@ -40,74 +44,92 @@ class CollectionScreen(
 
     @Composable
     override fun ShowContent() {
-        DisplayItem(
-            topBarColor = null,
-            actions = {
-                AnimatedVisibility(
-                    visible = item!!.canBeUpdatedByUser(user.id),
-                    enter = fadeIn(),
-                    exit = fadeOut()
-                ) {
-                    Row {
-                        val links = getItemRelations(
-                            userList = user.links,
-                            linkList = item!!.links
-                        )
-                        val addLinks = remember { mutableStateOf(false) }
-                        AddLinksButton(
-                            viewModel = viewModel,
-                            show = addLinks,
-                            links = links,
-                            collection = item!!,
-                            tint = iconsColor
-                        )
-                        val teams = getItemRelations(
-                            userList = user.teams,
-                            linkList = item!!.teams
-                        )
-                        val addTeams = remember { mutableStateOf(false) }
-                        AddTeamsButton(
-                            viewModel = viewModel,
-                            show = addTeams,
-                            teams = teams,
-                            collection = item!!,
-                            tint = iconsColor
-                        )
-                        val deleteCollection = remember { mutableStateOf(false) }
-                        DeleteCollectionButton(
-                            viewModel = viewModel,
-                            deleteCollection = deleteCollection,
-                            collection = item!!,
-                            tint = iconsColor
-                        )
-                    }
-                }
-            },
-            floatingActionButton = {
-                AnimatedVisibility(
-                    visible = hasTeams,
-                    enter = fadeIn(),
-                    exit = fadeOut()
-                ) {
-                    val expandTeams = remember { mutableStateOf(false) }
-                    FloatingActionButton(
-                        onClick = { expandTeams.value = true },
-                        containerColor = activityColorTheme
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Groups,
-                            contentDescription = null
-                        )
-                    }
-                    ExpandTeamMembers(
-                        viewModel = viewModel,
-                        show = expandTeams,
-                        teams = item!!.teams
+        prepareView()
+        ContentView {
+            item = viewModel.collection.collectAsState().value
+            activityColorTheme = item!!.color.toColor()
+            hasTeams = item!!.hasTeams()
+            Scaffold(
+                snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
+                topBar = {
+                    LargeTopAppBar(
+                        navigationIcon = { NavButton() },
+                        title = {
+                            Text(
+                                text = item!!.title
+                            )
+                        },
+                        colors = TopAppBarDefaults.largeTopAppBarColors(
+                            containerColor = activityColorTheme
+                        ),
+                        actions = {
+                            AnimatedVisibility(
+                                visible = item!!.canBeUpdatedByUser(localUser.userId),
+                                enter = fadeIn(),
+                                exit = fadeOut()
+                            ) {
+                                Row {
+                                    val links = getItemRelations(
+                                        userList = localUser.getLinks(true),
+                                        currentAttachments = item!!.links
+                                    )
+                                    val addLinks = remember { mutableStateOf(false) }
+                                    AddLinksButton(
+                                        viewModel = viewModel,
+                                        show = addLinks,
+                                        links = links,
+                                        collection = item!!,
+                                        tint = iconsColor
+                                    )
+                                    val teams = getItemRelations(
+                                        userList = localUser.getTeams(true),
+                                        currentAttachments = item!!.teams
+                                    )
+                                    val addTeams = remember { mutableStateOf(false) }
+                                    AddTeamsButton(
+                                        viewModel = viewModel,
+                                        show = addTeams,
+                                        teams = teams,
+                                        collection = item!!,
+                                        tint = iconsColor
+                                    )
+                                    val deleteCollection = remember { mutableStateOf(false) }
+                                    DeleteCollectionButton(
+                                        viewModel = viewModel,
+                                        deleteCollection = deleteCollection,
+                                        collection = item!!,
+                                        tint = iconsColor
+                                    )
+                                }
+                            }
+                        }
                     )
+                },
+                floatingActionButton = {
+                    AnimatedVisibility(
+                        visible = hasTeams,
+                        enter = fadeIn(),
+                        exit = fadeOut()
+                    ) {
+                        val expandTeams = remember { mutableStateOf(false) }
+                        FloatingActionButton(
+                            onClick = { expandTeams.value = true },
+                            containerColor = activityColorTheme
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Groups,
+                                contentDescription = null
+                            )
+                        }
+                        ExpandTeamMembers(
+                            viewModel = viewModel,
+                            show = expandTeams,
+                            teams = item!!.teams
+                        )
+                    }
                 }
-            },
-            content = { paddingValues ->
-                val userCanUpdate = item!!.canBeUpdatedByUser(user.id)
+            ) { paddingValues ->
+                val userCanUpdate = item!!.canBeUpdatedByUser(localUser.userId)
                 LazyVerticalGrid(
                     modifier = Modifier
                         .padding(
@@ -136,21 +158,19 @@ class CollectionScreen(
                     }
                 }
             }
-        )
+        }
     }
 
-    @Composable
-    @NonRestartableComposable
-    override fun InitViewModel() {
-        viewModel = CollectionActivityViewModel(
-            snackbarHostState = snackbarHostState,
-            initialCollection = item!!
-        )
-        viewModel.setActiveContext(this::class.java)
-        viewModel.refreshCollection()
-        item = viewModel.collection.collectAsState().value
-        activityColorTheme = item!!.color.toColor()
-        hasTeams = item!!.hasTeams()
+    override fun prepareView() {
+        super.prepareView()
+        if (itemExists) {
+            viewModel = CollectionActivityViewModel(
+                snackbarHostState = snackbarHostState,
+                initialCollection = item!!
+            )
+            viewModel.setActiveContext(this::class.java)
+            viewModel.refreshCollection()
+        }
     }
 
 }

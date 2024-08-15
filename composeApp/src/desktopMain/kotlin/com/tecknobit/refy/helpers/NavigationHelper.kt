@@ -47,6 +47,10 @@ class NavigationHelper private constructor() {
 
         var activeTab: MutableState<NavigationTab> = mutableStateOf(navigationTabs[0])
 
+        fun resetFirstTab() {
+            activeTab.value = navigationTabs[0]
+        }
+
         fun getInstance() : NavigationHelper {
             return NavigationHelper()
         }
@@ -84,6 +88,7 @@ class NavigationHelper private constructor() {
                     },
                     selected = selected,
                     onClick = {
+                        activeTab.value.screen.suspendScreenRefreshing()
                         activeTab.value = navTab
                         selectedItem = navTab
                     },

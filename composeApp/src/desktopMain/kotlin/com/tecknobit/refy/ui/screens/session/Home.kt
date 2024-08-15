@@ -15,7 +15,7 @@ import com.tecknobit.refy.helpers.NavigationHelper
 import com.tecknobit.refy.helpers.NavigationHelper.Companion.activeTab
 import com.tecknobit.refy.ui.screens.Screen
 import com.tecknobit.refy.ui.screens.Screen.Routes.PROFILE
-import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.user
+import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.localUser
 import com.tecknobit.refy.ui.theme.AppTypography
 import com.tecknobit.refy.ui.utilities.Logo
 import displayFontFamily
@@ -78,7 +78,7 @@ class Home : Screen() {
                                     shape = CircleShape
                                 ),
                             picSize = 75.dp,
-                            picUrl = user.profilePic,
+                            picUrl = localUser.profilePic,
                             onClick = { navigator.navigate(PROFILE.name) }
                         )
                     }

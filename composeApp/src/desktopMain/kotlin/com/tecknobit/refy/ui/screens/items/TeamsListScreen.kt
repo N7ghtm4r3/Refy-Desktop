@@ -26,9 +26,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tecknobit.equinoxcompose.components.EmptyListUI
+import com.tecknobit.refy.ui.getCompleteMediaItemUrl
 import com.tecknobit.refy.ui.screens.Screen.Routes.CREATE_TEAM_SCREEN
 import com.tecknobit.refy.ui.screens.Screen.Routes.TEAM_SCREEN
-import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.user
+import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.localUser
 import com.tecknobit.refy.ui.theme.AppTypography
 import com.tecknobit.refy.ui.utilities.*
 import com.tecknobit.refy.ui.viewmodels.teams.TeamsListViewModel
@@ -46,12 +47,11 @@ class TeamsListScreen: ItemScreen(), TeamsUtilities, RefyLinkUtilities<RefyLink>
 
     private lateinit var teams: List<Team>
 
-    init {
-        viewModel.setActiveContext(this::class.java)
-    }
-
     @Composable
     override fun ShowContent() {
+        val context = this::class.java
+        currentScreenContext = context
+        viewModel.setActiveContext(context)
         screenViewModel = viewModel
         viewModel.getTeams()
         teams = viewModel.teams.collectAsState().value
@@ -87,7 +87,7 @@ class TeamsListScreen: ItemScreen(), TeamsUtilities, RefyLinkUtilities<RefyLink>
     private fun TeamCard(
         team: Team
     ) {
-        val isAdmin = team.isAdmin(user.id)
+        val isAdmin = team.isAdmin(localUser.userId)
         Card(
             modifier = Modifier
                 .fillMaxWidth()
@@ -151,7 +151,9 @@ class TeamsListScreen: ItemScreen(), TeamsUtilities, RefyLinkUtilities<RefyLink>
                         size = 10.dp
                     ),
                     addShadow = true,
-                    picUrl = team.logoPic,
+                    picUrl = getCompleteMediaItemUrl(
+                        relativeMediaUrl = team.logoPic
+                    )
                 )
             },
             overlineContent = {
@@ -206,8 +208,8 @@ class TeamsListScreen: ItemScreen(), TeamsUtilities, RefyLinkUtilities<RefyLink>
                     Row {
                         val iconsColor = LocalContentColor.current
                         val links = getItemRelations(
-                            userList = user.links,
-                            linkList = team.links
+                            userList = localUser.getLinks(true),
+                            currentAttachments = team.links
                         )
                         AddLinksButton(
                             viewModel = viewModel,
@@ -217,8 +219,8 @@ class TeamsListScreen: ItemScreen(), TeamsUtilities, RefyLinkUtilities<RefyLink>
                             tint = iconsColor
                         )
                         val collections = getItemRelations(
-                            userList = user.collections,
-                            linkList = team.collections
+                            userList = localUser.getCollections(true),
+                            currentAttachments = team.collections
                         )
                         AddCollectionsButton(
                             viewModel = viewModel,
@@ -242,7 +244,7 @@ class TeamsListScreen: ItemScreen(), TeamsUtilities, RefyLinkUtilities<RefyLink>
                             team = team,
                             tint = MaterialTheme.colorScheme.primary
                         )
-                        if(team.isTheAuthor(user.id)) {
+                        if (team.isTheAuthor(localUser.userId)) {
                             DeleteTeamButton(
                                 //activity = null,
                                 viewModel = viewModel,

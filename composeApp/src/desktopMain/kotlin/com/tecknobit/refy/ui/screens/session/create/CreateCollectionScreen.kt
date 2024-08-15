@@ -21,7 +21,7 @@ import com.github.skydoves.colorpicker.compose.HsvColorPicker
 import com.github.skydoves.colorpicker.compose.rememberColorPickerController
 import com.tecknobit.equinoxcompose.components.EquinoxAlertDialog
 import com.tecknobit.refy.ui.generateRandomColor
-import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.user
+import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.localUser
 import com.tecknobit.refy.ui.toColor
 import com.tecknobit.refy.ui.utilities.ItemDescription
 import com.tecknobit.refy.ui.viewmodels.create.CreateCollectionViewModel
@@ -31,7 +31,7 @@ import refy.composeapp.generated.resources.*
 class CreateCollectionScreen(
     collectionId: String?
 ): CreateScreen<LinksCollection, CreateCollectionViewModel>(
-    items = user.collections,
+    items = localUser.getCollections(true),
     invalidMessage = Res.string.invalid_collection,
     itemId = collectionId
 ) {
@@ -112,7 +112,7 @@ class CreateCollectionScreen(
             header = Res.string.links
         ) {
             items(
-                items = user.links,
+                items = localUser.getLinks(true),
                 key = { link -> link.id }
             ) { link ->
                 val checked = remember { mutableStateOf(viewModel.itemDedicatedList.contains(link.id)) }

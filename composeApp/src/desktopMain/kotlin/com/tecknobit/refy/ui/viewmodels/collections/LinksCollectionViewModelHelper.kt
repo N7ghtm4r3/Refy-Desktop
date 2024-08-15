@@ -2,13 +2,13 @@ package com.tecknobit.refy.ui.viewmodels.collections
 
 import androidx.compose.material3.SnackbarHostState
 import com.tecknobit.apimanager.annotations.Structure
-import com.tecknobit.equinoxcompose.helpers.EquinoxViewModel
+import com.tecknobit.refy.ui.viewmodels.RefyViewModel
 import com.tecknobit.refycore.records.LinksCollection
 
 @Structure
 abstract class LinksCollectionViewModelHelper (
     snackbarHostState: SnackbarHostState
-) : EquinoxViewModel (
+) : RefyViewModel(
     snackbarHostState = snackbarHostState
 ) {
 

@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import com.tecknobit.equinoxcompose.components.EmptyListUI
 import com.tecknobit.refy.ui.screens.Screen.Routes.COLLECTION_SCREEN
 import com.tecknobit.refy.ui.screens.Screen.Routes.CREATE_COLLECTION_SCREEN
-import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.user
+import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.localUser
 import com.tecknobit.refy.ui.toColor
 import com.tecknobit.refy.ui.utilities.LinksCollectionUtilities
 import com.tecknobit.refy.ui.utilities.OptionsBar
@@ -43,14 +43,14 @@ class CollectionListScreen : ItemScreen(), RefyLinkUtilities<RefyLink>, LinksCol
 
     private lateinit var collections: List<LinksCollection>
 
-    init {
-        viewModel.setActiveContext(this::class.java)
-    }
-
     @Composable
     override fun ShowContent() {
+        val context = this::class.java
+        currentScreenContext = context
+        viewModel.setActiveContext(context)
+        viewModel.setCurrentUserOwnedLinks()
+        viewModel.setCurrentUserOwnedTeams()
         screenViewModel = viewModel
-        viewModel.getCollections()
         collections = viewModel.collections.collectAsState().value
         if(collections.isEmpty()) {
             EmptyListUI(
@@ -84,6 +84,7 @@ class CollectionListScreen : ItemScreen(), RefyLinkUtilities<RefyLink>, LinksCol
         collection: LinksCollection
     ) {
         ItemCard(
+            item = collection,
             borderColor = collection.color.toColor(),
             onClick = {
                 navToDedicatedItemScreen(
@@ -102,7 +103,7 @@ class CollectionListScreen : ItemScreen(), RefyLinkUtilities<RefyLink>, LinksCol
             teams = collection.teams,
             optionsBar = {
                 AnimatedVisibility(
-                    visible = collection.canBeUpdatedByUser(user.id),
+                    visible = collection.canBeUpdatedByUser(localUser.userId),
                     enter = fadeIn(),
                     exit = fadeOut()
                 ) {
@@ -124,8 +125,8 @@ class CollectionListScreen : ItemScreen(), RefyLinkUtilities<RefyLink>, LinksCol
         OptionsBar(
             options = {
                 val links = getItemRelations(
-                    userList = user.links,
-                    linkList = collection.links
+                    userList = localUser.getLinks(true),
+                    currentAttachments = collection.links
                 )
                 AddLinksButton(
                     viewModel = viewModel,
@@ -135,8 +136,8 @@ class CollectionListScreen : ItemScreen(), RefyLinkUtilities<RefyLink>, LinksCol
                     tint = LocalContentColor.current
                 )
                 val teams = getItemRelations(
-                    userList = user.teams,
-                    linkList = collection.teams
+                    userList = localUser.getTeams(true),
+                    currentAttachments = collection.teams
                 )
                 AddTeamsButton(
                     viewModel = viewModel,
@@ -151,7 +152,6 @@ class CollectionListScreen : ItemScreen(), RefyLinkUtilities<RefyLink>, LinksCol
                     horizontalAlignment = Alignment.End
                 ) {
                     DeleteCollectionButton(
-                        //activity = null,
                         viewModel = viewModel,
                         deleteCollection = deleteCollection,
                         collection = collection,
