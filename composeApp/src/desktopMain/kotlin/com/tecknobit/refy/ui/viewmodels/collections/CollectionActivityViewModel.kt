@@ -2,6 +2,7 @@ package com.tecknobit.refy.ui.viewmodels.collections
 
 import androidx.compose.material3.SnackbarHostState
 import com.tecknobit.equinox.Requester.Companion.RESPONSE_MESSAGE_KEY
+import com.tecknobit.refy.helpers.RecompositionsLocker
 import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.requester
 import com.tecknobit.refy.ui.screens.session.singleitem.CollectionScreen
 import com.tecknobit.refycore.records.LinksCollection
@@ -14,7 +15,13 @@ class CollectionActivityViewModel(
     val initialCollection: LinksCollection
 ) : LinksCollectionViewModelHelper(
     snackbarHostState = snackbarHostState
-) {
+), RecompositionsLocker {
+
+    companion object {
+
+        private var counter = 0
+
+    }
 
     private val _collection = MutableStateFlow(
         value = initialCollection
@@ -22,24 +29,27 @@ class CollectionActivityViewModel(
     val collection: StateFlow<LinksCollection> = _collection
 
     fun refreshCollection() {
-        execRefreshingRoutine(
-            currentContext = CollectionScreen::class.java,
-            routine = {
-                requester.sendRequest(
-                    request = {
-                        requester.getCollection(
-                            collectionId = initialCollection.id
-                        )
-                    },
-                    onSuccess = { response ->
-                        _collection.value = LinksCollection.getInstance(
-                            response.getJSONObject(RESPONSE_MESSAGE_KEY)
-                        )
-                    },
-                    onFailure = { showSnackbarMessage(it) }
-                )
-            }
-        )
+        if (lastCanGoes(counter)) {
+            execRefreshingRoutine(
+                currentContext = CollectionScreen::class.java,
+                routine = {
+                    requester.sendRequest(
+                        request = {
+                            requester.getCollection(
+                                collectionId = initialCollection.id
+                            )
+                        },
+                        onSuccess = { response ->
+                            _collection.value = LinksCollection.getInstance(
+                                response.getJSONObject(RESPONSE_MESSAGE_KEY)
+                            )
+                        },
+                        onFailure = { showSnackbarMessage(it) }
+                    )
+                }
+            )
+        } else
+            counter++
     }
 
     fun removeLinkFromCollection(
@@ -57,6 +67,15 @@ class CollectionActivityViewModel(
             onSuccess = {},
             onFailure = { showSnackbarMessage(it) }
         )
+    }
+
+    override fun suspendRefresher() {
+        reset()
+        super.suspendRefresher()
+    }
+
+    override fun reset() {
+        counter = 0
     }
 
 }

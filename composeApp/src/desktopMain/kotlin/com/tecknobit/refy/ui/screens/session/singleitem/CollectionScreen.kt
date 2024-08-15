@@ -43,15 +43,12 @@ class CollectionScreen(
     private lateinit var viewModel: CollectionActivityViewModel
 
     init {
-        //prepareView()
+        prepareView()
     }
 
     @Composable
     override fun ShowContent() {
         LifecycleManager(
-            onCreate = {
-                prepareView()
-            },
             onDispose = {
                 viewModel.suspendRefresher()
             }
@@ -106,6 +103,7 @@ class CollectionScreen(
                                     )
                                     val deleteCollection = remember { mutableStateOf(false) }
                                     DeleteCollectionButton(
+                                        goBack = true,
                                         viewModel = viewModel,
                                         deleteCollection = deleteCollection,
                                         collection = item!!,

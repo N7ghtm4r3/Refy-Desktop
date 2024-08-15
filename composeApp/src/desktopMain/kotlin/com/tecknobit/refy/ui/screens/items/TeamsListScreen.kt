@@ -50,8 +50,19 @@ class TeamsListScreen: ItemScreen(), TeamsUtilities, RefyLinkUtilities<RefyLink>
     @Composable
     override fun ShowContent() {
         viewModel.setActiveContext(context)
-        screenViewModel = viewModel
-        viewModel.getTeams()
+        LifecycleManager(
+            onCreate = {
+                screenViewModel = viewModel
+                viewModel.getTeams()
+            },
+            onResume = {
+                screenViewModel = viewModel
+                restartScreenRefreshing()
+            },
+            onDispose = {
+                suspendScreenRefreshing()
+            }
+        )
         teams = viewModel.teams.collectAsState().value
         if(teams.isEmpty()) {
             EmptyListUI(
@@ -237,6 +248,7 @@ class TeamsListScreen: ItemScreen(), TeamsUtilities, RefyLinkUtilities<RefyLink>
                     Row {
                         if (team.isTheAuthor(localUser.userId)) {
                             DeleteTeamButton(
+                                goBack = false,
                                 viewModel = viewModel,
                                 deleteTeam = deleteTeam,
                                 team = team,
@@ -244,6 +256,7 @@ class TeamsListScreen: ItemScreen(), TeamsUtilities, RefyLinkUtilities<RefyLink>
                             )
                         } else {
                             LeaveTeamButton(
+                                goBack = false,
                                 viewModel = viewModel,
                                 leaveTeam = leaveTeam,
                                 team = team,

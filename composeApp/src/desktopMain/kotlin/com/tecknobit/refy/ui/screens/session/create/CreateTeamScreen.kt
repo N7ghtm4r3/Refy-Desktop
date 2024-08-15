@@ -57,6 +57,7 @@ class CreateTeamScreen(
         viewModel = CreateTeamViewModel(
             snackbarHostState = snackbarHostState
         )
+        viewModel.fetchCurrentUsers()
     }
 
     @Composable
@@ -194,7 +195,6 @@ class CreateTeamScreen(
     @NonRestartableComposable
     private fun MembersSection() {
         val keyboardController = LocalSoftwareKeyboardController.current
-        viewModel.fetchCurrentUsers()
         val currentUsers = viewModel.potentialMembers.collectAsState().value
         CustomSection(
             header = Res.string.members

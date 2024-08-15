@@ -141,6 +141,7 @@ class TeamScreen(
                             if (item!!.isTheAuthor(localUser.userId)) {
                                 val deleteTeam = remember { mutableStateOf(false) }
                                 DeleteTeamButton(
+                                    goBack = true,
                                     viewModel = viewModel,
                                     deleteTeam = deleteTeam,
                                     team = item!!,
@@ -149,6 +150,7 @@ class TeamScreen(
                             } else {
                                 val leaveTeam = remember { mutableStateOf(false) }
                                 LeaveTeamButton(
+                                    goBack = true,
                                     viewModel = viewModel,
                                     leaveTeam = leaveTeam,
                                     team = item!!,

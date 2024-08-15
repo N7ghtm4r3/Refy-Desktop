@@ -161,6 +161,7 @@ class CollectionListScreen : ItemScreen(), RefyLinkUtilities<RefyLink>, LinksCol
                     horizontalAlignment = Alignment.End
                 ) {
                     DeleteCollectionButton(
+                        goBack = false,
                         viewModel = viewModel,
                         deleteCollection = deleteCollection,
                         collection = collection,

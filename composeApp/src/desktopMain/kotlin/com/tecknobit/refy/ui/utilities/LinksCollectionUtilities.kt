@@ -12,6 +12,7 @@ import com.tecknobit.refy.ui.viewmodels.collections.LinksCollectionViewModelHelp
 import com.tecknobit.refycore.records.LinksCollection
 import com.tecknobit.refycore.records.RefyItem
 import com.tecknobit.refycore.records.Team
+import navigator
 import refy.composeapp.generated.resources.Res
 import refy.composeapp.generated.resources.add_collection_to_team
 import refy.composeapp.generated.resources.delete_collection
@@ -71,6 +72,7 @@ interface LinksCollectionUtilities {
     @Composable
     @NonRestartableComposable
     fun DeleteCollectionButton(
+        goBack: Boolean,
         viewModel: LinksCollectionViewModelHelper,
         deleteCollection: MutableState<Boolean>,
         collection: LinksCollection,
@@ -80,6 +82,7 @@ interface LinksCollectionUtilities {
             show = deleteCollection,
             deleteAction = {
                 DeleteCollection(
+                    goBack = goBack,
                     show = deleteCollection,
                     collection = collection,
                     viewModel = viewModel
@@ -92,6 +95,7 @@ interface LinksCollectionUtilities {
     @Composable
     @NonRestartableComposable
     private fun DeleteCollection(
+        goBack: Boolean = false,
         viewModel: LinksCollectionViewModelHelper,
         show: MutableState<Boolean>,
         collection: LinksCollection
@@ -113,6 +117,8 @@ interface LinksCollectionUtilities {
                     collection = collection,
                     onSuccess = {
                         resetLayout.invoke()
+                        if (goBack)
+                            navigator.goBack()
                     }
                 )
             }
