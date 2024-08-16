@@ -2,6 +2,7 @@ package com.tecknobit.refy.ui.screens.items.links
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.NonRestartableComposable
+import androidx.compose.runtime.collectAsState
 import com.tecknobit.refy.ui.screens.Screen.Routes.CREATE_CUSTOM_LINK_SCREEN
 import com.tecknobit.refy.ui.screens.Screen.Routes.CUSTOM_LINK_SCREEN
 import com.tecknobit.refy.ui.viewmodels.links.CustomLinksViewModel
@@ -14,18 +15,19 @@ class CustomLinksScreen : LinksScreen<CustomRefyLink>(
 
     @Composable
     override fun ShowContent() {
+        viewModel.setActiveContext(context)
         LifecycleManager(
             onCreate = {
-                viewModel.setActiveContext(context)
                 fetchLinksList()
             },
             onResume = {
-                fetchLinksList()
+                restartScreenRefreshing()
             },
             onDispose = {
-                viewModel.suspendRefresher()
+                suspendScreenRefreshing()
             }
         )
+        links = viewModel.links.collectAsState().value
         LinksList()
     }
 

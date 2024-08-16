@@ -19,7 +19,7 @@ import com.tecknobit.equinoxcompose.components.EquinoxAlertDialog
 import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.localUser
 import com.tecknobit.refy.ui.utilities.DeleteItemButton
 import com.tecknobit.refy.ui.utilities.ItemDescription
-import com.tecknobit.refy.ui.viewmodels.links.CustomLinkActivityViewModel
+import com.tecknobit.refy.ui.viewmodels.links.CustomLinkScreenViewModel
 import com.tecknobit.refycore.records.links.CustomRefyLink
 import navigator
 import org.jetbrains.compose.resources.StringResource
@@ -35,7 +35,7 @@ class CustomLinkScreen(
     itemId = customLinkId
 ) {
 
-    private lateinit var viewModel: CustomLinkActivityViewModel
+    private lateinit var viewModel: CustomLinkScreenViewModel
 
     init {
         prepareView()
@@ -43,9 +43,14 @@ class CustomLinkScreen(
 
     @Composable
     override fun ShowContent() {
-        item = viewModel.customLink.collectAsState().value
-        activityColorTheme = MaterialTheme.colorScheme.primaryContainer
+        LifecycleManager(
+            onDispose = {
+                viewModel.suspendRefresher()
+            }
+        )
         ContentView {
+            item = viewModel.customLink.collectAsState().value
+            activityColorTheme = MaterialTheme.colorScheme.primaryContainer
             Scaffold(
                 snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
                 topBar = {
@@ -231,11 +236,15 @@ class CustomLinkScreen(
     private fun DeleteLink(
         show: MutableState<Boolean>
     ) {
-        viewModel.SuspendUntilElementOnScreen(
-            elementVisible = show
-        )
+        if (show.value)
+            viewModel.suspendRefresher()
+        val resetLayout = {
+            show.value = false
+            viewModel.restartRefresher()
+        }
         EquinoxAlertDialog(
             show = show,
+            onDismissAction = resetLayout,
             icon = Icons.Default.Delete,
             title = Res.string.delete_link,
             text = Res.string.delete_link_message,
@@ -254,7 +263,7 @@ class CustomLinkScreen(
     override fun prepareView() {
         super.prepareView()
         if (itemExists) {
-            viewModel = CustomLinkActivityViewModel(
+            viewModel = CustomLinkScreenViewModel(
                 snackbarHostState = snackbarHostState,
                 initialCustomLink = item!!
             )

@@ -19,7 +19,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.NonRestartableComposable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -44,7 +43,7 @@ abstract class LinksScreen <T : RefyLink> (
     val viewModel: LinksViewModel<T>
 ) : ItemScreen(), RefyLinkUtilities<T> {
 
-    private lateinit var links: List<T>
+    protected lateinit var links: List<T>
 
     protected fun fetchLinksList() {
         screenViewModel = viewModel
@@ -53,7 +52,6 @@ abstract class LinksScreen <T : RefyLink> (
 
     @Composable
     protected fun LinksList() {
-        links = viewModel.links.collectAsState().value
         if(links.isEmpty()) {
             EmptyListUI(
                 icon = Icons.Default.LinkOff,

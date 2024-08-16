@@ -40,6 +40,7 @@ class LinkListScreen : LinksScreen<RefyLink>(
             }
         )
         SetFabAction()
+        links = viewModel.links.collectAsState().value
         LinksList()
     }
 

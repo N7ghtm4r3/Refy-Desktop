@@ -64,12 +64,17 @@ class TeamScreen(
 
     @Composable
     override fun ShowContent() {
-        item = viewModel.team.collectAsState().value
-        activityColorTheme = MaterialTheme.colorScheme.primaryContainer
-        isUserAdmin = item!!.isAdmin(localUser.userId)
-        linksExpanded = remember { mutableStateOf(item!!.links.isNotEmpty()) }
-        membersExpanded = remember { mutableStateOf(false) }
+        LifecycleManager(
+            onDispose = {
+                viewModel.suspendRefresher()
+            }
+        )
         ContentView {
+            item = viewModel.team.collectAsState().value
+            activityColorTheme = MaterialTheme.colorScheme.primaryContainer
+            isUserAdmin = item!!.isAdmin(localUser.userId)
+            linksExpanded = remember { mutableStateOf(item!!.links.isNotEmpty()) }
+            membersExpanded = remember { mutableStateOf(false) }
             Scaffold(
                 snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
                 topBar = {

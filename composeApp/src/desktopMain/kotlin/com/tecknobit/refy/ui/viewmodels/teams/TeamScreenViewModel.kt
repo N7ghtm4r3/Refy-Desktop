@@ -2,6 +2,7 @@ package com.tecknobit.refy.ui.viewmodels.teams
 
 import androidx.compose.material3.SnackbarHostState
 import com.tecknobit.equinox.Requester.Companion.RESPONSE_MESSAGE_KEY
+import com.tecknobit.refy.helpers.RecompositionsLocker
 import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.requester
 import com.tecknobit.refy.ui.screens.session.singleitem.TeamScreen
 import com.tecknobit.refycore.records.LinksCollection
@@ -17,7 +18,13 @@ class TeamScreenViewModel(
     initialTeam: Team
 ): TeamViewModelHelper(
     snackbarHostState = snackbarHostState
-) {
+), RecompositionsLocker {
+
+    companion object {
+
+        private var counter = 0
+
+    }
 
     private val _team = MutableStateFlow(
         value = initialTeam
@@ -25,22 +32,25 @@ class TeamScreenViewModel(
     val team: StateFlow<Team> = _team
 
     fun refreshTeam() {
-        execRefreshingRoutine(
-            currentContext = TeamScreen::class.java,
-            routine = {
-                requester.sendRequest(
-                    request = {
-                        requester.getTeam(
-                            team = _team.value
-                        )
-                    },
-                    onSuccess = { hResponse ->
-                        _team.value = Team(hResponse.getJSONObject(RESPONSE_MESSAGE_KEY))
-                    },
-                    onFailure = { showSnackbarMessage(it) }
-                )
-            }
-        )
+        if (lastCanGoes(counter)) {
+            execRefreshingRoutine(
+                currentContext = TeamScreen::class.java,
+                routine = {
+                    requester.sendRequest(
+                        request = {
+                            requester.getTeam(
+                                team = _team.value
+                            )
+                        },
+                        onSuccess = { hResponse ->
+                            _team.value = Team(hResponse.getJSONObject(RESPONSE_MESSAGE_KEY))
+                        },
+                        onFailure = { showSnackbarMessage(it) }
+                    )
+                }
+            )
+        } else
+            counter++
     }
 
     fun removeLinkFromTeam(
@@ -108,6 +118,15 @@ class TeamScreenViewModel(
             onSuccess = { },
             onFailure = { showSnackbarMessage(it) }
         )
+    }
+
+    override fun suspendRefresher() {
+        reset()
+        super.suspendRefresher()
+    }
+
+    override fun reset() {
+        counter = 0
     }
 
 }
