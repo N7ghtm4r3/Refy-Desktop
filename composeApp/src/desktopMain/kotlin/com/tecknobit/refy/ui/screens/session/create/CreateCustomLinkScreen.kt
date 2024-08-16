@@ -56,14 +56,24 @@ class CreateCustomLinkScreen(
                 containerColor = MaterialTheme.colorScheme.primaryContainer
             ),
             placeholder = Res.string.custom_link_title,
-            customContent = {
-                Column {
-                    Options()
+            leftContent = {
+                Options()
+            },
+            rightContent = {
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                ) {
                     Payload(
                         header = Res.string.resources,
                         supportList = viewModel.resourcesSupportList,
                         itemName = Res.string.key
                     )
+                }
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                ) {
                     Payload(
                         header = Res.string.fields,
                         supportList = viewModel.fieldsSupportList,
@@ -77,31 +87,31 @@ class CreateCustomLinkScreen(
     @Composable
     @NonRestartableComposable
     private fun Options() {
-        HeaderText(
-            header = Res.string.options
-        )
-        OptionsSection(
+        Column(
             modifier = Modifier
-                .padding(
-                    top = 10.dp,
-                    start = 16.dp
-                ),
-            optionKey = UNIQUE_ACCESS_KEY,
-            optionText = Res.string.unique_access
-        )
-        OptionsSection(
-            modifier = Modifier
-                .padding(
-                    start = 16.dp
-                ),
-            optionKey = EXPIRED_TIME_KEY,
-            optionText = Res.string.expires,
-            extraContent = { selected ->
-                ExpireSection(
-                    selected = selected
-                )
-            }
-        )
+                .width(350.dp)
+        ) {
+            HeaderText(
+                header = Res.string.options
+            )
+            OptionsSection(
+                modifier = Modifier
+                    .padding(
+                        top = 10.dp
+                    ),
+                optionKey = UNIQUE_ACCESS_KEY,
+                optionText = Res.string.unique_access
+            )
+            OptionsSection(
+                optionKey = EXPIRED_TIME_KEY,
+                optionText = Res.string.expires,
+                extraContent = { selected ->
+                    ExpireSection(
+                        selected = selected
+                    )
+                }
+            )
+        }
     }
 
     @Composable
@@ -198,7 +208,7 @@ class CreateCustomLinkScreen(
     @Composable
     @NonRestartableComposable
     private fun OptionsSection(
-        modifier: Modifier,
+        modifier: Modifier = Modifier,
         optionKey: String,
         optionText: StringResource,
         extraContent: @Composable ((Boolean) -> Unit)? = null
@@ -239,7 +249,8 @@ class CreateCustomLinkScreen(
         LazyColumn(
             modifier = Modifier
                 .padding(
-                    all = 16.dp
+                    start = 16.dp,
+                    end = 16.dp
                 )
                 .heightIn(
                     max = 300.dp

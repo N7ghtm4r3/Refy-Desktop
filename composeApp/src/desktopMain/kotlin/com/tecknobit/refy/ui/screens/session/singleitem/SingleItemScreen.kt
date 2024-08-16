@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
-
 package com.tecknobit.refy.ui.screens.session.singleitem
 
 import androidx.compose.foundation.ExperimentalFoundationApi

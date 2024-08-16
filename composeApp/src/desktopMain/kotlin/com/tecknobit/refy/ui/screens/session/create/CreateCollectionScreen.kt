@@ -3,7 +3,7 @@
 package com.tecknobit.refy.ui.screens.session.create
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -19,14 +19,16 @@ import androidx.compose.ui.unit.dp
 import com.github.skydoves.colorpicker.compose.ColorEnvelope
 import com.github.skydoves.colorpicker.compose.HsvColorPicker
 import com.github.skydoves.colorpicker.compose.rememberColorPickerController
-import com.tecknobit.equinoxcompose.components.EquinoxAlertDialog
 import com.tecknobit.refy.ui.generateRandomColor
 import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.localUser
 import com.tecknobit.refy.ui.toColor
 import com.tecknobit.refy.ui.utilities.ItemDescription
 import com.tecknobit.refy.ui.viewmodels.create.CreateCollectionViewModel
 import com.tecknobit.refycore.records.LinksCollection
-import refy.composeapp.generated.resources.*
+import refy.composeapp.generated.resources.Res
+import refy.composeapp.generated.resources.collection_name
+import refy.composeapp.generated.resources.invalid_collection
+import refy.composeapp.generated.resources.links
 
 class CreateCollectionScreen(
     collectionId: String?
@@ -35,8 +37,6 @@ class CreateCollectionScreen(
     invalidMessage = Res.string.invalid_collection,
     itemId = collectionId
 ) {
-
-    private lateinit var choseColor: MutableState<Boolean>
 
     init {
         viewModel = CreateCollectionViewModel(
@@ -55,31 +55,14 @@ class CreateCollectionScreen(
                     generateRandomColor()
             )
         }
-        choseColor = remember { mutableStateOf(false) }
         ScaffoldContent(
-            modifier = Modifier
-                .clickable { choseColor.value = true },
             colors = TopAppBarDefaults.largeTopAppBarColors(
                 containerColor = viewModel.collectionColor.value
             ),
             saveButtonColor = viewModel.collectionColor.value,
             placeholder = Res.string.collection_name,
-            customContent = {
-                LinksSection()
-                ChoseCollectionColor()
-            }
-        )
-    }
-
-    @Composable
-    @NonRestartableComposable
-    private fun ChoseCollectionColor() {
-        val controller = rememberColorPickerController()
-        var currentColor = remember { viewModel.collectionColor.value.copy() }
-        EquinoxAlertDialog(
-            show = choseColor,
-            title = Res.string.collection_color,
-            text = {
+            leftContent = {
+                val controller = rememberColorPickerController()
                 HsvColorPicker(
                     modifier = Modifier
                         .size(
@@ -90,16 +73,11 @@ class CreateCollectionScreen(
                     onColorChanged = { colorEnvelope: ColorEnvelope ->
                         viewModel.collectionColor.value = colorEnvelope.color
                     },
-                    initialColor = currentColor
+                    initialColor = viewModel.collectionColor.value.copy()
                 )
             },
-            onDismissAction = {
-                viewModel.collectionColor.value = currentColor
-                choseColor.value = false
-            },
-            confirmAction = {
-                currentColor = viewModel.collectionColor.value
-                choseColor.value = false
+            rightContent = {
+                LinksSection()
             }
         )
     }
@@ -109,6 +87,10 @@ class CreateCollectionScreen(
     private fun LinksSection() {
         val keyboardController = LocalSoftwareKeyboardController.current
         CustomSection(
+            modifier = Modifier
+                .padding(
+                    end = 16.dp
+                ),
             header = Res.string.links
         ) {
             items(

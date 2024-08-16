@@ -16,6 +16,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
@@ -106,8 +107,8 @@ abstract class CreateScreen<T : RefyItem, V : CreateItemViewModel<T>>(
         ),
         placeholder: StringResource,
         saveButtonColor: Color = MaterialTheme.colorScheme.primaryContainer,
-        customContent: @Composable () -> Unit,
-        extraContent: (@Composable () -> Unit)? = null
+        leftContent: @Composable ColumnScope.() -> Unit,
+        rightContent: @Composable ColumnScope.() -> Unit
     ) {
         Scaffold(
             snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
@@ -129,18 +130,37 @@ abstract class CreateScreen<T : RefyItem, V : CreateItemViewModel<T>>(
                 )
             }
         ) { paddingValues ->
-            Column (
+            Row(
                 modifier = Modifier
+                    .fillMaxWidth()
                     .padding(
                         top = paddingValues.calculateTopPadding() + 16.dp,
                         bottom = paddingValues.calculateBottomPadding() + 16.dp
                     )
             ) {
-                extraContent?.invoke()
-                DescriptionSection(
+                Column(
                     modifier = Modifier
+                        .weight(1f)
+                        .fillMaxHeight(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    content = {
+                        leftContent.invoke(this)
+                        DescriptionSection(
+                            modifier = Modifier
+                                .padding(
+                                    top = 16.dp
+                                )
+                                .width(350.dp)
+                        )
+                    }
                 )
-                customContent.invoke()
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxHeight(),
+                    content = rightContent
+                )
             }
         }
     }
@@ -234,20 +254,15 @@ abstract class CreateScreen<T : RefyItem, V : CreateItemViewModel<T>>(
 
     @Composable
     @NonRestartableComposable
-    private fun DescriptionSection(
-        modifier: Modifier
+    protected fun DescriptionSection(
+        modifier: Modifier = Modifier
     ) {
         EquinoxTextField(
             modifier = modifier
-                .padding(
-                    start = 16.dp,
-                    end = 16.dp
-                )
                 .onFocusChanged {
                     if (it.isFocused)
                         editItemName.value = false
-                }
-                .fillMaxWidth(),
+                },
             isTextArea = true,
             value = viewModel.itemDescription,
             label = stringResource(Res.string.description),
@@ -263,6 +278,7 @@ abstract class CreateScreen<T : RefyItem, V : CreateItemViewModel<T>>(
     @Composable
     @NonRestartableComposable
     protected fun CustomSection(
+        modifier: Modifier = Modifier,
         header: StringResource,
         content: LazyListScope.() -> Unit
     ) {
@@ -270,6 +286,7 @@ abstract class CreateScreen<T : RefyItem, V : CreateItemViewModel<T>>(
             header = header
         )
         LazyColumn (
+            modifier = modifier,
             contentPadding = PaddingValues(
                 top = 5.dp,
                 bottom = 5.dp

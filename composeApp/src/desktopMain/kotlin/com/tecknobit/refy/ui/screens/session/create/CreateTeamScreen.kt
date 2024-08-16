@@ -6,7 +6,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ImageSearch
 import androidx.compose.material3.*
@@ -15,7 +15,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.ContentScale
@@ -77,13 +76,13 @@ class CreateTeamScreen(
                 containerColor = MaterialTheme.colorScheme.primaryContainer
             ),
             placeholder = Res.string.team_name,
-            extraContent = {
+            leftContent = {
                 if(viewModel.logoPic.value.isNotEmpty())
                     LogoSet()
                 else
                     LogoNotSet()
             },
-            customContent = {
+            rightContent = {
                 MembersSection()
             }
         )
@@ -92,44 +91,45 @@ class CreateTeamScreen(
     @Composable
     @NonRestartableComposable
     private fun LogoSet() {
-        val shape = RoundedCornerShape(
-            size = 5.dp
-        )
-        AsyncImage(
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(200.dp)
                 .padding(
-                    start = 16.dp,
-                    end = 16.dp,
-                    bottom = 16.dp
-                )
-                .clip(
-                    shape = shape
-                )
-                .border(
-                    width = 2.dp,
-                    color = MaterialTheme.colorScheme.primaryContainer,
-                    shape = shape
-                )
-                .clickable { pickProfilePic.value = true },
-            imageLoader = imageLoader,
-            model = ImageRequest.Builder(LocalPlatformContext.current)
-                .data(
-                    if (itemExists && viewModel.logoPic.value.contains(item!!.id)) {
-                        getCompleteMediaItemUrl(
-                            relativeMediaUrl = viewModel.logoPic.value
-                        )
-                    } else
-                        viewModel.logoPic.value
-                )
-                .crossfade(enable = true)
-                .crossfade(500)
-                //.error() //TODO: TO SET THE ERROR IMAGE CORRECTLY
-                .build(),
-            contentDescription = null,
-            contentScale = ContentScale.Crop
-        )
+                    all = 16.dp
+                ),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            val shape = CircleShape
+            AsyncImage(
+                modifier = Modifier
+                    .size(225.dp)
+                    .clip(
+                        shape = shape
+                    )
+                    .border(
+                        width = 2.dp,
+                        color = MaterialTheme.colorScheme.primaryContainer,
+                        shape = shape
+                    )
+                    .clickable { pickProfilePic.value = true },
+                imageLoader = imageLoader,
+                model = ImageRequest.Builder(LocalPlatformContext.current)
+                    .data(
+                        if (itemExists && viewModel.logoPic.value.contains(item!!.id)) {
+                            getCompleteMediaItemUrl(
+                                relativeMediaUrl = viewModel.logoPic.value
+                            )
+                        } else
+                            viewModel.logoPic.value
+                    )
+                    .crossfade(enable = true)
+                    .crossfade(500)
+                    //.error() //TODO: TO SET THE ERROR IMAGE CORRECTLY
+                    .build(),
+                contentDescription = null,
+                contentScale = ContentScale.Crop
+            )
+        }
     }
 
     @Composable
@@ -142,25 +142,17 @@ class CreateTeamScreen(
         val color = MaterialTheme.colorScheme.primary
         Column (
             modifier = Modifier
-                .fillMaxWidth()
+                .size(225.dp)
                 .padding(
-                    start = 16.dp,
-                    end = 16.dp,
-                    bottom = 16.dp
+                    all = 16.dp
                 )
-                .height(150.dp)
                 .drawBehind {
-                    drawRoundRect(
+                    drawCircle(
                         color = color,
-                        style = stroke,
-                        cornerRadius = CornerRadius(16.dp.toPx())
+                        style = stroke
                     )
                 }
-                .clip(
-                    RoundedCornerShape(
-                        size = 5.dp
-                    )
-                )
+                .clip(CircleShape)
                 .clickable { pickProfilePic.value = true },
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
@@ -197,6 +189,10 @@ class CreateTeamScreen(
         val keyboardController = LocalSoftwareKeyboardController.current
         val currentUsers = viewModel.potentialMembers.collectAsState().value
         CustomSection(
+            modifier = Modifier
+                .padding(
+                    end = 16.dp
+                ),
             header = Res.string.members
         ) {
             items(
