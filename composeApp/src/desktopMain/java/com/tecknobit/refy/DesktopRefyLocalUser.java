@@ -1,3 +1,5 @@
+package com.tecknobit.refy;
+
 import com.tecknobit.refycore.helpers.RefyLocalUser;
 
 import java.util.prefs.BackingStoreException;

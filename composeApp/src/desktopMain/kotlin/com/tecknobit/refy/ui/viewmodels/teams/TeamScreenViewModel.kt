@@ -33,20 +33,15 @@ class TeamScreenViewModel(
 
     fun refreshTeam() {
         if (lastCanGoes(counter)) {
-            execRefreshingRoutine(
+            sendFetchRequest(
                 currentContext = TeamScreen::class.java,
-                routine = {
-                    requester.sendRequest(
-                        request = {
-                            requester.getTeam(
-                                team = _team.value
-                            )
-                        },
-                        onSuccess = { hResponse ->
-                            _team.value = Team(hResponse.getJSONObject(RESPONSE_MESSAGE_KEY))
-                        },
-                        onFailure = { showSnackbarMessage(it) }
+                request = {
+                    requester.getTeam(
+                        team = _team.value
                     )
+                },
+                onSuccess = { hResponse ->
+                    _team.value = Team(hResponse.getJSONObject(RESPONSE_MESSAGE_KEY))
                 }
             )
         } else
@@ -118,11 +113,6 @@ class TeamScreenViewModel(
             onSuccess = { },
             onFailure = { showSnackbarMessage(it) }
         )
-    }
-
-    override fun suspendRefresher() {
-        reset()
-        super.suspendRefresher()
     }
 
     override fun reset() {

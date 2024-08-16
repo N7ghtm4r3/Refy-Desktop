@@ -1,6 +1,8 @@
 package com.tecknobit.refy.ui.screens.navigation
 
-import DesktopRefyLocalUser
+import FrequencyVisibility
+import OctocatKDUConfig
+import UpdaterDialog
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
@@ -13,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tecknobit.equinox.inputs.InputValidator.DEFAULT_LANGUAGE
 import com.tecknobit.equinox.inputs.InputValidator.LANGUAGES_SUPPORTED
+import com.tecknobit.refy.DesktopRefyLocalUser
 import com.tecknobit.refy.ui.screens.Screen
 import com.tecknobit.refy.ui.screens.Screen.Routes.CONNECT_SCREEN
 import com.tecknobit.refy.ui.screens.Screen.Routes.HOME
@@ -23,6 +26,7 @@ import navigator
 import org.jetbrains.compose.resources.stringResource
 import refy.composeapp.generated.resources.Res
 import refy.composeapp.generated.resources.app_name
+import refy.composeapp.generated.resources.app_version
 import java.util.*
 
 class Splashscreen : Screen() {
@@ -78,17 +82,19 @@ class Splashscreen : Screen() {
     private fun NavToFirstScreen() {
         var startApp by remember { mutableStateOf(true) }
         setLocale()
-        //TODO: TO IMPLEMENT
-        /*UpdaterDialog(
-            appName = stringResource(Res.string.app_name),
-            currentVersion = stringResource(Res.string.app_version),
-            onUpdateAvailable = {
-                startApp = false
-            },
-            dismissAction = {
-                startApp = true
-            }
-        )*/
+        UpdaterDialog(
+            config = OctocatKDUConfig(
+                frequencyVisibility = FrequencyVisibility.ONCE_PER_DAY,
+                appName = stringResource(Res.string.app_name),
+                currentVersion = stringResource(Res.string.app_version),
+                onUpdateAvailable = {
+                    startApp = false
+                },
+                dismissAction = {
+                    startApp = true
+                }
+            )
+        )
         if (startApp) {
             requester = RefyRequester(
                 host = localUser.hostAddress,

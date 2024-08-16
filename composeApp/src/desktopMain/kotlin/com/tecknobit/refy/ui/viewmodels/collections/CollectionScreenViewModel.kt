@@ -10,7 +10,7 @@ import com.tecknobit.refycore.records.links.RefyLink
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-class CollectionActivityViewModel(
+class CollectionScreenViewModel(
     snackbarHostState: SnackbarHostState,
     val initialCollection: LinksCollection
 ) : LinksCollectionViewModelHelper(
@@ -30,21 +30,16 @@ class CollectionActivityViewModel(
 
     fun refreshCollection() {
         if (lastCanGoes(counter)) {
-            execRefreshingRoutine(
+            sendFetchRequest(
                 currentContext = CollectionScreen::class.java,
-                routine = {
-                    requester.sendRequest(
-                        request = {
-                            requester.getCollection(
-                                collectionId = initialCollection.id
-                            )
-                        },
-                        onSuccess = { response ->
-                            _collection.value = LinksCollection.getInstance(
-                                response.getJSONObject(RESPONSE_MESSAGE_KEY)
-                            )
-                        },
-                        onFailure = { showSnackbarMessage(it) }
+                request = {
+                    requester.getCollection(
+                        collectionId = initialCollection.id
+                    )
+                },
+                onSuccess = { response ->
+                    _collection.value = LinksCollection.getInstance(
+                        response.getJSONObject(RESPONSE_MESSAGE_KEY)
                     )
                 }
             )
@@ -67,11 +62,6 @@ class CollectionActivityViewModel(
             onSuccess = {},
             onFailure = { showSnackbarMessage(it) }
         )
-    }
-
-    override fun suspendRefresher() {
-        reset()
-        super.suspendRefresher()
     }
 
     override fun reset() {

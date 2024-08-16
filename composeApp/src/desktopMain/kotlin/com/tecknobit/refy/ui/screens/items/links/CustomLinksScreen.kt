@@ -28,7 +28,9 @@ class CustomLinksScreen : LinksScreen<CustomRefyLink>(
             }
         )
         links = viewModel.links.collectAsState().value
-        LinksList()
+        ManagedContent {
+            LinksList()
+        }
     }
 
     override fun executeFabAction() {

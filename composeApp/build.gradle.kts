@@ -46,6 +46,7 @@ kotlin {
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
+            implementation("com.github.N7ghtm4r3:OctocatKDU:1.0.4")
         }
     }
 }

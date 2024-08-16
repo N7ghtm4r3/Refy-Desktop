@@ -57,8 +57,11 @@ abstract class SingleItemScreen <T : RefyItem> (
         RefyTheme {
             if (!itemExists)
                 InvalidItemUi()
-            else
-                validItemUi.invoke()
+            else {
+                ManagedContent {
+                    validItemUi.invoke()
+                }
+            }
         }
     }
 

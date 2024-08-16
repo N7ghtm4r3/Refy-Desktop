@@ -29,23 +29,18 @@ class CustomLinkScreenViewModel(
 
     fun refreshLink() {
         if (lastCanGoes(counter)) {
-            execRefreshingRoutine(
+            sendFetchRequest(
                 currentContext = CustomLinkScreen::class.java,
-                routine = {
-                    requester.sendRequest(
-                        request = {
-                            requester.getCustomLink(
-                                link = _customLink.value
-                            )
-                        },
-                        onSuccess = { response ->
-                            _customLink.value = CustomRefyLink(
-                                response.getJSONObject(
-                                    RESPONSE_MESSAGE_KEY
-                                )
-                            )
-                        },
-                        onFailure = { showSnackbarMessage(it) }
+                request = {
+                    requester.getCustomLink(
+                        link = _customLink.value
+                    )
+                },
+                onSuccess = { response ->
+                    _customLink.value = CustomRefyLink(
+                        response.getJSONObject(
+                            RESPONSE_MESSAGE_KEY
+                        )
                     )
                 }
             )
@@ -66,11 +61,6 @@ class CustomLinkScreenViewModel(
             onSuccess = { onSuccess.invoke() },
             onFailure = { showSnackbarMessage(it) }
         )
-    }
-
-    override fun suspendRefresher() {
-        reset()
-        super.suspendRefresher()
     }
 
     override fun reset() {

@@ -45,40 +45,42 @@ class CollectionListScreen : ItemScreen(), RefyLinkUtilities<RefyLink>, LinksCol
 
     @Composable
     override fun ShowContent() {
-        viewModel.setActiveContext(context)
-        LifecycleManager(
-            onCreate = {
-                viewModel.setCurrentUserOwnedLinks()
-                screenViewModel = viewModel
-                viewModel.getCollections()
-            },
-            onResume = {
-                screenViewModel = viewModel
-                restartScreenRefreshing()
-            },
-            onDispose = {
-                suspendScreenRefreshing()
-            }
-        )
-        collections = viewModel.collections.collectAsState().value
-        if(collections.isEmpty()) {
-            EmptyListUI(
-                icon = Icons.Default.PlaylistRemove,
-                subText = stringResource(Res.string.no_collections_yet)
+        ManagedContent {
+            viewModel.setActiveContext(context)
+            LifecycleManager(
+                onCreate = {
+                    viewModel.setCurrentUserOwnedLinks()
+                    screenViewModel = viewModel
+                    viewModel.getCollections()
+                },
+                onResume = {
+                    screenViewModel = viewModel
+                    restartScreenRefreshing()
+                },
+                onDispose = {
+                    suspendScreenRefreshing()
+                }
             )
-        } else {
-            LazyVerticalGrid(
-                columns = GridCells.Adaptive(350.dp),
-                horizontalArrangement = Arrangement.spacedBy(10.dp),
-                verticalArrangement = Arrangement.spacedBy(10.dp)
-            ) {
-                items(
-                    items = collections,
-                    key = { collection -> collection.id }
-                ) { collection ->
-                    CollectionCard(
-                        collection = collection
-                    )
+            collections = viewModel.collections.collectAsState().value
+            if (collections.isEmpty()) {
+                EmptyListUI(
+                    icon = Icons.Default.PlaylistRemove,
+                    subText = stringResource(Res.string.no_collections_yet)
+                )
+            } else {
+                LazyVerticalGrid(
+                    columns = GridCells.Adaptive(350.dp),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    verticalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    items(
+                        items = collections,
+                        key = { collection -> collection.id }
+                    ) { collection ->
+                        CollectionCard(
+                            collection = collection
+                        )
+                    }
                 }
             }
         }

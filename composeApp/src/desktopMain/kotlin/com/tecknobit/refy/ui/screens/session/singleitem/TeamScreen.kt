@@ -66,6 +66,7 @@ class TeamScreen(
     override fun ShowContent() {
         LifecycleManager(
             onDispose = {
+                viewModel.reset()
                 viewModel.suspendRefresher()
             }
         )

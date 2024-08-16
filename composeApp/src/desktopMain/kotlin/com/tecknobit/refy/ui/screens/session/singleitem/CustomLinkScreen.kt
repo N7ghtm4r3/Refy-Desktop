@@ -45,6 +45,7 @@ class CustomLinkScreen(
     override fun ShowContent() {
         LifecycleManager(
             onDispose = {
+                viewModel.reset()
                 viewModel.suspendRefresher()
             }
         )

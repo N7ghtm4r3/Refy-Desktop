@@ -26,7 +26,7 @@ import com.tecknobit.refy.ui.utilities.ExpandTeamMembers
 import com.tecknobit.refy.ui.utilities.LinksCollectionUtilities
 import com.tecknobit.refy.ui.utilities.RefyLinkUtilities
 import com.tecknobit.refy.ui.utilities.getItemRelations
-import com.tecknobit.refy.ui.viewmodels.collections.CollectionActivityViewModel
+import com.tecknobit.refy.ui.viewmodels.collections.CollectionScreenViewModel
 import com.tecknobit.refycore.records.LinksCollection
 import com.tecknobit.refycore.records.links.RefyLink
 import refy.composeapp.generated.resources.Res
@@ -40,7 +40,7 @@ class CollectionScreen(
     itemId = collectionId
 ), RefyLinkUtilities<RefyLink>, LinksCollectionUtilities {
 
-    private lateinit var viewModel: CollectionActivityViewModel
+    private lateinit var viewModel: CollectionScreenViewModel
 
     init {
         prepareView()
@@ -50,6 +50,7 @@ class CollectionScreen(
     override fun ShowContent() {
         LifecycleManager(
             onDispose = {
+                viewModel.reset()
                 viewModel.suspendRefresher()
             }
         )
@@ -173,7 +174,7 @@ class CollectionScreen(
     override fun prepareView() {
         super.prepareView()
         if (itemExists) {
-            viewModel = CollectionActivityViewModel(
+            viewModel = CollectionScreenViewModel(
                 snackbarHostState = snackbarHostState,
                 initialCollection = item!!
             )

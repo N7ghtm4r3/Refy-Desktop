@@ -39,9 +39,11 @@ class LinkListScreen : LinksScreen<RefyLink>(
                 suspendScreenRefreshing()
             }
         )
-        SetFabAction()
-        links = viewModel.links.collectAsState().value
-        LinksList()
+        ManagedContent {
+            SetFabAction()
+            links = viewModel.links.collectAsState().value
+            LinksList()
+        }
     }
 
     @Composable

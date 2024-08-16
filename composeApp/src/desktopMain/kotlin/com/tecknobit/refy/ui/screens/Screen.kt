@@ -1,16 +1,25 @@
 package com.tecknobit.refy.ui.screens
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Lifecycle.Event.*
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
 import com.tecknobit.apimanager.apis.ConsolePainter
+import com.tecknobit.equinoxcompose.components.ErrorUI
 import com.tecknobit.equinoxcompose.helpers.EquinoxViewModel
+import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.localUser
 import navigator
+import org.jetbrains.compose.resources.stringResource
+import refy.composeapp.generated.resources.Res
+import refy.composeapp.generated.resources.server_currently_offline
 
 abstract class Screen {
 
@@ -19,6 +28,10 @@ abstract class Screen {
     protected val context = this::class.java
 
     companion object {
+
+        lateinit var isServerOffline: MutableState<Boolean>
+
+        lateinit var haveBeenDisconnected: MutableState<Boolean>
 
         val snackbarHostState = SnackbarHostState()
 
@@ -51,7 +64,37 @@ abstract class Screen {
     @Composable
     abstract fun ShowContent()
 
-    //TODO: TO REMOVE
+    @Composable
+    protected fun ManagedContent(
+        content: @Composable () -> Unit
+    ) {
+        InstantiateSessionFlags()
+        AnimatedVisibility(
+            visible = isServerOffline.value,
+            enter = fadeIn(),
+            exit = fadeOut()
+        ) {
+            ServerOfflineUi()
+        }
+        AnimatedVisibility(
+            visible = !isServerOffline.value,
+            enter = fadeIn(),
+            exit = fadeOut()
+        ) {
+            if (haveBeenDisconnected.value)
+                haveBeenDisconnected()
+            else
+                content.invoke()
+        }
+    }
+
+    @Composable
+    private fun InstantiateSessionFlags() {
+        isServerOffline = remember { mutableStateOf(false) }
+        haveBeenDisconnected = remember { mutableStateOf(false) }
+    }
+
+    //TODO: TO REMOVE WHEN CREATED THE RELATED EQUINOXScreen
     private val painter = ConsolePainter()
 
     @Composable
@@ -99,6 +142,21 @@ abstract class Screen {
                 lifecycle.removeObserver(observer)
             }
         }
+    }
+
+    @Composable
+    @NonRestartableComposable
+    private fun ServerOfflineUi() {
+        ErrorUI(
+            errorIcon = Icons.Default.Warning,
+            errorMessage = stringResource(Res.string.server_currently_offline),
+            retryText = ""
+        )
+    }
+
+    private fun haveBeenDisconnected() {
+        localUser.clear()
+        navigator.navigate(Routes.CONNECT_SCREEN.name)
     }
 
     protected fun navToDedicatedItemScreen(

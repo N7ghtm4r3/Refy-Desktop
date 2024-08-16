@@ -49,39 +49,41 @@ class TeamsListScreen: ItemScreen(), TeamsUtilities, RefyLinkUtilities<RefyLink>
 
     @Composable
     override fun ShowContent() {
-        viewModel.setActiveContext(context)
-        LifecycleManager(
-            onCreate = {
-                screenViewModel = viewModel
-                viewModel.getTeams()
-            },
-            onResume = {
-                screenViewModel = viewModel
-                restartScreenRefreshing()
-            },
-            onDispose = {
-                suspendScreenRefreshing()
-            }
-        )
-        teams = viewModel.teams.collectAsState().value
-        if(teams.isEmpty()) {
-            EmptyListUI(
-                icon = Icons.Default.GroupOff,
-                subText = stringResource(Res.string.you_re_not_on_any_team)
+        ManagedContent {
+            viewModel.setActiveContext(context)
+            LifecycleManager(
+                onCreate = {
+                    screenViewModel = viewModel
+                    viewModel.getTeams()
+                },
+                onResume = {
+                    screenViewModel = viewModel
+                    restartScreenRefreshing()
+                },
+                onDispose = {
+                    suspendScreenRefreshing()
+                }
             )
-        } else {
-            LazyVerticalGrid(
-                columns = GridCells.Adaptive(350.dp),
-                horizontalArrangement = Arrangement.spacedBy(10.dp),
-                verticalArrangement = Arrangement.spacedBy(10.dp)
-            ) {
-                items(
-                    items = teams,
-                    key = { team -> team.id }
-                ) { team ->
-                    TeamCard(
-                        team = team
-                    )
+            teams = viewModel.teams.collectAsState().value
+            if (teams.isEmpty()) {
+                EmptyListUI(
+                    icon = Icons.Default.GroupOff,
+                    subText = stringResource(Res.string.you_re_not_on_any_team)
+                )
+            } else {
+                LazyVerticalGrid(
+                    columns = GridCells.Adaptive(350.dp),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    verticalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    items(
+                        items = teams,
+                        key = { team -> team.id }
+                    ) { team ->
+                        TeamCard(
+                            team = team
+                        )
+                    }
                 }
             }
         }
