@@ -93,7 +93,9 @@ class CustomLinkScreen(
                 floatingActionButton = {
                     FloatingActionButton(
                         onClick = {
-                            // TODO: VIEW THE LINK AS PREVIEW, CHECK HOW TO IMPLEMENT
+                            openLink(
+                                link = item!!.getPreviewModeUrl(localUser.hostAddress)
+                            )
                         }
                     ) {
                         Icon(
