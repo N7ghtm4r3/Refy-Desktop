@@ -1,4 +1,4 @@
-package com.tecknobit.refy.ui.viewmodels.teams
+package com.tecknobit.refy.viewmodels.teams
 
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.snapshots.SnapshotStateList

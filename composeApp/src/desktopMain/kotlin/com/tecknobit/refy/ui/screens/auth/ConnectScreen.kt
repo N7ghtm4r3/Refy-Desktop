@@ -23,8 +23,8 @@ import androidx.compose.ui.unit.sp
 import com.tecknobit.equinox.inputs.InputValidator.*
 import com.tecknobit.equinoxcompose.components.EquinoxOutlinedTextField
 import com.tecknobit.refy.ui.screens.Screen
-import com.tecknobit.refy.ui.utilities.RefyLinkUtilities
-import com.tecknobit.refy.ui.viewmodels.ConnectViewModel
+import com.tecknobit.refy.utilities.RefyLinkUtilities
+import com.tecknobit.refy.viewmodels.ConnectViewModel
 import com.tecknobit.refycore.helpers.RefyInputValidator.isTagNameValid
 import com.tecknobit.refycore.records.links.RefyLink
 import displayFontFamily
@@ -32,6 +32,13 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import refy.composeapp.generated.resources.*
 
+/**
+ * The **ConnectScreen** class is useful to manage the authentication requests of the user
+ *
+ * @author N7ghtm4r3 - Tecknobit
+ * @see Screen
+ * @see RefyLinkUtilities
+ */
 class ConnectScreen : Screen(), RefyLinkUtilities<RefyLink> {
 
     /**
@@ -46,6 +53,11 @@ class ConnectScreen : Screen(), RefyLinkUtilities<RefyLink> {
         snackbarHostState = snackbarHostState
     )
 
+    /**
+     * Function to display the content of the screen
+     *
+     * No-any params required
+     */
     @Composable
     override fun ShowContent() {
         viewModel.isSignUp = remember { mutableStateOf(true) }

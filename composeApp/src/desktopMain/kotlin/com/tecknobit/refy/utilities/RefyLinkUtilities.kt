@@ -1,4 +1,4 @@
-package com.tecknobit.refy.ui.utilities
+package com.tecknobit.refy.utilities
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddLink
@@ -31,6 +31,14 @@ import java.awt.datatransfer.Clipboard
 import java.awt.datatransfer.StringSelection
 import java.net.URI
 
+/**
+ * The **RefyLinkUtilities** interface is useful to manage the [RefyLink] giving some
+ * common utilities that appear in different part of the application
+ *
+ * @author N7ghtm4r3 - Tecknobit
+ *
+ * @param T: the type of the link between [RefyLink] and [CustomRefyLink]
+ */
 interface RefyLinkUtilities<T : RefyLink> {
 
     companion object {
@@ -42,6 +50,15 @@ interface RefyLinkUtilities<T : RefyLink> {
 
     }
 
+    /**
+     * Function to add links to a collection
+     *
+     * @param viewModel: the view model used to execute this operation
+     * @param show: whether show the [EquinoxAlertDialog] where is possible chose the links
+     * @param links: the list of links identifiers to share with the collection
+     * @param collection: the collection where add the links
+     * @param tint: the tint for the [OptionButton]
+     */
     @Composable
     @NonRestartableComposable
     fun AddLinksButton(
@@ -67,6 +84,14 @@ interface RefyLinkUtilities<T : RefyLink> {
         )
     }
 
+    /**
+     * Function to execute the action to add links to a collection
+     *
+     * @param viewModel: the view model used to execute this operation
+     * @param show: whether show the [EquinoxAlertDialog] where is possible chose the links
+     * @param availableLinks: the list of available links identifiers to share with the collection
+     * @param collection: the collection where add the links
+     */
     @Composable
     @NonRestartableComposable
     private fun AddLinksToCollection(
@@ -91,6 +116,15 @@ interface RefyLinkUtilities<T : RefyLink> {
         )
     }
 
+    /**
+     * Function to add links to a teams
+     *
+     * @param viewModel: the view model used to execute this operation
+     * @param show: whether show the [EquinoxAlertDialog] where is possible chose the links
+     * @param links: the list of links identifiers where share with the team
+     * @param team: the team where add the links
+     * @param tint: the tint for the [OptionButton]
+     */
     @Composable
     @NonRestartableComposable
     fun AddLinksButton(
@@ -116,6 +150,14 @@ interface RefyLinkUtilities<T : RefyLink> {
         )
     }
 
+    /**
+     * Function to execute the action to add links to a teams
+     *
+     * @param viewModel: the view model used to execute this operation
+     * @param show: whether show the [EquinoxAlertDialog] where is possible chose the links
+     * @param availableLinks: the list of available links identifiers where share with the team
+     * @param team: the team where add the links
+     */
     @Composable
     @NonRestartableComposable
     private fun AddLinksToTeam(
@@ -140,6 +182,12 @@ interface RefyLinkUtilities<T : RefyLink> {
         )
     }
 
+    /**
+     * Function to share a link outside the application
+     *
+     * @param link: the link to share
+     * @param snackbarHostState: the host to launch the snackbar messages
+     */
     @Composable
     @NonRestartableComposable
     fun ShareButton(
@@ -153,6 +201,13 @@ interface RefyLinkUtilities<T : RefyLink> {
         )
     }
 
+    /**
+     * Function to share a link outside the application
+     *
+     * @param snackbarHostState: the host to launch the snackbar messages
+     * @param link: the link to share
+     * @param tint: the tint for the [OptionButton]
+     */
     @Composable
     @NonRestartableComposable
     fun ShareButton(
@@ -176,6 +231,12 @@ interface RefyLinkUtilities<T : RefyLink> {
         }
     }
 
+    /**
+     * Function to show the reference link for the secure view
+     *
+     * @param snackbarHostState: the host to launch the snackbar messages
+     * @param link: the link to show
+     */
     @Composable
     @NonRestartableComposable
     fun ViewLinkReferenceButton(
@@ -197,6 +258,14 @@ interface RefyLinkUtilities<T : RefyLink> {
         }
     }
 
+    /**
+     * Function to delete a link
+     *
+     * @param viewModel: the view model used to execute this operation
+     * @param deleteLink: whether show the warn [EquinoxAlertDialog] about the link deletion
+     * @param link: the link to delete
+     * @param tint: the tint for the [OptionButton]
+     */
     @Composable
     @NonRestartableComposable
     fun DeleteLinkButton(
@@ -218,6 +287,13 @@ interface RefyLinkUtilities<T : RefyLink> {
         )
     }
 
+    /**
+     * Function to execute the action to delete a link
+     *
+     * @param viewModel: the view model used to execute this operation
+     * @param show: whether show the warn [EquinoxAlertDialog] about the link deletion
+     * @param link: the link to delete
+     */
     @Composable
     @NonRestartableComposable
     private fun DeleteLink(
@@ -248,6 +324,11 @@ interface RefyLinkUtilities<T : RefyLink> {
         )
     }
 
+    /**
+     * Function to open a link
+     *
+     * @param link: the link to open
+     */
     fun openLink(
         link: T
     ) {
@@ -256,12 +337,23 @@ interface RefyLinkUtilities<T : RefyLink> {
         )
     }
 
+    /**
+     * Function to open a link
+     *
+     * @param link: the link url to open
+     */
     fun openLink(
         link: String
     ) {
         Desktop.getDesktop().browse(URI(link))
     }
 
+    /**
+     * Function for the security view of a link
+     *
+     * @param snackbarHostState: the host to launch the snackbar messages
+     * @param link: the link from show its reference link value
+     */
     fun showLinkReference(
         snackbarHostState: SnackbarHostState,
         link: T
@@ -271,6 +363,12 @@ interface RefyLinkUtilities<T : RefyLink> {
         }
     }
 
+    /**
+     * Function to share a link
+     *
+     * @param snackbarHostState: the host to launch the snackbar messages
+     * @param link: the link url to share
+     */
     fun shareLink(
         snackbarHostState: SnackbarHostState,
         link: T

@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tecknobit.equinox.inputs.InputValidator.DEFAULT_LANGUAGE
 import com.tecknobit.equinox.inputs.InputValidator.LANGUAGES_SUPPORTED
-import com.tecknobit.refy.DesktopRefyLocalUser
+import com.tecknobit.refy.helpers.DesktopRefyLocalUser
 import com.tecknobit.refy.ui.screens.Screen
 import com.tecknobit.refy.ui.screens.Screen.Routes.CONNECT_SCREEN
 import com.tecknobit.refy.ui.screens.Screen.Routes.HOME
@@ -29,16 +29,34 @@ import refy.composeapp.generated.resources.app_name
 import refy.composeapp.generated.resources.app_version
 import java.util.*
 
+/**
+ * The **Splashscreen** class is the entry point of the application
+ *
+ * @author N7ghtm4r3 - Tecknobit
+ * @see Screen
+ */
 class Splashscreen : Screen() {
 
     companion object {
 
+        /**
+         * **localUser** the user of the current logged-in session, used to make the requests to the
+         * backed
+         */
         val localUser = DesktopRefyLocalUser()
 
+        /**
+         * **requester** -> the instance to manage the requests with the backend
+         */
         lateinit var requester: RefyRequester
 
     }
 
+    /**
+     * Function to display the content of the screen
+     *
+     * No-any params required
+     */
     @Composable
     override fun ShowContent() {
         Column (
@@ -78,6 +96,12 @@ class Splashscreen : Screen() {
         NavToFirstScreen()
     }
 
+    /**
+     * Function to get the first screen to display, this is based on whether the [localUser]
+     * is already authenticated or not
+     *
+     * No-any params required
+     */
     @Composable
     private fun NavToFirstScreen() {
         var startApp by remember { mutableStateOf(true) }

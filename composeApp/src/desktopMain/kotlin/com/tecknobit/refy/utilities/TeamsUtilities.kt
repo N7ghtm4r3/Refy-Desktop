@@ -1,4 +1,4 @@
-package com.tecknobit.refy.ui.utilities
+package com.tecknobit.refy.utilities
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ExitToApp
@@ -16,8 +16,24 @@ import com.tecknobit.refycore.records.Team
 import navigator
 import refy.composeapp.generated.resources.*
 
+/**
+ * The **TeamsUtilities** interface is useful to manage the [Team] giving some
+ * common utilities that appear in different part of the application
+ *
+ * @author N7ghtm4r3 - Tecknobit
+ *
+ */
 interface TeamsUtilities {
 
+    /**
+     * Function to share the collections with a team
+     *
+     * @param viewModel: the view model used to execute this operation
+     * @param show: whether show the [EquinoxAlertDialog] where is possible chose the teams
+     * @param collections: the list of collections identifiers to share in the team
+     * @param team: the team where share that collections
+     * @param tint: the tint for the [OptionButton]
+     */
     @Composable
     @NonRestartableComposable
     fun AddCollectionsButton(
@@ -43,6 +59,14 @@ interface TeamsUtilities {
         )
     }
 
+    /**
+     * Function to execute the action to share the collections with a team
+     *
+     * @param viewModel: the view model used to execute this operation
+     * @param show: whether show the [EquinoxAlertDialog] where is possible chose the teams
+     * @param availableCollections: the list of available collections identifiers to share in the team
+     * @param team: the team where share that collections
+     */
     @Composable
     @NonRestartableComposable
     private fun AddCollectionsToTeam(
@@ -67,6 +91,15 @@ interface TeamsUtilities {
         )
     }
 
+    /**
+     * Function to delete a team
+     *
+     * @param goBack: whether after the action execute needs to navigation back
+     * @param viewModel: the view model used to execute this operation
+     * @param deleteTeam: whether show the warn [EquinoxAlertDialog] about the team deletion
+     * @param team: the team to delete
+     * @param tint: the tint for the [OptionButton]
+     */
     @Composable
     @NonRestartableComposable
     fun DeleteTeamButton(
@@ -90,6 +123,14 @@ interface TeamsUtilities {
         )
     }
 
+    /**
+     * Function to execute the deletion a team
+     *
+     * @param goBack: whether after the action execute needs to navigation back
+     * @param viewModel: the view model used to execute this operation
+     * @param show: whether show the warn [EquinoxAlertDialog] about the team deletion
+     * @param team: the team to delete
+     */
     @Composable
     @NonRestartableComposable
     private fun DeleteTeam(
@@ -124,6 +165,15 @@ interface TeamsUtilities {
         )
     }
 
+    /**
+     * Function to leave from a team
+     *
+     * @param goBack: whether after the action execute needs to navigation back
+     * @param viewModel: the view model used to execute this operation
+     * @param leaveTeam: whether show the warn [EquinoxAlertDialog] about the team leaving
+     * @param team: the team from leave
+     * @param tint: the tint for the [OptionButton]
+     */
     @Composable
     @NonRestartableComposable
     fun LeaveTeamButton(
@@ -148,6 +198,14 @@ interface TeamsUtilities {
         )
     }
 
+    /**
+     * Function to leave from a team
+     *
+     * @param goBack: whether after the action execute needs to navigation back
+     * @param viewModel: the view model used to execute this operation
+     * @param show: whether show the warn [EquinoxAlertDialog] about the team leaving
+     * @param team: the team from leave
+     */
     @Composable
     @NonRestartableComposable
     private fun LeaveTeam(

@@ -30,15 +30,24 @@ import com.tecknobit.refy.ui.screens.Screen.Routes.SPLASHSCREEN
 import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.localUser
 import com.tecknobit.refy.ui.theme.RefyTheme
 import com.tecknobit.refy.ui.utilities.Logo
-import com.tecknobit.refy.ui.viewmodels.ProfileScreenViewModel
+import com.tecknobit.refy.viewmodels.ProfileScreenViewModel
 import displayFontFamily
 import navigator
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import refy.composeapp.generated.resources.*
 
+/**
+ * The **ProfileScreen** class is the screen where the user manage his/her profile account
+ *
+ * @author N7ghtm4r3 - Tecknobit
+ * @see Screen
+ */
 class ProfileScreen: Screen() {
-    
+
+    /**
+     * *viewModel* -> the support view model to manage the requests to the backend
+     */
     private val viewModel = ProfileScreenViewModel(
         snackbarHostState = snackbarHostState
     )
@@ -47,7 +56,12 @@ class ProfileScreen: Screen() {
      * **fileType** -> list of allowed image types
      */
     private val fileType = listOf("jpg", "png", "jpeg")
-    
+
+    /**
+     * Function to display the content of the screen
+     *
+     * No-any params required
+     */
     @Composable
     override fun ShowContent() {
         viewModel.setActiveContext(this::class.java)
@@ -73,6 +87,12 @@ class ProfileScreen: Screen() {
         }
     }
 
+    /**
+     * Function to create a custom top bar to display in the [ProfileActivity] allowing also the user
+     * to change his/her profile picture
+     *
+     * No-any params required
+     */
     @Composable
     @NonRestartableComposable
     private fun CustomTopBar() {
@@ -132,6 +152,11 @@ class ProfileScreen: Screen() {
         }
     }
 
+    /**
+     * Function to display the section of the user's email and allowing the user to change it
+     *
+     * No-any params required
+     */
     @Composable
     @NonRestartableComposable
     private fun EmailSection() {
@@ -175,6 +200,11 @@ class ProfileScreen: Screen() {
         )
     }
 
+    /**
+     * Function to display the section of the user's password and allowing the user to change it
+     *
+     * No-any params required
+     */
     @Composable
     @NonRestartableComposable
     private fun PasswordSection() {
@@ -236,6 +266,11 @@ class ProfileScreen: Screen() {
         )
     }
 
+    /**
+     * Function to display the section of the user's language and allowing the user to change it
+     *
+     * No-any params required
+     */
     @Composable
     @NonRestartableComposable
     private fun LanguageSection() {
@@ -250,6 +285,11 @@ class ProfileScreen: Screen() {
         )
     }
 
+    /**
+     * Function to display the section of the user's theme and allowing the user to change it
+     *
+     * No-any params required
+     */
     @Composable
     @NonRestartableComposable
     private fun ThemeSection() {
@@ -265,6 +305,11 @@ class ProfileScreen: Screen() {
         )
     }
 
+    /**
+     * Function to display the section where the user can disconnect from the current session
+     *
+     * No-any params required
+     */
     @Composable
     @NonRestartableComposable
     private fun LogoutSection() {
@@ -290,6 +335,12 @@ class ProfileScreen: Screen() {
         )
     }
 
+    /**
+     * Function to display the section where the user can delete the current account and disconnect
+     * from the current session
+     *
+     * No-any params required
+     */
     @Composable
     @NonRestartableComposable
     private fun DeleteSection() {

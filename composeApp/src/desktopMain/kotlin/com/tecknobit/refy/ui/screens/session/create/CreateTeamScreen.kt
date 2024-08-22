@@ -2,6 +2,7 @@
 
 package com.tecknobit.refy.ui.screens.session.create
 
+import androidx.annotation.CallSuper
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -29,7 +30,7 @@ import com.tecknobit.equinox.environment.records.EquinoxUser.DEFAULT_PROFILE_PIC
 import com.tecknobit.refy.ui.getCompleteMediaItemUrl
 import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.localUser
 import com.tecknobit.refy.ui.utilities.DefaultPlaque
-import com.tecknobit.refy.ui.viewmodels.create.CreateTeamViewModel
+import com.tecknobit.refy.viewmodels.create.CreateTeamViewModel
 import com.tecknobit.refycore.records.Team
 import imageLoader
 import refy.composeapp.generated.resources.Res
@@ -37,6 +38,14 @@ import refy.composeapp.generated.resources.invalid_team
 import refy.composeapp.generated.resources.members
 import refy.composeapp.generated.resources.team_name
 
+/**
+ * The **CreateTeamActivity** class is useful to create or edit a [Team]
+ *
+ * @author N7ghtm4r3 - Tecknobit
+ * @see Screen
+ * @see RefyItemBaseScreen
+ * @see CreateScreen
+ */
 class CreateTeamScreen(
     teamId: String?
 ): CreateScreen<Team, CreateTeamViewModel>(
@@ -50,6 +59,9 @@ class CreateTeamScreen(
      */
     private val fileType = listOf("jpg", "png", "jpeg")
 
+    /**
+     * *pickProfilePic* -> the flag to choose the logo picture for the team
+     */
     private lateinit var pickProfilePic: MutableState<Boolean>
 
     init {
@@ -59,6 +71,12 @@ class CreateTeamScreen(
         viewModel.fetchCurrentUsers()
     }
 
+    /**
+     * Function to display the content of the screen
+     *
+     * No-any params required
+     */
+    @CallSuper
     @Composable
     override fun ScreenContent() {
         super.ScreenContent()
@@ -88,6 +106,11 @@ class CreateTeamScreen(
         )
     }
 
+    /**
+     * Function to display the logo picture of the team
+     *
+     * No-any params required
+     */
     @Composable
     @NonRestartableComposable
     private fun LogoSet() {
@@ -132,6 +155,11 @@ class CreateTeamScreen(
         }
     }
 
+    /**
+     * Function to display the section to choose the logo picture for the team
+     *
+     * No-any params required
+     */
     @Composable
     @NonRestartableComposable
     private fun LogoNotSet() {
@@ -167,6 +195,11 @@ class CreateTeamScreen(
         }
     }
 
+    /**
+     * Function to pick the logo picture from the team
+     *
+     * No-any params required
+     */
     @Composable
     @NonRestartableComposable
     private fun PickLogo() {
@@ -183,6 +216,11 @@ class CreateTeamScreen(
         }
     }
 
+    /**
+     * Function to display the section to choose the members of the team
+     *
+     * No-any params required
+     */
     @Composable
     @NonRestartableComposable
     private fun MembersSection() {
@@ -217,6 +255,13 @@ class CreateTeamScreen(
         }
     }
 
+    /**
+     * Function to check whether the current item can be saved because all the details has been
+     * correctly filled
+     *
+     * No-any params required
+     * @return whether the item can be saved as boolean
+     */
     override fun canBeSaved(): Boolean {
         return super.canBeSaved() && viewModel.logoPic.value.isNotEmpty()
     }

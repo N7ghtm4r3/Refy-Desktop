@@ -2,6 +2,7 @@
 
 package com.tecknobit.refy.ui.screens.session.singleitem
 
+import androidx.annotation.CallSuper
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -27,10 +28,13 @@ import androidx.compose.ui.unit.sp
 import com.tecknobit.refy.ui.getCompleteMediaItemUrl
 import com.tecknobit.refy.ui.screens.Screen.Routes.CREATE_COLLECTION_SCREEN
 import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.localUser
+import com.tecknobit.refy.ui.screens.session.RefyItemBaseScreen
 import com.tecknobit.refy.ui.theme.AppTypography
 import com.tecknobit.refy.ui.toColor
 import com.tecknobit.refy.ui.utilities.*
 import com.tecknobit.refy.ui.viewmodels.teams.TeamScreenViewModel
+import com.tecknobit.refy.utilities.RefyLinkUtilities
+import com.tecknobit.refy.utilities.TeamsUtilities
 import com.tecknobit.refycore.records.LinksCollection
 import com.tecknobit.refycore.records.Team
 import com.tecknobit.refycore.records.links.RefyLink
@@ -42,6 +46,19 @@ import refy.composeapp.generated.resources.collections
 import refy.composeapp.generated.resources.invalid_team
 import refy.composeapp.generated.resources.links
 
+/**
+ * The **TeamScreen** class is useful to display a [Team]'s details and manage
+ * that team
+ *
+ * @param teamId: the identifier of the team
+ *
+ * @author N7ghtm4r3 - Tecknobit
+ * @see Screen
+ * @see RefyItemBaseScreen
+ * @see SingleItemScreen
+ * @see RefyLinkUtilities
+ * @see TeamsUtilities
+ */
 class TeamScreen(
     teamId: String
 ) : SingleItemScreen<Team>(
@@ -50,18 +67,35 @@ class TeamScreen(
     itemId = teamId
 ), RefyLinkUtilities<RefyLink>, TeamsUtilities {
 
+    /**
+     * *viewModel* -> the support view model to manage the requests to the backend
+     */
     private lateinit var viewModel: TeamScreenViewModel
 
+    /**
+     * *linksExpanded* -> whether the links section is expanded
+     */
     private lateinit var linksExpanded: MutableState<Boolean>
 
+    /**
+     * *membersExpanded* -> whether the members section is expanded
+     */
     private lateinit var membersExpanded: MutableState<Boolean>
 
+    /**
+     * *isUserAdmin* -> whether the current [localUser] is an admin of the current team ([item])
+     */
     private var isUserAdmin: Boolean = false
 
     init {
         prepareView()
     }
 
+    /**
+     * Function to display the content of the screen
+     *
+     * No-any params required
+     */
     @Composable
     override fun ShowContent() {
         LifecycleManager(
@@ -191,6 +225,11 @@ class TeamScreen(
         }
     }
 
+    /**
+     * Function to display the content of the team
+     *
+     * @param paddingValues: the padding to use to correctly display the content
+     */
     @Composable
     @NonRestartableComposable
     private fun TeamContent(
@@ -244,6 +283,14 @@ class TeamScreen(
         }
     }
 
+    /**
+     * Function to display an items section such links or collections section shared with the team
+     *
+     * @param isSectionVisible: whether the section can be visible, so the [items] is not empty
+     * @param header: the resource identifier of the header text
+     * @param visible: whether the section is currently visible
+     * @param items: the items list to display
+     */
     @Composable
     @NonRestartableComposable
     private fun ItemsSection(
@@ -281,6 +328,12 @@ class TeamScreen(
         }
     }
 
+    /**
+     * Function to create the control header to hide or unhidden an [ItemsSection]
+     *
+     * @param header: the resource identifier of the header text
+     * @param iconCheck: the icon for the button to hide or unhidden the section
+     */
     @Composable
     @NonRestartableComposable
     private fun ControlSectionHeader(
@@ -316,6 +369,12 @@ class TeamScreen(
         }
     }
 
+    /**
+     * Function to create an [LinksCollection] card to display the details of that collection and
+     * to give the rapid actions such removing from the team
+     *
+     * @param collection: the collection to display
+     */
     @Composable
     @NonRestartableComposable
     private fun LinksCollectionTeamCard(
@@ -402,6 +461,12 @@ class TeamScreen(
         }
     }
 
+    /**
+     * Function to display the members of the team displayed and, if authorized, removing or change
+     * the role members
+     *
+     * No-any params required
+     */
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     @NonRestartableComposable
@@ -428,6 +493,14 @@ class TeamScreen(
         }
     }
 
+    /**
+     * Function to prepare the view initializing the [item] by invoking the [initItemFromIntent]
+     * method, will be initialized the [viewModel] and started its refreshing routine to refresh the
+     * [item]
+     *
+     * No-any params required
+     */
+    @CallSuper
     override fun prepareView() {
         super.prepareView()
         if (itemExists) {

@@ -39,20 +39,56 @@ import com.tecknobit.refycore.records.Team.MAX_TEAMS_DISPLAYED
 import displayFontFamily
 import imageLoader
 
+/**
+ * The **ItemScreen** class is useful to give the basic structure for a Refy's screen to display
+ * the [RefyItem]'s list
+ *
+ * @author N7ghtm4r3 - Tecknobit
+ *
+ * @see Screen
+ */
 @Structure
 abstract class ItemScreen : Screen() {
 
+    /**
+     * Function to execute the fab action previously set
+     *
+     * No-any params required
+     */
     abstract fun executeFabAction()
 
+    /**
+     * Function to restart the refresher of the screen displayed
+     *
+     * No-any params required
+     */
     fun restartScreenRefreshing() {
         screenViewModel.setActiveContext(context)
         screenViewModel.restartRefresher()
     }
 
+    /**
+     * Function to suspend the refresher of the screen displayed
+     *
+     * No-any params required
+     */
     fun suspendScreenRefreshing() {
         screenViewModel.suspendRefresher()
     }
 
+    /**
+     * Function to create a [Card] to display the [RefyItem]'s details
+     *
+     * @param item: the item to display
+     * @param borderColor: the color to apply to one border
+     * @param onClick: the action to execute when the card has been clicked
+     * @param onDoubleClick: the action to execute when the card has been clicked twice
+     * @param onLongClick: the action to execute when the card has been clicked for a long period
+     * @param title: the title of the item
+     * @param description: the description of the item
+     * @param teams: the teams where the item is shared
+     * @param optionsBar: the options bar available for the item
+     */
     @OptIn(ExperimentalFoundationApi::class)
     @Composable
     @NonRestartableComposable
@@ -128,6 +164,11 @@ abstract class ItemScreen : Screen() {
         }
     }
 
+    /**
+     * Function to display the section relating the teams where the item is shared
+     *
+     * @param teams: the teams where the item is shared
+     */
     @Composable
     @NonRestartableComposable
     private fun TeamSections(
@@ -161,6 +202,13 @@ abstract class ItemScreen : Screen() {
         }
     }
 
+    /**
+     * Function to create a [Card] to display the [RefyItem]'s details
+     *
+     * @param onClick: the action to execute when the card has been clicked
+     * @param pictures: the pictures to display in a row
+     * @param pictureSize: the size to apply to the pictures
+     */
     @Composable
     @NonRestartableComposable
     protected fun PicturesRow(

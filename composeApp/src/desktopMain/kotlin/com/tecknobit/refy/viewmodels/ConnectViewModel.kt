@@ -1,10 +1,9 @@
-package com.tecknobit.refy.ui.viewmodels
+package com.tecknobit.refy.viewmodels
 
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.MutableState
 import com.tecknobit.apimanager.formatters.JsonHelper
 import com.tecknobit.equinox.environment.records.EquinoxItem.IDENTIFIER_KEY
-import com.tecknobit.equinox.environment.records.EquinoxUser
 import com.tecknobit.equinox.environment.records.EquinoxUser.*
 import com.tecknobit.equinox.inputs.InputValidator.*
 import com.tecknobit.equinoxcompose.helpers.EquinoxViewModel

@@ -22,8 +22,20 @@ import displayFontFamily
 import navigator
 import org.jetbrains.compose.resources.stringResource
 
+/**
+ * The **Home** class is the screen where the user can navigate between his/her links, collections
+ * teams and custom links
+ *
+ * @author N7ghtm4r3 - Tecknobit
+ * @see Screen
+ */
 class Home : Screen() {
 
+    /**
+     * Function to display the content of the screen
+     *
+     * No-any params required
+     */
     @Composable
     override fun ShowContent() {
         Scaffold (

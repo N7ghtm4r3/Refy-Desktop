@@ -2,6 +2,7 @@
 
 package com.tecknobit.refy.ui.screens.session.create
 
+import androidx.annotation.CallSuper
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -30,6 +31,14 @@ import refy.composeapp.generated.resources.collection_name
 import refy.composeapp.generated.resources.invalid_collection
 import refy.composeapp.generated.resources.links
 
+/**
+ * The **CreateCollectionScreen** class is useful to create or edit a [LinksCollection]
+ *
+ * @author N7ghtm4r3 - Tecknobit
+ * @see Screen
+ * @see RefyItemBaseScreen
+ * @see CreateScreen
+ */
 class CreateCollectionScreen(
     collectionId: String?
 ): CreateScreen<LinksCollection, CreateCollectionViewModel>(
@@ -44,6 +53,12 @@ class CreateCollectionScreen(
         )
     }
 
+    /**
+     * Function to display the content of the screen
+     *
+     * No-any params required
+     */
+    @CallSuper
     @Composable
     override fun ScreenContent() {
         super.ScreenContent()
@@ -82,6 +97,11 @@ class CreateCollectionScreen(
         )
     }
 
+    /**
+     * Function to create the section where choose the links to attach to the current collection
+     *
+     * No-any params required
+     */
     @Composable
     @NonRestartableComposable
     private fun LinksSection() {

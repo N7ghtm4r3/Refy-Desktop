@@ -4,11 +4,13 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material3.Card
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import com.tecknobit.equinoxcompose.components.EquinoxAlertDialog
 import com.tecknobit.equinoxcompose.components.EquinoxOutlinedTextField
+import com.tecknobit.refy.ui.screens.Screen
 import com.tecknobit.refy.ui.viewmodels.links.LinkListViewModel
 import com.tecknobit.refycore.helpers.RefyInputValidator.isDescriptionValid
 import com.tecknobit.refycore.helpers.RefyInputValidator.isLinkResourceValid
@@ -17,12 +19,29 @@ import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import refy.composeapp.generated.resources.*
 
+/**
+ * The **LinkListScreen** class is useful to display the list of the [localUser]'s [RefyLink]
+ *
+ * @author N7ghtm4r3 - Tecknobit
+ *
+ * @see Screen
+ * @see LinksScreen
+ * @see SessionManager
+ */
 class LinkListScreen : LinksScreen<RefyLink>(
     viewModel = LinkListViewModel()
 ) {
 
+    /**
+     * *addLink* -> the state to manage a link addition
+     */
     private lateinit var addLink: MutableState<Boolean>
 
+    /**
+     * Function to display the content of the screen
+     *
+     * No-any params required
+     */
     @Composable
     override fun ShowContent() {
         LifecycleManager(
@@ -46,6 +65,11 @@ class LinkListScreen : LinksScreen<RefyLink>(
         }
     }
 
+    /**
+     * Function to create a properly [Card] to display the link
+     *
+     * @param link: the link to display
+     */
     @Composable
     @NonRestartableComposable
     override fun LinkCard(
@@ -69,6 +93,11 @@ class LinkListScreen : LinksScreen<RefyLink>(
         )
     }
 
+    /**
+     * Function to set the action to execute when the [FloatingActionButton] has been clicked
+     *
+     * No-any params required
+     */
     @Composable
     @NonRestartableComposable
     private fun SetFabAction() {
@@ -76,10 +105,20 @@ class LinkListScreen : LinksScreen<RefyLink>(
         AddLink()
     }
 
+    /**
+     * Function to execute the fab action previously set
+     *
+     * No-any params required
+     */
     override fun executeFabAction() {
         addLink.value = true
     }
 
+    /**
+     * Function to display the [LinkDialog] to create a new [RefyLink]
+     *
+     * No-any params required
+     */
     @Composable
     @NonRestartableComposable
     private fun AddLink() {
@@ -91,6 +130,12 @@ class LinkListScreen : LinksScreen<RefyLink>(
         )
     }
 
+    /**
+     * Function to display the [LinkDialog] to edit an existing [RefyLink]
+     *
+     * @param editLink: the state flag to display the dialog to edit the link
+     * @param link: the link to edit
+     */
     @Composable
     private fun EditLink(
         editLink: MutableState<Boolean>,
@@ -105,6 +150,15 @@ class LinkListScreen : LinksScreen<RefyLink>(
         )
     }
 
+    /**
+     * Function to display the [LinkDialog] to create or edit a [RefyLink]
+     *
+     * @param show: the state flag to display the dialog
+     * @param icon: the representative icon
+     * @param title: the resource identifier for the title text
+     * @param confirmText: the resource identifier for the confirm button text
+     * @param link: the link to edit if passed, null if it to be created
+     */
     @Composable
     @NonRestartableComposable
     private fun LinkDialog(

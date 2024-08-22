@@ -4,9 +4,14 @@ import androidx.compose.material3.Typography
 import bodyFontFamily
 import displayFontFamily
 
-// Default Material 3 typography values
+/**
+ * **baseline** -> the Refy's baseline
+ */
 val baseline = Typography()
 
+/**
+ * **AppTypography** -> the Refy's Typography
+ */
 val AppTypography = Typography(
     displayLarge = baseline.displayLarge.copy(fontFamily = displayFontFamily),
     displayMedium = baseline.displayMedium.copy(fontFamily = displayFontFamily),

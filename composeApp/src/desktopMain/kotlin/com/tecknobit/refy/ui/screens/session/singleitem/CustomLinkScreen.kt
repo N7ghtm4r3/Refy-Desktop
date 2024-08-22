@@ -2,6 +2,7 @@
 
 package com.tecknobit.refy.ui.screens.session.singleitem
 
+import androidx.annotation.CallSuper
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -27,6 +28,18 @@ import org.jetbrains.compose.resources.stringResource
 import org.json.JSONObject
 import refy.composeapp.generated.resources.*
 
+/**
+ * The **CustomLinkScreen** class is useful to display a [CustomLinkActivity]'s details and manage
+ * that team
+ *
+ * @param customLinkId: the identifier of the custom link
+ *
+ * @author N7ghtm4r3 - Tecknobit
+ * @see Screen
+ * @see RefyItemBaseScreen
+ * @see SingleItemScreen
+ * @see SessionManager
+ */
 class CustomLinkScreen(
     customLinkId: String
 ) : SingleItemScreen<CustomRefyLink>(
@@ -35,12 +48,20 @@ class CustomLinkScreen(
     itemId = customLinkId
 ) {
 
+    /**
+     * *viewModel* -> the support view model to manage the requests to the backend
+     */
     private lateinit var viewModel: CustomLinkScreenViewModel
 
     init {
         prepareView()
     }
 
+    /**
+     * Function to display the content of the screen
+     *
+     * No-any params required
+     */
     @Composable
     override fun ShowContent() {
         LifecycleManager(
@@ -138,6 +159,12 @@ class CustomLinkScreen(
         }
     }
 
+    /**
+     * Function to display the details of the [CustomRefyLink] displayed such if it has the
+     * [CustomRefyLink.hasUniqueAccess] or [CustomRefyLink.expires]
+     *
+     * No-any params required
+     */
     @Composable
     @NonRestartableComposable
     private fun DetailsSection() {
@@ -172,6 +199,11 @@ class CustomLinkScreen(
         }
     }
 
+    /**
+     * Function to display the info details of the [CustomRefyLink]
+     *
+     * @param info: the info details
+     */
     @Composable
     @NonRestartableComposable
     private fun DetailInfo(
@@ -192,6 +224,13 @@ class CustomLinkScreen(
         }
     }
 
+    /**
+     * Function to display the payload attached to the [CustomRefyLink] such the resources or the
+     * validation fields
+     *
+     * @param header: the resource identifier of the header text
+     * @param map: the map with the details to display
+     */
     @Composable
     @NonRestartableComposable
     private fun PayloadSection(
@@ -234,6 +273,12 @@ class CustomLinkScreen(
         }
     }
 
+    /**
+     * Function to display the info details of the [CustomRefyLink]
+     *
+     * @param show: whether show the warn [EquinoxAlertDialog] to warn the user about the custom link
+     * deletion
+     */
     @Composable
     @NonRestartableComposable
     private fun DeleteLink(
@@ -263,6 +308,14 @@ class CustomLinkScreen(
         )
     }
 
+    /**
+     * Function to prepare the view initializing the [item] by invoking the [initItemFromIntent]
+     * method, will be initialized the [viewModel] and started its refreshing routine to refresh the
+     * [item]
+     *
+     * No-any params required
+     */
+    @CallSuper
     override fun prepareView() {
         super.prepareView()
         if (itemExists) {

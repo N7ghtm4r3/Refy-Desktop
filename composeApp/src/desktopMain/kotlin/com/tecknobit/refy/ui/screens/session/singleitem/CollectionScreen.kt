@@ -2,6 +2,7 @@
 
 package com.tecknobit.refy.ui.screens.session.singleitem
 
+import androidx.annotation.CallSuper
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -21,17 +22,31 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.localUser
+import com.tecknobit.refy.ui.screens.session.RefyItemBaseScreen
 import com.tecknobit.refy.ui.toColor
 import com.tecknobit.refy.ui.utilities.ExpandTeamMembers
-import com.tecknobit.refy.ui.utilities.LinksCollectionUtilities
-import com.tecknobit.refy.ui.utilities.RefyLinkUtilities
 import com.tecknobit.refy.ui.utilities.getItemRelations
-import com.tecknobit.refy.ui.viewmodels.collections.CollectionScreenViewModel
+import com.tecknobit.refy.utilities.LinksCollectionUtilities
+import com.tecknobit.refy.utilities.RefyLinkUtilities
+import com.tecknobit.refy.viewmodels.collections.CollectionScreenViewModel
 import com.tecknobit.refycore.records.LinksCollection
 import com.tecknobit.refycore.records.links.RefyLink
 import refy.composeapp.generated.resources.Res
 import refy.composeapp.generated.resources.invalid_collection
 
+/**
+ * The **CollectionScreen** class is useful to display a [LinksCollection]'s details and manage
+ * that collection
+ *
+ * @param collectionId: the identifier of the collection
+ *
+ * @author N7ghtm4r3 - Tecknobit
+ * @see Screen
+ * @see RefyItemBaseScreen
+ * @see SingleItemScreen
+ * @see RefyLinkUtilities
+ * @see LinksCollectionUtilities
+ */
 class CollectionScreen(
     collectionId: String
 ): SingleItemScreen<LinksCollection>(
@@ -40,12 +55,20 @@ class CollectionScreen(
     itemId = collectionId
 ), RefyLinkUtilities<RefyLink>, LinksCollectionUtilities {
 
+    /**
+     * *viewModel* -> the support view model to manage the requests to the backend
+     */
     private lateinit var viewModel: CollectionScreenViewModel
 
     init {
         prepareView()
     }
 
+    /**
+     * Function to display the content of the screen
+     *
+     * No-any params required
+     */
     @Composable
     override fun ShowContent() {
         LifecycleManager(
@@ -171,6 +194,14 @@ class CollectionScreen(
         }
     }
 
+    /**
+     * Function to prepare the view initializing the [item] by invoking the [initItemFromIntent]
+     * method, will be initialized the [viewModel] and started its refreshing routine to refresh the
+     * [item]
+     *
+     * No-any params required
+     */
+    @CallSuper
     override fun prepareView() {
         super.prepareView()
         if (itemExists) {

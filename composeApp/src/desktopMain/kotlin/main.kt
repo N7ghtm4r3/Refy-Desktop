@@ -7,6 +7,11 @@ import org.jetbrains.compose.resources.stringResource
 import refy.composeapp.generated.resources.Res
 import refy.composeapp.generated.resources.app_name
 
+/**
+ * Method to start the of **Neutron** desktop app.
+ * No-any params required
+ */
+//TODO: SET THE ICON
 fun main() = application {
     Window(
         onCloseRequest = ::exitApplication,

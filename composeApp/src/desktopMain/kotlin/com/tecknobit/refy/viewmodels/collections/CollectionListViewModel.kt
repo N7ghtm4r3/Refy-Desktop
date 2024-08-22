@@ -1,4 +1,4 @@
-package com.tecknobit.refy.ui.viewmodels.collections
+package com.tecknobit.refy.viewmodels.collections
 
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.snapshots.SnapshotStateList

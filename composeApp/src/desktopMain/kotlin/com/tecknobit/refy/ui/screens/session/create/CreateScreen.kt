@@ -1,7 +1,8 @@
-@file:OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class)
+@file:OptIn(ExperimentalMaterial3Api::class)
 
 package com.tecknobit.refy.ui.screens.session.create
 
+import androidx.annotation.CallSuper
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -30,7 +31,7 @@ import com.tecknobit.apimanager.annotations.Structure
 import com.tecknobit.equinoxcompose.components.EquinoxTextField
 import com.tecknobit.refy.ui.screens.session.RefyItemBaseScreen
 import com.tecknobit.refy.ui.theme.RefyTheme
-import com.tecknobit.refy.ui.viewmodels.create.CreateItemViewModel
+import com.tecknobit.refy.viewmodels.create.CreateItemViewModel
 import com.tecknobit.refycore.helpers.RefyInputValidator.MAX_TITLE_LENGTH
 import com.tecknobit.refycore.helpers.RefyInputValidator.isDescriptionValid
 import com.tecknobit.refycore.records.RefyItem
@@ -41,6 +42,21 @@ import refy.composeapp.generated.resources.Res
 import refy.composeapp.generated.resources.description
 import refy.composeapp.generated.resources.description_not_valid
 
+/**
+ * The **CreateScreen** class is useful to give the base behavior to create or edit a [RefyItem]'s
+ * item
+ *
+ * @param items: the items list
+ * @param invalidMessage: the resource identifier of the invalid message to display when the item is
+ * not valid or not found in [items] list
+ * @param itemId: the identifier of the item
+ *
+ * @param T: the [RefyItem] of the current activity displayed
+ *
+ * @author N7ghtm4r3 - Tecknobit
+ * @see Screen
+ * @see RefyItemBaseScreen
+ */
 @Structure
 abstract class CreateScreen<T : RefyItem, V : CreateItemViewModel<T>>(
     items : List<T>,
@@ -52,10 +68,21 @@ abstract class CreateScreen<T : RefyItem, V : CreateItemViewModel<T>>(
     itemId = itemId
 ) {
 
+    /**
+     * *editItemName* -> whether the name of the item is currently in edit mode
+     */
     protected lateinit var editItemName: MutableState<Boolean>
 
+    /**
+     * *viewModel* -> the support view model to manage the requests to the backend
+     */
     protected lateinit var viewModel: V
 
+    /**
+     * Function to display the content of the screen
+     *
+     * No-any params required
+     */
     @Composable
     override fun ShowContent() {
         viewModel.setActiveContext(this::class.java)
@@ -68,6 +95,12 @@ abstract class CreateScreen<T : RefyItem, V : CreateItemViewModel<T>>(
         }
     }
 
+    /**
+     * Function to display the content of the screen
+     *
+     * No-any params required
+     */
+    @CallSuper
     @Composable
     protected open fun ScreenContent() {
         LifecycleManager(
@@ -98,6 +131,16 @@ abstract class CreateScreen<T : RefyItem, V : CreateItemViewModel<T>>(
         viewModel.itemDescriptionError = remember { mutableStateOf(false) }
     }
 
+    /**
+     * Function to create the [Scaffold] with the details to display
+     *
+     * @param modifier: the modifier of the scaffold
+     * @param colors: the scheme colors to use for the [LargeTopAppBar]
+     * @param placeholder: the resource identifier for the placeholder text
+     * @param saveButtonColor: the color of the save button
+     * @param leftContent: the left content to display
+     * @param rightContent: the right content to display
+     */
     @Composable
     @NonRestartableComposable
     protected fun ScaffoldContent(
@@ -165,6 +208,11 @@ abstract class CreateScreen<T : RefyItem, V : CreateItemViewModel<T>>(
         }
     }
 
+    /**
+     * Wrapper function to create a back navigation button to nav at the previous caller activity
+     *
+     * No-any params required
+     */
     @Composable
     @NonRestartableComposable
     private fun NavButton() {
@@ -178,6 +226,12 @@ abstract class CreateScreen<T : RefyItem, V : CreateItemViewModel<T>>(
         }
     }
 
+    /**
+     * Function to create the section that allows the user to edit or show the name of the item
+     *
+     * @param modifier: the modifier of the [TextField]
+     * @param placeholder: the resource identifier for the placeholder text
+     */
     @Composable
     @NonRestartableComposable
     protected fun ItemNameSection(
@@ -226,6 +280,11 @@ abstract class CreateScreen<T : RefyItem, V : CreateItemViewModel<T>>(
         }
     }
 
+    /**
+     * Wrapper function to create a save button to save the current item
+     *
+     * @param color: the color of the save button
+     */
     @Composable
     @NonRestartableComposable
     private fun SaveButton(
@@ -252,6 +311,11 @@ abstract class CreateScreen<T : RefyItem, V : CreateItemViewModel<T>>(
         }
     }
 
+    /**
+     * Function to create the section that allows the user to edit the description of the item
+     *
+     * @param modifier: the modifier of the [TextField]
+     */
     @Composable
     @NonRestartableComposable
     protected fun DescriptionSection(
@@ -275,6 +339,12 @@ abstract class CreateScreen<T : RefyItem, V : CreateItemViewModel<T>>(
         )
     }
 
+    /**
+     * Function to display a custom section to display an items list
+     *
+     * @param header: the resource identifier of the header text
+     * @param content: the content of the [LazyColumn]
+     */
     @Composable
     @NonRestartableComposable
     protected fun CustomSection(
@@ -295,6 +365,14 @@ abstract class CreateScreen<T : RefyItem, V : CreateItemViewModel<T>>(
         )
     }
 
+    /**
+     * Wrapper function to create a custom check box that when clicked manage the current focus and
+     * set to *false* the [editItemName]
+     *
+     * @param checked: the state used to control whether the checkbox has been checked
+     * @param keyboardController: the current keyboard controller
+     * @param itemId: the identifier of the item attached to that [Checkbox]
+     */
     @Composable
     @NonRestartableComposable
     protected fun ItemCheckbox(
@@ -316,6 +394,13 @@ abstract class CreateScreen<T : RefyItem, V : CreateItemViewModel<T>>(
         )
     }
 
+    /**
+     * Function to check whether the current item can be saved because all the details has been
+     * correctly filled
+     *
+     * No-any params required
+     * @return whether the item can be saved as boolean
+     */
     protected open fun canBeSaved(): Boolean {
         if(editItemName.value)
             return false

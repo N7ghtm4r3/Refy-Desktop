@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlaylistRemove
+import androidx.compose.material3.Card
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -21,15 +22,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.tecknobit.equinoxcompose.components.EmptyListUI
+import com.tecknobit.refy.ui.screens.Screen
 import com.tecknobit.refy.ui.screens.Screen.Routes.COLLECTION_SCREEN
 import com.tecknobit.refy.ui.screens.Screen.Routes.CREATE_COLLECTION_SCREEN
 import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.localUser
 import com.tecknobit.refy.ui.toColor
-import com.tecknobit.refy.ui.utilities.LinksCollectionUtilities
-import com.tecknobit.refy.ui.utilities.OptionsBar
-import com.tecknobit.refy.ui.utilities.RefyLinkUtilities
-import com.tecknobit.refy.ui.utilities.getItemRelations
-import com.tecknobit.refy.ui.viewmodels.collections.CollectionListViewModel
+import com.tecknobit.refy.utilities.LinksCollectionUtilities
+import com.tecknobit.refy.utilities.OptionsBar
+import com.tecknobit.refy.utilities.RefyLinkUtilities
+import com.tecknobit.refy.utilities.getItemRelations
+import com.tecknobit.refy.viewmodels.collections.CollectionListViewModel
 import com.tecknobit.refycore.records.LinksCollection
 import com.tecknobit.refycore.records.links.RefyLink
 import navigator
@@ -37,12 +39,35 @@ import org.jetbrains.compose.resources.stringResource
 import refy.composeapp.generated.resources.Res
 import refy.composeapp.generated.resources.no_collections_yet
 
-class CollectionListScreen : ItemScreen(), RefyLinkUtilities<RefyLink>, LinksCollectionUtilities {
+/**
+ * The **CollectionListScreen** class is useful to display the [LinksCollection]'s list
+ *
+ * @author N7ghtm4r3 - Tecknobit
+ *
+ * @see Screen
+ * @see SessionManager
+ * @see RefyLinkUtilities
+ * @see LinksCollectionUtilities
+ *
+ */
+class CollectionListScreen : ItemScreen(), RefyLinkUtilities<RefyLink>,
+    LinksCollectionUtilities {
 
+    /**
+     * *viewModel* -> the support view model to manage the requests to the backend
+     */
     private val viewModel = CollectionListViewModel()
 
+    /**
+     * *collections* -> the list of the collections to display
+     */
     private lateinit var collections: List<LinksCollection>
 
+    /**
+     * Function to display the content of the screen
+     *
+     * No-any params required
+     */
     @Composable
     override fun ShowContent() {
         ManagedContent {
@@ -86,10 +111,20 @@ class CollectionListScreen : ItemScreen(), RefyLinkUtilities<RefyLink>, LinksCol
         }
     }
 
+    /**
+     * Function to execute the fab action previously set
+     *
+     * No-any params required
+     */
     override fun executeFabAction() {
         navigator.navigate(CREATE_COLLECTION_SCREEN.name)
     }
 
+    /**
+     * Function to create a properly [Card] to display the collection
+     *
+     * @param collection: the collection to display
+     */
     @Composable
     private fun CollectionCard(
         collection: LinksCollection
@@ -126,6 +161,11 @@ class CollectionListScreen : ItemScreen(), RefyLinkUtilities<RefyLink>, LinksCol
         )
     }
 
+    /**
+     * Function to create an options bar for the card of the [LinksCollection]
+     *
+     * @param collection: the collection to display
+     */
     @Composable
     private fun OptionsBar(
         collection: LinksCollection

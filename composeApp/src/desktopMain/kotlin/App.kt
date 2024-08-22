@@ -1,5 +1,4 @@
 
-
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.font.FontFamily
 import coil3.ImageLoader
@@ -64,6 +63,10 @@ private val sslContext = SSLContext.getInstance("TLS")
  */
 lateinit var imageLoader: ImageLoader
 
+/**
+ * Method to sho the layout of **Neutron** desktop app.
+ * No-any params required
+ */
 @Composable
 @Preview
 fun App() {
