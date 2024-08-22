@@ -9,6 +9,20 @@ import com.tecknobit.refycore.records.links.CustomRefyLink
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
+/**
+ * The **CustomLinkScreenViewModel** class is the support class used by [CustomLinkScreen] to communicate
+ * with the backend and to execute the refreshing routines to update the UI data and working with the
+ * [CustomRefyLink]
+ *
+ * @param snackbarHostState: the host to launch the snackbar messages
+ * @param initialCustomLink: the initial value of the [CustomRefyLink]
+ *
+ * @author N7ghtm4r3 - Tecknobit
+ * @see ViewModel
+ * @see FetcherManagerWrapper
+ * @see EquinoxViewModel
+ * @see LinksViewModelHelper
+ */
 class CustomLinkScreenViewModel(
     snackbarHostState: SnackbarHostState,
     initialCustomLink: CustomRefyLink
@@ -18,15 +32,26 @@ class CustomLinkScreenViewModel(
 
     companion object {
 
+        /**
+         * **counter** -> the counter used to avoid the multiple sent of the requests
+         */
         private var counter = 0
 
     }
 
+    /**
+     * **_customLink** -> the current custom link displayed
+     */
     private val _customLink = MutableStateFlow(
         value = initialCustomLink
     )
     val customLink: StateFlow<CustomRefyLink> = _customLink
 
+    /**
+     * Function to execute the request to refresh the custom link displayed
+     *
+     * No-any params required
+     */
     fun refreshLink() {
         if (lastCanGoes(counter)) {
             sendFetchRequest(
@@ -48,6 +73,12 @@ class CustomLinkScreenViewModel(
             counter++
     }
 
+    /**
+     * Function to execute the request to delete a link
+     *
+     * @param link: the link to delete
+     * @param onSuccess: the action to execute if the link has been deleted
+     */
     override fun deleteLink(
         link: CustomRefyLink,
         onSuccess: () -> Unit
@@ -63,6 +94,11 @@ class CustomLinkScreenViewModel(
         )
     }
 
+    /**
+     * Function to reset the counter to zero
+     *
+     * No-any params required
+     */
     override fun reset() {
         counter = 0
     }

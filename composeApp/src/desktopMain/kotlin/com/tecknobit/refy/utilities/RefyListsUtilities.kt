@@ -48,7 +48,7 @@ import com.tecknobit.equinoxcompose.helpers.EquinoxViewModel
 import com.tecknobit.refy.ui.getCompleteMediaItemUrl
 import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.localUser
 import com.tecknobit.refy.ui.theme.AppTypography
-import com.tecknobit.refy.ui.viewmodels.teams.TeamScreenViewModel
+import com.tecknobit.refy.viewmodels.teams.TeamScreenViewModel
 import com.tecknobit.refycore.records.RefyItem
 import com.tecknobit.refycore.records.RefyUser
 import com.tecknobit.refycore.records.Team

@@ -11,6 +11,17 @@ import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.localUser
 import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.requester
 import java.io.File
 
+/**
+ * The **ProfileActivityViewModel** class is the support class used by the [ProfileScreen] to
+ * change the user account settings or preferences
+ *
+ * @param snackbarHostState: the host to launch the snackbar messages
+ *
+ * @author N7ghtm4r3 - Tecknobit
+ * @see EquinoxViewModel
+ * @see ViewModel
+ * @see FetcherManagerWrapper
+ */
 class ProfileScreenViewModel(
     snackbarHostState: SnackbarHostState
 ): EquinoxViewModel(

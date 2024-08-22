@@ -14,6 +14,17 @@ import com.tecknobit.refycore.helpers.RefyInputValidator.isTagNameValid
 import com.tecknobit.refycore.records.RefyUser.TAG_NAME_KEY
 import navigator
 
+/**
+ * The **ConnectViewModel** class is the support class used by the [ConnectScreen]
+ * to execute the authentication requests to the backend
+ *
+ * @param snackbarHostState: the host to launch the snackbar messages
+ *
+ * @author N7ghtm4r3 - Tecknobit
+ * @see EquinoxViewModel
+ * @see ViewModel
+ * @see FetcherManagerWrapper
+ */
 class ConnectViewModel (
     snackbarHostState: SnackbarHostState
 ) : EquinoxViewModel(

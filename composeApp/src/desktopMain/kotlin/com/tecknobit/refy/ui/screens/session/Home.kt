@@ -17,7 +17,7 @@ import com.tecknobit.refy.ui.screens.Screen
 import com.tecknobit.refy.ui.screens.Screen.Routes.PROFILE
 import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.localUser
 import com.tecknobit.refy.ui.theme.AppTypography
-import com.tecknobit.refy.ui.utilities.Logo
+import com.tecknobit.refy.utilities.Logo
 import displayFontFamily
 import navigator
 import org.jetbrains.compose.resources.stringResource

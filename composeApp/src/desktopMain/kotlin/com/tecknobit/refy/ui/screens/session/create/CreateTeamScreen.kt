@@ -29,7 +29,7 @@ import com.darkrockstudios.libraries.mpfilepicker.FilePicker
 import com.tecknobit.equinox.environment.records.EquinoxUser.DEFAULT_PROFILE_PIC
 import com.tecknobit.refy.ui.getCompleteMediaItemUrl
 import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.localUser
-import com.tecknobit.refy.ui.utilities.DefaultPlaque
+import com.tecknobit.refy.utilities.DefaultPlaque
 import com.tecknobit.refy.viewmodels.create.CreateTeamViewModel
 import com.tecknobit.refycore.records.Team
 import imageLoader

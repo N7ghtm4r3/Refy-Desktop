@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.dp
 import com.tecknobit.equinoxcompose.components.EquinoxAlertDialog
 import com.tecknobit.equinoxcompose.components.EquinoxOutlinedTextField
 import com.tecknobit.refy.ui.screens.Screen
-import com.tecknobit.refy.ui.viewmodels.links.LinkListViewModel
+import com.tecknobit.refy.viewmodels.links.LinkListViewModel
 import com.tecknobit.refycore.helpers.RefyInputValidator.isDescriptionValid
 import com.tecknobit.refycore.helpers.RefyInputValidator.isLinkResourceValid
 import com.tecknobit.refycore.records.links.RefyLink

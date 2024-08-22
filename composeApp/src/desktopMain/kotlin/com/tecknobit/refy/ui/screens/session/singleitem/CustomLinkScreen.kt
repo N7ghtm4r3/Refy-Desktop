@@ -18,9 +18,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tecknobit.equinoxcompose.components.EquinoxAlertDialog
 import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.localUser
-import com.tecknobit.refy.ui.utilities.DeleteItemButton
-import com.tecknobit.refy.ui.utilities.ItemDescription
-import com.tecknobit.refy.ui.viewmodels.links.CustomLinkScreenViewModel
+import com.tecknobit.refy.utilities.DeleteItemButton
+import com.tecknobit.refy.utilities.ItemDescription
+import com.tecknobit.refy.viewmodels.links.CustomLinkScreenViewModel
 import com.tecknobit.refycore.records.links.CustomRefyLink
 import navigator
 import org.jetbrains.compose.resources.StringResource

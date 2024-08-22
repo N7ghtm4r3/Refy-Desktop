@@ -32,9 +32,7 @@ import com.tecknobit.refy.ui.screens.Screen.Routes.CREATE_TEAM_SCREEN
 import com.tecknobit.refy.ui.screens.Screen.Routes.TEAM_SCREEN
 import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.localUser
 import com.tecknobit.refy.ui.theme.AppTypography
-import com.tecknobit.refy.ui.utilities.*
-import com.tecknobit.refy.utilities.RefyLinkUtilities
-import com.tecknobit.refy.utilities.TeamsUtilities
+import com.tecknobit.refy.utilities.*
 import com.tecknobit.refy.viewmodels.teams.TeamsListViewModel
 import com.tecknobit.refycore.records.Team
 import com.tecknobit.refycore.records.links.RefyLink

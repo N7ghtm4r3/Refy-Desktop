@@ -29,10 +29,10 @@ import com.tecknobit.apimanager.annotations.Structure
 import com.tecknobit.refy.ui.getCompleteMediaItemUrl
 import com.tecknobit.refy.ui.screens.Screen
 import com.tecknobit.refy.ui.theme.AppTypography
-import com.tecknobit.refy.ui.utilities.ExpandTeamMembers
-import com.tecknobit.refy.ui.utilities.ItemDescription
-import com.tecknobit.refy.ui.utilities.drawOneSideBorder
-import com.tecknobit.refy.ui.utilities.isItemOwner
+import com.tecknobit.refy.utilities.ExpandTeamMembers
+import com.tecknobit.refy.utilities.ItemDescription
+import com.tecknobit.refy.utilities.drawOneSideBorder
+import com.tecknobit.refy.utilities.isItemOwner
 import com.tecknobit.refycore.records.RefyItem
 import com.tecknobit.refycore.records.Team
 import com.tecknobit.refycore.records.Team.MAX_TEAMS_DISPLAYED

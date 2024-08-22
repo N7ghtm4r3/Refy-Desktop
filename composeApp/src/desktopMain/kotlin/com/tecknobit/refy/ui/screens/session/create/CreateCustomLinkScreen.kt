@@ -26,7 +26,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import com.tecknobit.equinoxcompose.components.EquinoxOutlinedTextField
 import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.localUser
-import com.tecknobit.refy.ui.viewmodels.create.CreateCustomLinkViewModel
+import com.tecknobit.refy.viewmodels.create.CreateCustomLinkViewModel
 import com.tecknobit.refycore.records.links.CustomRefyLink
 import com.tecknobit.refycore.records.links.CustomRefyLink.*
 import com.tecknobit.refycore.records.links.CustomRefyLink.ExpiredTime.*

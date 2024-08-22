@@ -29,7 +29,7 @@ import com.tecknobit.refy.ui.screens.Screen
 import com.tecknobit.refy.ui.screens.Screen.Routes.SPLASHSCREEN
 import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.localUser
 import com.tecknobit.refy.ui.theme.RefyTheme
-import com.tecknobit.refy.ui.utilities.Logo
+import com.tecknobit.refy.utilities.Logo
 import com.tecknobit.refy.viewmodels.ProfileScreenViewModel
 import displayFontFamily
 import navigator

@@ -1,7 +1,10 @@
 package com.tecknobit.refy.viewmodels.teams
 
 import androidx.compose.material3.SnackbarHostState
+import androidx.lifecycle.ViewModel
+import com.tecknobit.equinox.FetcherManager.FetcherManagerWrapper
 import com.tecknobit.equinox.Requester.Companion.RESPONSE_MESSAGE_KEY
+import com.tecknobit.equinoxcompose.helpers.EquinoxViewModel
 import com.tecknobit.refy.helpers.RecompositionsLocker
 import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.requester
 import com.tecknobit.refy.ui.screens.session.singleitem.TeamScreen
@@ -13,6 +16,21 @@ import com.tecknobit.refycore.records.links.RefyLink
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
+/**
+ * The **TeamActivityViewModel** class is the support class used by [TeamScreen] to communicate
+ * with the backend and to execute the refreshing routines to update the UI data and working with the
+ * [Team]
+ *
+ * @param snackbarHostState: the host to launch the snackbar messages
+ * @param initialTeam: the initial value of the [Team]
+ *
+ * @author N7ghtm4r3 - Tecknobit
+ * @see ViewModel
+ * @see FetcherManagerWrapper
+ * @see EquinoxViewModel
+ * @see RefyViewModel
+ * @see TeamViewModelHelper
+ */
 class TeamScreenViewModel(
     snackbarHostState: SnackbarHostState,
     initialTeam: Team
@@ -22,15 +40,26 @@ class TeamScreenViewModel(
 
     companion object {
 
+        /**
+         * **counter** -> the counter used to avoid the multiple sent of the requests
+         */
         private var counter = 0
 
     }
 
+    /**
+     * **_team** -> the current team displayed
+     */
     private val _team = MutableStateFlow(
         value = initialTeam
     )
     val team: StateFlow<Team> = _team
 
+    /**
+     * Function to execute the request to refresh the team displayed
+     *
+     * No-any params required
+     */
     fun refreshTeam() {
         if (lastCanGoes(counter)) {
             sendFetchRequest(
@@ -48,6 +77,11 @@ class TeamScreenViewModel(
             counter++
     }
 
+    /**
+     * Function to execute the request to remove from the team a link
+     *
+     * @param link: the link to remove (the link will be not deleted)
+     */
     fun removeLinkFromTeam(
         link: RefyLink
     ) {
@@ -65,6 +99,11 @@ class TeamScreenViewModel(
         )
     }
 
+    /**
+     * Function to execute the request to remove from the team a collection
+     *
+     * @param collection: the collection to remove (the collection will be not deleted)
+     */
     fun removeCollectionFromTeam(
         collection: LinksCollection
     ) {
@@ -82,6 +121,13 @@ class TeamScreenViewModel(
         )
     }
 
+    /**
+     * Function to execute the request to change the role of a member
+     *
+     * @param member: the member to change his/her role
+     * @param role: the role to set
+     * @param onSuccess: the action to execute if the request has been successful
+     */
     fun changeMemberRole(
         member: RefyTeamMember,
         role: TeamRole,
@@ -100,6 +146,11 @@ class TeamScreenViewModel(
         )
     }
 
+    /**
+     * Function to execute the request to remove a member from the team
+     *
+     * @param member: the member to remove
+     */
     fun removeMember(
         member: RefyTeamMember
     ) {
@@ -115,6 +166,11 @@ class TeamScreenViewModel(
         )
     }
 
+    /**
+     * Function to reset the counter to zero
+     *
+     * No-any params required
+     */
     override fun reset() {
         counter = 0
     }

@@ -8,7 +8,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.ui.graphics.Color
 import com.tecknobit.equinoxcompose.components.EquinoxAlertDialog
-import com.tecknobit.refy.ui.viewmodels.collections.LinksCollectionViewModelHelper
+import com.tecknobit.refy.viewmodels.collections.LinksCollectionViewModelHelper
 import com.tecknobit.refycore.records.LinksCollection
 import com.tecknobit.refycore.records.RefyItem
 import com.tecknobit.refycore.records.Team

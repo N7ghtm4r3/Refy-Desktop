@@ -7,8 +7,25 @@ import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.localUser
 import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.requester
 import com.tecknobit.refycore.records.links.CustomRefyLink
 
+/**
+ * The **CustomLinksViewModel** class is the support class used by [CustomLinksScreen] to communicate
+ * with the backend and to execute the refreshing routines to update the UI data and working with the
+ * [RefyLink]
+ *
+ * @author N7ghtm4r3 - Tecknobit
+ * @see ViewModel
+ * @see FetcherManagerWrapper
+ * @see EquinoxViewModel
+ * @see LinksViewModelHelper
+ * @see LinksViewModel
+ */
 class CustomLinksViewModel: LinksViewModel<CustomRefyLink>() {
 
+    /**
+     * Function to execute the request to get the links list
+     *
+     * No-any params required
+     */
     override fun getLinks() {
         sendFetchRequest(
             currentContext = CustomLinksScreen::class.java,
@@ -57,6 +74,12 @@ class CustomLinksViewModel: LinksViewModel<CustomRefyLink>() {
         // TODO: TO IGNORE AT THE MOMENT
     }
 
+    /**
+     * Function to execute the request to delete a link
+     *
+     * @param link: the link to delete
+     * @param onSuccess: the action to execute if the link has been deleted
+     */
     override fun deleteLink(
         link: CustomRefyLink,
         onSuccess: () -> Unit

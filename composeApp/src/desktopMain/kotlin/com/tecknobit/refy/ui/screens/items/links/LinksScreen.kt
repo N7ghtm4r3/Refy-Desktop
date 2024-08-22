@@ -27,8 +27,8 @@ import com.tecknobit.equinoxcompose.components.EquinoxAlertDialog
 import com.tecknobit.refy.ui.screens.Screen
 import com.tecknobit.refy.ui.screens.items.ItemScreen
 import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.localUser
-import com.tecknobit.refy.ui.utilities.*
-import com.tecknobit.refy.ui.viewmodels.links.LinksViewModel
+import com.tecknobit.refy.utilities.*
+import com.tecknobit.refy.viewmodels.links.LinksViewModel
 import com.tecknobit.refycore.records.RefyItem
 import com.tecknobit.refycore.records.links.RefyLink
 import org.jetbrains.compose.resources.stringResource

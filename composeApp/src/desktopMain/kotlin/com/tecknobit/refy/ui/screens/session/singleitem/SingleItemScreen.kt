@@ -20,8 +20,7 @@ import com.tecknobit.apimanager.annotations.Structure
 import com.tecknobit.refy.ui.screens.session.RefyItemBaseScreen
 import com.tecknobit.refy.ui.theme.AppTypography
 import com.tecknobit.refy.ui.theme.RefyTheme
-import com.tecknobit.refy.ui.utilities.*
-import com.tecknobit.refy.utilities.RefyLinkUtilities
+import com.tecknobit.refy.utilities.*
 import com.tecknobit.refycore.records.RefyItem
 import com.tecknobit.refycore.records.links.RefyLink
 import displayFontFamily

@@ -23,8 +23,8 @@ import com.github.skydoves.colorpicker.compose.rememberColorPickerController
 import com.tecknobit.refy.ui.generateRandomColor
 import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.localUser
 import com.tecknobit.refy.ui.toColor
-import com.tecknobit.refy.ui.utilities.ItemDescription
-import com.tecknobit.refy.ui.viewmodels.create.CreateCollectionViewModel
+import com.tecknobit.refy.utilities.ItemDescription
+import com.tecknobit.refy.viewmodels.create.CreateCollectionViewModel
 import com.tecknobit.refycore.records.LinksCollection
 import refy.composeapp.generated.resources.Res
 import refy.composeapp.generated.resources.collection_name
