@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -244,10 +245,10 @@ abstract class ItemScreen : Screen() {
                         )
                         .crossfade(enable = true)
                         .crossfade(500)
-                        //.error() //TODO: TO SET THE ERROR IMAGE CORRECTLY
                         .build(),
                     contentDescription = null,
-                    contentScale = ContentScale.FillBounds
+                    contentScale = ContentScale.FillBounds,
+                    error = painterResource("logo.png")
                 )
             }
         }

@@ -31,6 +31,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
@@ -615,9 +616,9 @@ fun Logo(
             .data(picUrl)
             .crossfade(enable = true)
             .crossfade(500)
-            //.error() //TODO: TO SET THE ERROR IMAGE CORRECTLY
             .build(),
         contentDescription = null,
-        contentScale = ContentScale.FillBounds
+        contentScale = ContentScale.FillBounds,
+        error = painterResource("logo.png")
     )
 }

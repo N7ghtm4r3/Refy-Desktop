@@ -69,14 +69,14 @@ compose.desktop {
             licenseFile.set(project.file("LICENSE"))
             macOS {
                 bundleID = "com.tecknobit.refy"
-                iconFile.set(project.file("src/commonMain/resources/logo.icns"))
+                iconFile.set(project.file("src/desktopMain/resources/logo.icns"))
             }
             windows {
-                iconFile.set(project.file("src/commonMain/resources/logo.ico"))
+                iconFile.set(project.file("src/desktopMain/resources/logo.ico"))
                 upgradeUuid = UUID.randomUUID().toString()
             }
             linux {
-                iconFile.set(project.file("src/commonMain/resources/logo.png"))
+                iconFile.set(project.file("src/desktopMain/resources/logo.png"))
                 packageName = "com-tecknobit-refy"
                 debMaintainer = "infotecknobitcompany@gmail.com"
                 appRelease = "1.0.0"

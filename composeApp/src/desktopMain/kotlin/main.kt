@@ -1,4 +1,4 @@
-
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowPlacement
 import androidx.compose.ui.window.WindowState
@@ -11,7 +11,6 @@ import refy.composeapp.generated.resources.app_name
  * Method to start the of **Neutron** desktop app.
  * No-any params required
  */
-//TODO: SET THE ICON
 fun main() = application {
     Window(
         onCloseRequest = ::exitApplication,
@@ -19,7 +18,7 @@ fun main() = application {
         state = WindowState(
             placement = WindowPlacement.Maximized
         ),
-        //icon = painterResource("logo.png")
+        icon = painterResource("logo.png")
     ) {
         App()
     }

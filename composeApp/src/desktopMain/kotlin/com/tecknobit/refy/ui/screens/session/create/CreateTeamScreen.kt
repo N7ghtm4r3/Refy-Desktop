@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import coil3.compose.LocalPlatformContext
@@ -147,10 +148,10 @@ class CreateTeamScreen(
                     )
                     .crossfade(enable = true)
                     .crossfade(500)
-                    //.error() //TODO: TO SET THE ERROR IMAGE CORRECTLY
                     .build(),
                 contentDescription = null,
-                contentScale = ContentScale.Crop
+                contentScale = ContentScale.Crop,
+                error = painterResource("logo.png")
             )
         }
     }
