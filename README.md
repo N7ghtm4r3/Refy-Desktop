@@ -1,16 +1,11 @@
 # Refy-Desktop
-References collector and custom links generator
-
-# Refy-Desktop
 
 **v1.0.0**
 
-This project, based on Java and the Spring Boot framework, is an open source self-hosted orders and ticket revenue
-manager for the
-projects
-you are developing
+This project, based on Java and the Spring Boot framework, is an open source self-hosted references collector and custom
+links generator.
 
-Trace your revenues with **Refy**!
+Save your references with **Refy**!
 
 This repository contains the desktop version of **Refy**,
 so if you want to customize you can fork it and work on it, if there are any errors, fixes to do or some
