@@ -80,11 +80,11 @@ dependencies {
 
 <details>
   <summary>Desktop UI</summary>
-  <img src="https://github.com/N7ghtm4r3/Refy-Desktop/blob/main/images/*.png" alt="links"/>
-  <img src="https://github.com/N7ghtm4r3/Refy-Desktop/blob/main/images/*.png" alt="collection"/>
-  <img src="https://github.com/N7ghtm4r3/Refy-Desktop/blob/main/images/*.png" alt="team"/>
-  <img src="https://github.com/N7ghtm4r3/Refy-Desktop/blob/main/images/*.png" alt="custom_link"/>
-  <img src="https://github.com/N7ghtm4r3/Refy-Desktop/blob/main/images/*.png" alt="custom_link_web_page"/>
+  <img src="https://github.com/N7ghtm4r3/Refy-Desktop/blob/main/images/links.png" alt="links"/>
+  <img src="https://github.com/N7ghtm4r3/Refy-Desktop/blob/main/images/collection.png" alt="collection"/>
+  <img src="https://github.com/N7ghtm4r3/Refy-Desktop/blob/main/images/team.png" alt="team"/>
+  <img src="https://github.com/N7ghtm4r3/Refy-Desktop/blob/main/images/custom_link.png" alt="custom_link"/>
+  <img src="https://github.com/N7ghtm4r3/Refy-Desktop/blob/main/images/custom_link_web.png" alt="custom_link_web_page"/>
 </details>
 
 ## Authors

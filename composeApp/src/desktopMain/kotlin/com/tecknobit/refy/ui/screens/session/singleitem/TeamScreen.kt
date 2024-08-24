@@ -23,6 +23,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tecknobit.refy.ui.getCompleteMediaItemUrl
@@ -419,7 +420,8 @@ class TeamScreen(
                     Text(
                         text = collection.title,
                         fontFamily = displayFontFamily,
-                        fontSize = 25.sp,
+                        maxLines = 3,
+                        overflow = TextOverflow.Ellipsis,
                         fontStyle = AppTypography.titleMedium.fontStyle
                     )
                     ItemDescription(
