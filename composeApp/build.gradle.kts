@@ -60,7 +60,7 @@ compose.desktop {
                 "java.compiler", "java.instrument", "java.management", "java.naming", "java.net.http", "java.prefs",
                 "java.rmi", "java.scripting", "java.security.jgss", "java.sql", "jdk.jfr", "jdk.unsupported"
             )
-            packageName = "com.tecknobit.refy"
+            packageName = "Refy"
             packageVersion = "1.0.0"
             version = "1.0.0"
             description = "References collector and custom links generator"
