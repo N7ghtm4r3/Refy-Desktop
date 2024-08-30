@@ -1,5 +1,6 @@
 package com.tecknobit.refy.viewmodels.links
 
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.toMutableStateList
 import com.tecknobit.equinox.Requester.Companion.RESPONSE_MESSAGE_KEY
 import com.tecknobit.refy.ui.screens.items.links.LinkListScreen
@@ -9,6 +10,7 @@ import com.tecknobit.refycore.helpers.RefyInputValidator.isDescriptionValid
 import com.tecknobit.refycore.helpers.RefyInputValidator.isLinkResourceValid
 import com.tecknobit.refycore.records.links.RefyLink
 import com.tecknobit.refycore.records.links.RefyLink.returnLinks
+import kotlinx.coroutines.flow.MutableStateFlow
 
 /**
  * The **LinkListViewModel** class is the support class used by [LinkListScreen] to communicate
@@ -23,6 +25,13 @@ import com.tecknobit.refycore.records.links.RefyLink.returnLinks
  * @see LinksViewModel
  */
 class LinkListViewModel : LinksViewModel<RefyLink>() {
+
+    init {
+        _links = MutableStateFlow(
+            value = mutableStateListOf()
+        )
+        links = _links
+    }
 
     /**
      * Function to execute the request to get the links list

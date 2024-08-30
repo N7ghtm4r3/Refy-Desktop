@@ -12,6 +12,8 @@ import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.requester
 import com.tecknobit.refycore.records.LinksCollection.returnCollections
 import com.tecknobit.refycore.records.Team.returnTeams
 import com.tecknobit.refycore.records.links.RefyLink.returnLinks
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 import org.json.JSONObject
 
 /**
@@ -134,6 +136,7 @@ abstract class RefyViewModel(
         request: () -> JSONObject,
         onSuccess: (JsonHelper) -> Unit
     ) {
+        val mainScope = MainScope()
         execRefreshingRoutine(
             currentContext = currentContext,
             routine = {
@@ -141,13 +144,19 @@ abstract class RefyViewModel(
                     request = request,
                     onSuccess = { response ->
                         onSuccess.invoke(response)
-                        isServerOffline.value = false
+                        mainScope.launch {
+                            isServerOffline.value = false
+                        }
                     },
                     onConnectionError = {
-                        isServerOffline.value = true
+                        mainScope.launch {
+                            isServerOffline.value = true
+                        }
                     },
                     onFailure = {
-                        haveBeenDisconnected.value = true
+                        mainScope.launch {
+                            haveBeenDisconnected.value = true
+                        }
                     }
                 )
             }

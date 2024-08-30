@@ -1,11 +1,13 @@
 package com.tecknobit.refy.viewmodels.links
 
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.toMutableStateList
 import com.tecknobit.equinox.Requester.Companion.RESPONSE_MESSAGE_KEY
 import com.tecknobit.refy.ui.screens.items.links.CustomLinksScreen
 import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.localUser
 import com.tecknobit.refy.ui.screens.navigation.Splashscreen.Companion.requester
 import com.tecknobit.refycore.records.links.CustomRefyLink
+import kotlinx.coroutines.flow.MutableStateFlow
 
 /**
  * The **CustomLinksViewModel** class is the support class used by [CustomLinksScreen] to communicate
@@ -20,6 +22,13 @@ import com.tecknobit.refycore.records.links.CustomRefyLink
  * @see LinksViewModel
  */
 class CustomLinksViewModel: LinksViewModel<CustomRefyLink>() {
+
+    init {
+        _links = MutableStateFlow(
+            value = mutableStateListOf()
+        )
+        links = _links
+    }
 
     /**
      * Function to execute the request to get the links list
