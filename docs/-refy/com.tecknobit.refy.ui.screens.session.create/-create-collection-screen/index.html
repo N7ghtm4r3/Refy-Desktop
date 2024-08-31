@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>CreateCollectionScreen</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+    <script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js"
+            async="async"></script>
+    <script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+    <link href="../../../styles/style.css" rel="Stylesheet">
+    <link href="../../../styles/main.css" rel="Stylesheet">
+    <link href="../../../styles/prism.css" rel="Stylesheet">
+    <link href="../../../styles/logo-styles.css" rel="Stylesheet">
+    <link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+    <script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+    <script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+    <script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+    <script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+    <script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+    <script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+    <link href="../../../images/logo-icon.svg">
+</head>
+<body>
+<div class="root">
+    <nav class="navigation" id="navigation-wrapper">
+        <div class="navigation--inner">
+            <div class="navigation-title">
+                <button class="menu-toggle" id="menu-toggle" type="button">toggle menu</button>
+                <div class="library-name">
+                    <a class="library-name--link" href="../../../index.html">
+                        Refy
+                    </a>
+                </div>
+                <div class="library-version">
+                    1.0.0
+                </div>
+            </div>
+            <div class="filter-section" id="filter-section">
+                <button class="platform-tag platform-selector jvm-like" data-active=""
+                        data-filter=":composeApp:dokkaHtml/desktopMain">desktop
+                </button>
+            </div>
+        </div>
+        <div class="navigation-controls">
+            <button class="navigation-controls--btn navigation-controls--theme" id="theme-toggle-button" type="button">
+                switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--search" id="searchBar" role="button">search in
+                API
+            </div>
+        </div>
+    </nav>
+    <div id="container">
+        <div class="sidebar" id="leftColumn">
+            <div class="sidebar--inner" id="sideMenu"></div>
+        </div>
+        <div id="main">
+            <div class="main-content" data-page-type="classlike" id="content"
+                 pageIds="Refy::com.tecknobit.refy.ui.screens.session.create/CreateCollectionScreen///PointingToDeclaration//589146367">
+                <div class="breadcrumbs"><a href="../../../index.html">Refy</a><span class="delimiter">/</span><a
+                        href="../index.html">com.tecknobit.refy.ui.screens.session.create</a><span
+                        class="delimiter">/</span><span class="current">CreateCollectionScreen</span></div>
+                <div class="cover ">
+                    <h1 class="cover"><span>Create</span>
+                        <wbr></wbr>
+                        <span>Collection</span>
+                        <wbr></wbr>
+                        <span><span>Screen</span></span></h1>
+                    <div class="platform-hinted " data-platform-hinted="data-platform-hinted">
+                        <div class="content sourceset-dependent-content" data-active=""
+                             data-togglable=":composeApp:dokkaHtml/desktopMain">
+                            <div class="symbol monospace"><span class="token keyword">class </span><a href="index.html">CreateCollectionScreen</a><span
+                                    class="token punctuation">(</span><span class="parameters "><span
+                                    class="parameter ">collectionId<span class="token operator">: </span><a
+                                    href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span
+                                    class="token operator">?</span></span></span><span
+                                    class="token punctuation">)</span> : <a href="../-create-screen/index.html">CreateScreen</a><span
+                                    class="token operator">&lt;</span><span
+                                    data-unresolved-link="com.tecknobit.refycore.records/LinksCollection///PointingToDeclaration/">LinksCollection</span><span
+                                    class="token punctuation">, </span><a
+                                    href="../../com.tecknobit.refy.viewmodels.create/-create-collection-view-model/index.html">CreateCollectionViewModel</a><span
+                                    class="token operator">&gt; </span></div>
+                            <p class="paragraph">The <strong>CreateCollectionScreen</strong> class is useful to create
+                                or edit a <span
+                                        data-unresolved-link="com.tecknobit.refycore.records/LinksCollection///PointingToDeclaration/">LinksCollection</span>
+                            </p><span class="kdoc-tag"><h4 class="">Author</h4><p class="paragraph">N7ghtm4r3 - Tecknobit</p></span>
+                            <h4 class="">See also</h4>
+                            <div class="table">
+                                <div class="table-row" data-filterable-current=":composeApp:dokkaHtml/desktopMain"
+                                     data-filterable-set=":composeApp:dokkaHtml/desktopMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex"><div><span><span>Screen</span></span></div></span>
+                                        </div>
+                                        <div></div>
+                                    </div>
+                                </div>
+                                <div class="table-row" data-filterable-current=":composeApp:dokkaHtml/desktopMain"
+                                     data-filterable-set=":composeApp:dokkaHtml/desktopMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex"><div><span>Refy</span><wbr></wbr><span>Item</span><wbr></wbr><span>Base</span><wbr></wbr><span><span>Screen</span></span></div></span>
+                                        </div>
+                                        <div></div>
+                                    </div>
+                                </div>
+                                <div class="table-row" data-filterable-current=":composeApp:dokkaHtml/desktopMain"
+                                     data-filterable-set=":composeApp:dokkaHtml/desktopMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex"><div><a
+                                                href="../-create-screen/index.html"><span>Create</span><wbr></wbr><span><span>Screen</span></span></a></div></span>
+                                        </div>
+                                        <div></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tabbedcontent">
+                    <div class="tabs-section" tabs-section="tabs-section">
+                        <button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">
+                            Members
+                        </button>
+                    </div>
+                    <div class="tabs-section-body">
+                        <div data-togglable="CONSTRUCTOR">
+                            <h2 class="">Constructors</h2>
+                            <div class="table"><a data-name="-112221657%2FConstructors%2F589146367"
+                                                  anchor-label="CreateCollectionScreen"
+                                                  id="-112221657%2FConstructors%2F589146367"
+                                                  data-filterable-set=":composeApp:dokkaHtml/desktopMain"></a>
+                                <div class="table-row" data-togglable="CONSTRUCTOR"
+                                     data-filterable-current=":composeApp:dokkaHtml/desktopMain"
+                                     data-filterable-set=":composeApp:dokkaHtml/desktopMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="-create-collection-screen.html"><span>Create</span><wbr></wbr><span>Collection</span><wbr></wbr><span><span>Screen</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-112221657%2FConstructors%2F589146367"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":composeApp:dokkaHtml/desktopMain">
+                                                        <div class="symbol monospace"><span class="token keyword">constructor</span><span
+                                                                class="token punctuation">(</span><span
+                                                                class="parameters "><span class="parameter ">collectionId<span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span
+                                                                class="token operator">?</span></span></span><span
+                                                                class="token punctuation">)</span></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div data-togglable="PROPERTY">
+                            <h2 class="">Properties</h2>
+                            <div class="table"><a data-name="932105710%2FProperties%2F589146367"
+                                                  anchor-label="invalidMessage" id="932105710%2FProperties%2F589146367"
+                                                  data-filterable-set=":composeApp:dokkaHtml/desktopMain"></a>
+                                <div class="table-row" data-filterable-current=":composeApp:dokkaHtml/desktopMain"
+                                     data-filterable-set=":composeApp:dokkaHtml/desktopMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="../../com.tecknobit.refy.ui.screens.session/-refy-item-base-screen/invalid-message.html"><span>invalid</span><wbr></wbr><span><span>Message</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="932105710%2FProperties%2F589146367"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":composeApp:dokkaHtml/desktopMain">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">val </span><a
+                                                                href="../../com.tecknobit.refy.ui.screens.session/-refy-item-base-screen/invalid-message.html">invalidMessage</a><span
+                                                                class="token operator">: </span><span
+                                                                data-unresolved-link="org.jetbrains.compose.resources/StringResource///PointingToDeclaration/">StringResource</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="-1633702756%2FProperties%2F589146367" anchor-label="items"
+                                   id="-1633702756%2FProperties%2F589146367"
+                                   data-filterable-set=":composeApp:dokkaHtml/desktopMain"></a>
+                                <div class="table-row" data-filterable-current=":composeApp:dokkaHtml/desktopMain"
+                                     data-filterable-set=":composeApp:dokkaHtml/desktopMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="../../com.tecknobit.refy.ui.screens.session/-refy-item-base-screen/items.html"><span><span>items</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1633702756%2FProperties%2F589146367"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":composeApp:dokkaHtml/desktopMain">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">val </span><a
+                                                                href="../../com.tecknobit.refy.ui.screens.session/-refy-item-base-screen/items.html">items</a><span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span
+                                                                class="token operator">&lt;</span><span
+                                                                data-unresolved-link="com.tecknobit.refycore.records/LinksCollection///PointingToDeclaration/">LinksCollection</span><span
+                                                                class="token operator">&gt;</span></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div data-togglable="FUNCTION">
+                            <h2 class="">Functions</h2>
+                            <div class="table"><a data-name="1595006533%2FFunctions%2F589146367"
+                                                  anchor-label="initItemFromScreen"
+                                                  id="1595006533%2FFunctions%2F589146367"
+                                                  data-filterable-set=":composeApp:dokkaHtml/desktopMain"></a>
+                                <div class="table-row" data-filterable-current=":composeApp:dokkaHtml/desktopMain"
+                                     data-filterable-set=":composeApp:dokkaHtml/desktopMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="../../com.tecknobit.refy.ui.screens.session/-refy-item-base-screen/init-item-from-screen.html"><span>init</span><wbr></wbr><span>Item</span><wbr></wbr><span>From</span><wbr></wbr><span><span>Screen</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1595006533%2FFunctions%2F589146367"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":composeApp:dokkaHtml/desktopMain">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">fun </span><a
+                                                                href="../../com.tecknobit.refy.ui.screens.session/-refy-item-base-screen/init-item-from-screen.html"><span
+                                                                class="token function">initItemFromScreen</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="token punctuation">)</span></div>
+                                                        <div class="brief "><p class="paragraph">Function to init the
+                                                            <span data-unresolved-link="com.tecknobit.refy.ui.screens.session/RefyItemBaseScreen/item/#/PointingToDeclaration/">item</span>
+                                                            searching it in the <a
+                                                                    href="../../com.tecknobit.refy.ui.screens.session/-refy-item-base-screen/items.html">items</a>
+                                                            list by its <span
+                                                                    data-unresolved-link="com.tecknobit.refy.ui.screens.session/RefyItemBaseScreen/itemId/#/PointingToDeclaration/">itemId</span>
+                                                        </p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="-266069666%2FFunctions%2F589146367" anchor-label="InvalidItemUi"
+                                   id="-266069666%2FFunctions%2F589146367"
+                                   data-filterable-set=":composeApp:dokkaHtml/desktopMain"></a>
+                                <div class="table-row" data-filterable-current=":composeApp:dokkaHtml/desktopMain"
+                                     data-filterable-set=":composeApp:dokkaHtml/desktopMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="../../com.tecknobit.refy.ui.screens.session/-refy-item-base-screen/-invalid-item-ui.html"><span>Invalid</span><wbr></wbr><span>Item</span><wbr></wbr><span><span>Ui</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-266069666%2FFunctions%2F589146367"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":composeApp:dokkaHtml/desktopMain">
+                                                        <div class="symbol monospace">
+                                                            <div class="block">
+                                                                <div class="block"><span
+                                                                        class="token annotation builtin">@</span><span
+                                                                        data-unresolved-link="androidx.compose.runtime/Composable///PointingToDeclaration/"><span
+                                                                        class="token annotation builtin">Composable</span></span>
+                                                                </div>
+                                                            </div>
+                                                            <span class="token keyword">fun </span><a
+                                                                href="../../com.tecknobit.refy.ui.screens.session/-refy-item-base-screen/-invalid-item-ui.html"><span
+                                                                class="token function">InvalidItemUi</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="token punctuation">)</span></div>
+                                                        <div class="brief "><p class="paragraph">Function to display the
+                                                            error view when the item is not valid or has not been
+                                                            found</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="-740677106%2FFunctions%2F589146367" anchor-label="ShowContent"
+                                   id="-740677106%2FFunctions%2F589146367"
+                                   data-filterable-set=":composeApp:dokkaHtml/desktopMain"></a>
+                                <div class="table-row" data-filterable-current=":composeApp:dokkaHtml/desktopMain"
+                                     data-filterable-set=":composeApp:dokkaHtml/desktopMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="../-create-screen/-show-content.html"><span>Show</span><wbr></wbr><span><span>Content</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-740677106%2FFunctions%2F589146367"></span>
+                    <div class="copy-popup-wrapper "><span
+                            class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content" data-active=""
+                                                         data-togglable=":composeApp:dokkaHtml/desktopMain">
+                                                        <div class="symbol monospace">
+                                                            <div class="block">
+                                                                <div class="block"><span
+                                                                        class="token annotation builtin">@</span><span
+                                                                        data-unresolved-link="androidx.compose.runtime/Composable///PointingToDeclaration/"><span
+                                                                        class="token annotation builtin">Composable</span></span>
+                                                                </div>
+                                                            </div>
+                                                            <span class="token keyword">open </span><span
+                                                                class="token keyword">override </span><span
+                                                                class="token keyword">fun </span><a
+                                                                href="../-create-screen/-show-content.html"><span
+                                                                class="token function">ShowContent</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="token punctuation">)</span></div>
+                                                        <div class="brief "><p class="paragraph">Function to display the
+                                                            content of the screen</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span class="go-to-top-icon"><a href="#content"
+                                                id="go-to-top-link"></a></span><span>(c) 2024 Tecknobit</span><span
+                    class="pull-right"><span>Generated by </span><a
+                    href="https://github.com/Kotlin/dokka"><span>dokka</span><span
+                    class="padded-icon"></span></a></span>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

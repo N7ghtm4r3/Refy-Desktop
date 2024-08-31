@@ -64,7 +64,7 @@ private val sslContext = SSLContext.getInstance("TLS")
 lateinit var imageLoader: ImageLoader
 
 /**
- * Method to sho the layout of **Neutron** desktop app.
+ * Method to sho the layout of **Refy** desktop app.
  * No-any params required
  */
 @Composable

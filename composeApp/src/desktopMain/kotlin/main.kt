@@ -8,7 +8,7 @@ import refy.composeapp.generated.resources.Res
 import refy.composeapp.generated.resources.app_name
 
 /**
- * Method to start the of **Neutron** desktop app.
+ * Method to start the of **Refy** desktop app.
  * No-any params required
  */
 fun main() = application {

@@ -1,4 +1,7 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat.*
+import org.jetbrains.dokka.base.DokkaBase
+import org.jetbrains.dokka.base.DokkaBaseConfiguration
+import org.jetbrains.dokka.gradle.DokkaTask
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.util.*
@@ -7,6 +10,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.dokka)
 }
 
 kotlin {
@@ -88,6 +92,18 @@ compose.desktop {
             configurationFiles.from(project.file("compose-desktop.pro"))
             obfuscate.set(true)
         }
+    }
+}
+
+tasks.withType<DokkaTask>().configureEach {
+    dokkaSourceSets {
+        moduleName.set("Refy")
+        outputDirectory.set(layout.projectDirectory.dir("../docs"))
+    }
+
+    pluginConfiguration<DokkaBase, DokkaBaseConfiguration> {
+        customAssets = listOf(file("../docs/logo-icon.svg"))
+        footerMessage = "(c) 2024 Tecknobit"
     }
 }
 
